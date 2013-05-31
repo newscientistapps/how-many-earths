@@ -1,0 +1,38 @@
+@charset "utf-8";
+
+a:link, a:visited, a:hover, a:active {color:#000080;}
+
+#back a {color:#ffffff;}
+
+a img {border: none; }
+
+body  {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+    height: 100%;
+    overflow: auto;
+}
+
+#header {
+    position: absolute;
+    background: #000000;
+    color: #ffffff;
+    height: 50px;
+    width: 100%;
+    top: 0px;
+} 
+
+#header img {
+    width: 200px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+
+#header #back {
+    position: absolute;
+    right: 1%;
+} 
+
