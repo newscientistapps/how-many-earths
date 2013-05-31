@@ -6,6 +6,12 @@
     <link href="css/exoplanets.css" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
   
+    <!--skrollr script from: https://github.com/Prinzhorn/skrollr-->
+    <script type="text/javascript" src="js/skrollr.min.js"></script>
+    
+    <!--initialize skrollr-->
+    <script type="text/javascript"> window.onload = function() {skrollr.init();} </script>
+  
     <title>How Many Earths? | New Scientist</title>
 
 </head>
@@ -17,6 +23,118 @@
         <a href="http://www.newscientist.com/" target="_blank"><img src="img/NSlogo.png" alt="NS logo"/></a>
 
     </div>
+    
+    <div id="head_planet" data-600="opacity:1;" data-800="opacity:0;"><img id="planet_png" src="img/exoplanet_centered.png"/></div>
+	<div id="head_title" data-0="opacity:1;" data-250="opacity:0;"><h1>How many Earths?</h1></div>
+	<div id="left_box" data-0="opacity:0;" data-250="opacity:1;"><h3>Stargazing</h3>
+
+<p>Looking up at the night sky, have you ever wondered how many other planets might be circling those pinpricks of light – some maybe populated by sentient beings gazing back at us? Today, thanks to NASA's <a href="http://kepler.nasa.gov/" target= "_blank">Kepler space telescope</a>, we're starting to get a handle on the number of roughly Earth-sized worlds that sit within the Goldilocks zone – neither too hot, nor too cold for life to emerge – around their parent stars. </p>
+
+<p>Scroll down to learn more, and watch the video to discover how Kepler has delivered its haul of exo-worlds. </p>  [<this will be a short embedded video with narration, yes?]
+
+Text box 2: [With the scroll to this box the Kepler field appears against a view of the sky; this sky view remains and evolves as we continue to scroll down through the text in the left panel. Here's how Adam is thinking of rendering it, with a vector map of stars and constellations replacing the view of the Earth: http://bl.ocks.org/mbostock/3763057]
+
+<h3>In the frame</h3>
+
+<p>This is the Kepler field of view, a grid of squares near the constellation of Cygnus – the Swan – in the northern hemisphere sky. From Kepler's <a href="http://www.newscientist.com/article/mg20126944.700-kepler-telescope-launches-to-hunt-for-alien-earths.html" target="_blank">launch in 2009</a> to the http://www.newscientist.com/article/dn23550-kepler-telescopes-planethunting-days-crunch-to-a-close.html end of its active planet-hunting days in May 2013, the telescope's detectors were trained on some 150,000 target stars in this grid.</p> 
+
+<p>Scroll for more. </p>
+
+Text box 3: 
+
+[With the scroll to this box we add the locations of all the Kepler candidates, color-coded according to their size, like this: http://www.nasa.gov/images/content/528361main_5LocationsAllCandidates_Mar08_11_tv.jpg. A number also appears prominently in the view, corresponding to the number of candidates and confirmed planets, i.e. 2713 planets, or whatever the latest number is.]
+
+<h3>Kepler's haul</h3>
+
+<p>Here are the locations of the candidate planets discovered in Kepler's data so far. To estimate the number of alien Earths we must extrapolate from these candidates, based on what astronomers know about the telescope's limits of detection.</p>
+
+<p>Some of Kepler's planet candidates will turn out to be false alarms. Other signals are just be too faint to be seen against the natural variability in a star's glow. As it happens, these two numbers, representing about 10 per cent of Kepler's planet candidates, roughly cancel one another out. </p> 
+
+<p>Much more important to our quest is the large number of planets that are missed because the tilt of their orbits means they never pass between their parent stars and Kepler's vantage point, as shown below.</p> 
+
+[<this probably just needs a version of Mac's video showing signal and no signal, with maybe the second one not quite completely perpendicular to the first. I don't think this one needs to be as large as the first video, nor have narration, so it can probably be embedded in the text box as a simple loop.]
+
+Text box 4:
+
+[With the scroll to this box suddenly we add a population of planets extrapolating to include those that are missed due to their orbits' tilt. These will be distributed across the target stars. The number displayed switches to a range at this point, to give an idea of the uncertainties involved. **This is one of the two key "Wow" moments in our narrative, so we need to think about making this have maximal visual impact.** At the same time a toggle button appears on the graphic, so users can run this step back and forth if they wish.]
+
+<h3>Planets galore</h3>
+
+<p>Adding in these invisible worlds, distributed across Kepler's target stars, the telescope's field of view becomes dense with planets. But many of them will be nothing like our Earth. </p>
+
+<p>First, we need to remove gas giants, the size of Neptune and above.</p>
+
+<p>Scroll for more.</p>
+
+Text box 5:
+
+[With the scroll to this box we remove everything other than the Earths and super Earths. The range of numbers shown shifts accordingly. Here we drop the first toggle button and now allow users to toggle back and forth over this step if they wish. ]
+
+<h3>Ripe for life?</h3>
+
+<p>Not all of these planets will be rocky worlds like our Earth, with life-sustaining liquid water. In some systems, for instance, <a href="http://www.newscientist.com/article/dn23477-astrophile-diamond-planets-get-even-more-precious.html" target="_blank">carbon-rich planets</a> could form with a crust made from graphite, layers of diamond below, plus rivers and lakes of oils and tar. </p>
+
+<p>Kepler cannot determine a planet's composition, but it can establish whether a roughly Earth-sized planet is orbiting in the habitable zone around its parent star – the range of distances where its surface temperature would allow water to exist in liquid form.</p>
+
+[As the concept seems simple to understand, I'm not sure we need a visual explanation of the habitable zone, but if we want it can be added as short video loop embed here below the text.]
+
+<p>Scroll for more.</p>
+
+Text box 6:
+
+[With the scroll to this box we remove anything that isn't in a habitable zone, leaving a final tally of planets in the Kepler field of view. Again, the range of numbers shown shifts accordingly, and the toggle button now allows users to run this step back and forth, if they wish.]
+
+<h3>These might be like home</h3>
+
+<p>Having removed everything lying outside habitable zones, we're left with our best estimate of the number of potentially life-bearing worlds in the Kepler field of view. The true number will be higher: the telescope failed before it was able to census planets around Sun-like stars with orbits of longer than about 200 days – had Kepler been made by an alien race, looking in our direction, it would have failed to detect the Earth. </p>
+
+<p>What's more, some of the gas giants we excluded earlier could have rocky moons that would be good candidates to host life.</p>
+
+<p>Now consider this: Kepler's field of view covered just 0.28 per cent of the sky. And the telescope was only able to peer up to 3000 light years away, looking just above the plane of our Galaxy.<p>
+
+[Here I think we may want to embed an image something like this, so that the point being made about the limits of Kepler's survey is absolutely clear: http://www.sciencenews.org/view/access/id/343953/description/A_STELLAR_VIEW. If we're just talking about a flat graphic, we can get Nige to draw this.]
+
+<p>So to estimate the number of potentially habitable planets in the entire Milky Way, we need to extrapolate again.</p>  
+
+<p>Scroll for more. </p>
+
+
+Text box 7:
+
+[With the scroll to this box we zoom out to show a view roughly corresponding to the night sky as viewed from our perspective here on Earth, if possible. **This is the second big "Wow" in our narrative, so again we need to think about maximizing visual impact.** We may not want to populate the entire sky with planet candidates, but the number range shown should again shift accordingly, perhaps to show two ranges: potentially habitable planets in the view, and in the entire Galaxy – although we may be talking about huge uncertainties for both of these numbers. After a short delay, corresponding to the time an average person takes to read the first paragraph below, the sky view now begins to rotate, so we see the Kepler FOV sweep past on each rotation and get a better idea of its small size, in relation to the entire sky. We may also allow users to click and drag across the sky themselves, and toggle back and forth between the zoomed in and zoomed out views.]
+
+<h3>The bigger picture</h3>
+
+<p>Here the Kepler field is zoomed out against an area of sky similar to what you'd see standing on Earth gazing to the heavens. [<not sure if we can do this precisely, but it would be really nice to zoom out to a view corresponding to the initial "Stargazing" intro]. Estimating the number of alien earths in this view, and in the entire Galaxy, is difficult, because astronomers don't know whether Kepler's field of view contains a population of stars typical of the Milky Way as a whole.</p>
+
+<p>As the view rotates, the enormity of the task of scouring the entire sky for habitable worlds becomes clear. Yet this is the mission of Kepler's successor, the <a href="http://www.kavlifoundation.org/science-spotlights/searching-best-and-brightest" target="_blank">Transiting Exoplanet Survey Satellite</a> (TESS), <a href="http://www.newscientist.com/article/dn23359-nasas-next-exoplanet-hunter-to-launch-in-2017.html" target="_blank">scheduled for launch in 2017</a>.</p>
+
+<p>Click and drag to tour of TESS's hunting ground, but bear in mind that even TESS will target only some 500,000 of the nearest and brightest stars in its first two years of life. In all, the Milky Way contains as many as 400 billion stars, and it is just one of at least 100 billion galaxies in the Universe.</p>
+
+<p>Viewed from this perspective, the chances that we're alone in the cosmos seem very slim, indeed. </p.
+
+<p>Scroll for credits.</p>
+
+Text box 8:
+
+<h3>Credits<h3>
+
+<p>Thanks to [names/urls t/k] and the <a href="http://kepler.nasa.gov/Mission/team/" target="_blank">Kepler Science Team</a> for technical advice and data. </p>
+
+<p>Graphics and text by MacGregor Campbell, Adam Becker and Peter Aldhous.</p>
+
+	
+	</div>
+	
+	<div id="main_event_interactive" data-0="position:absolute;" data-300-top="opacity:0;" data-top-top="opacity:1;position:fixed;top:0px;" >
+	<img id="finale_2" src="img/Kepler_Sky.jpg"/>
+	</div>
+    
+    
+    
+    
+    
+    
 
 </body>
 
