@@ -12,18 +12,29 @@ body {overflow: hidden; margin: 0px;}
 var width = window.innerWidth,
 	height = window.innerHeight;
 
+var initial_ra = -115,  // in degrees
+	initial_dec = -45;
+
+var min_magnitude = 5,
+	magnitude_scaling = .75;
+
 var projection = d3.geo.stereographic()
     .clipAngle(140)
     .scale(2000)
-    .translate([width, height])
-    .precision(.1);
+    // .translate([width, height])
+	// .scale(1000)
+	.translate([width/2, height/2])
+    .precision(10)
+ 	.rotate([initial_ra, initial_dec]);
 
 var path = d3.geo.path()
     .projection(projection)
-	// .pointRadius(10);
 	.pointRadius(function(d){
-		return 1.5*(5 - d.properties.brightness);
+		return Math.max(0, magnitude_scaling*(min_magnitude - d.properties.brightness));
 	});
+	
+var kepler_path = d3.geo.path()
+    .projection(projection);
 
 var color = d3.scale.linear()
 				.domain([-2.0, 0.2, 5.5])
@@ -43,36 +54,65 @@ var svg = d3.select("body").append("svg")
 
 var mapx = width/2, 
 	mapy = height/2;
+	
 var dragmove = function() {
   	mapx += d3.event.dx;
 	mapy += d3.event.dy;
-  	projection.rotate([λ(mapx), φ(mapy)]);
-  	svg.selectAll("path").attr("d", path);
+  	projection.rotate([λ(mapx) + initial_ra, φ(mapy) + initial_dec]);
+  	svg.selectAll(".star").attr("d", path);
+  	svg.selectAll(".kepler").attr("d", kepler_path);
 };
 
 var dragobj = d3.behavior.drag().on("drag", dragmove);
 
 d3.json("new_stars.geojson", function(error, stars) {
-	svg.append("rect")
-		.attr("width", width)
-		.attr("height", height)
-		.attr("fill", "black");
+	d3.json("keplerFOV.geojson", function(error, keplerfov){
+			
+		svg.append("rect")
+			.attr("width", width)
+			.attr("height", height)
+			.attr("fill", "black");
 
-  svg.selectAll("path")
-		.data(stars)
-		.enter()
-		.append("path")
-      	.attr("d", path)
-		.attr("fill", function(d){return color(d.properties.color)});
-
-	svg.call(dragobj);
-	
-	svg.selectAll("path")
-		.transition()
-		.delay(1000)
-		.duration(1000)
-		.attr("transform", "scale(0.5)");
-
+	 	svg.selectAll("path")
+	 		  		.data(stars)
+	 		  		.enter()
+	 		  		.append("path")
+	 				.attr("class", "star")
+	 		      	.attr("d", path)
+	 		  		.attr("fill", function(d){return color(d.properties.color)});
+		
+		svg.append("path")
+			.datum(keplerfov)
+			.attr("class", "kepler")
+			.attr("d", kepler_path)
+			.attr("fill", "none")
+			.attr("stroke", "white");
+		
+		// kepler_centroid = kepler_path.centroid(keplerfov);
+		// projection.center(projection.invert(kepler_centroid));
+		
+		projection.scale(1000);		
+		
+		svg.selectAll(".star")
+			.transition()
+			.delay(5000)
+			.duration(1000)
+			.attr("d", path);
+		
+		svg.selectAll(".kepler")
+			.transition()
+			.delay(5000)
+			.duration(1000)
+			.each("end", function(){
+				d3.select(this).attr("transform", "scale(1)");
+				d3.select(this).attr("d", kepler_path);
+				})
+			// .attr("d", kepler_path);   // can't do it this way, it behaves strangely if you do.
+			.attr("transform", "scale(0.5)translate(" + width/2 + "," + height/2 + ")");
+		
+		svg.call(dragobj);
+		
+	});
 });
 
 </script>
