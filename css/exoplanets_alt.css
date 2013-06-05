@@ -11,15 +11,25 @@ body  {
     margin: 0px;
     padding: 0px;
     font-size: 14px;
-    height: 100%;
+    /*height: 100%;*/
+    height: 9000px;
     overflow: auto;
     
+    /*background: #fff;*/
     background: #000;
     background-image:url('../img/starry_background_tile-able.jpg');
+    background-repeat:no-repeat;
+}
+
+h3 {
+
+font-size: 35px;
+
 }
 
 #header {
-    position: absolute;
+    position: fixed;
+    z-index:100;
     background: #000000;
     color: #ffffff;
     height: 50px;
@@ -39,6 +49,8 @@ body  {
     right: 1%;
 } 
 
+
+
 #head_title{
 position:fixed;
 top:300px;
@@ -54,34 +66,103 @@ left: 50%;
 }
 
 #left_box{
-position: absolute;
-top: 600px;
-width:30%;
+margin-top:600px;
+
+position: relative;
+/*top: 600px;*/
+margin-left: auto;
+margin-right: auto;
+width:50%;
+max-width:500px;
 /*height:2000px;*/
 background:#fff;
 /*margin-left:5%;*/
 padding:20px;
-padding-right:20px;
-border-radius:10px;
+/*border-radius:10px;*/
 
 color:#000;
 
 z-index:90;
 }
 
+.interactive_overlay{
 
-#vid_how_to_find_a_planet {
-/*position:absolute;
-top:900px;*/
+
+position:fixed;
+margin-top:50px;
+
+display:block;
+
+/*top:600px;*/
+/*margin: auto;*/
+width:50%;
+max-width:500px;
+
+/*background:#fff;*/
+padding:20px;
+
+color:#fff;
+
+z-index:90;
+}
+
+
+.overlay {
+
+position:absolute;
+margin-top:50px;
+top:0%;
+display:block;
+width:50%;
+max-width:500px;
+padding:20px;
+
+color:#fff;
+
+z-index:90;
+
+
+}
+
+
+.temp_overlay {
+
+position:absolute;
+margin-left:50%;
+top:50%;
+display:block;
+width:50%;
+max-width:500px;
+padding:20px;
+font-size:90px;
+color:#fff;
+
+z-index:95;
+
 
 }
 
 
 
 
+#vid_how_to_find_a_planet {
+/*position:absolute;
+top:900px;*/
+max-width: 100%;
+height: auto;
+
+}
+
+video {
+
+max-width: 100%;
+height: auto;
+
+}
+
 #main_event_interactive {
-position:fixed;
-top:1000px;
+position:relative;
+/*top:300px;*/
 display:block;
 z-index:70;
 }
