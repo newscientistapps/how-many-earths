@@ -1,0 +1,154 @@
+@charset "utf-8";
+
+a:link, a:visited, a:hover, a:active {color:#fff;}
+
+#back a {color:#ffffff;}
+
+a img {border: none; }
+
+h1 {font-size: 45px}
+
+h3 {font-size: 25px}
+
+
+body  {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+    height: 9000px;
+    overflow: auto;
+    background: #000;
+    background-image:url('../img/starry_background_tile-able.jpg');
+}
+
+#header {
+    position: fixed;
+    z-index:100;
+    background: #000;
+    color: #fff;
+    height: 50px;
+    width: 100%;
+    top: 0px;
+    border-bottom-width: 1px;
+    border-bottom-color: #fff;
+    border-bottom-style: solid;
+} 
+
+#header img {
+    width: 200px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+
+#header #back {
+    position: absolute;
+    right: 1%;
+} 
+
+
+#intro {
+	position:fixed;
+	top:100px;
+	width:50%;
+	max-width:500px;
+	padding:20px 50px;
+	color: #fff;
+}
+
+#intro_planet{
+	position: fixed;
+	top: 150px;
+	left: 50%;
+}
+
+#left_box{
+	margin-top:600px;
+	position: relative;
+	/*top: 600px;*/
+	width:50%;
+	max-width:500px;
+	color: #fff;
+	background: #000;
+	/*height:2000px;*/
+	/*background:#fff;*/
+	/*margin-left:5%;*/
+	padding:50px;
+	/*border-radius:10px;*/
+	z-index:90;
+}
+
+.interactive_overlay{
+position:fixed;
+margin-top:50px;
+display:block;
+/*top:600px;*/
+/*margin: auto;*/
+width:50%;
+max-width:500px;
+/*background:#fff;*/
+padding:20px;
+color:#fff;
+z-index:90;
+}
+
+.overlay {
+position:absolute;
+margin-top:50px;
+top:0%;
+display:block;
+width:50%;
+max-width:500px;
+padding:20px 50px;
+color:#fff;
+background: #000;
+z-index:90;
+
+
+}
+
+
+.temp_overlay {
+
+position:absolute;
+margin-left:50%;
+top:50%;
+display:block;
+width:50%;
+max-width:500px;
+padding:20px;
+font-size:90px;
+color:#fff;
+
+z-index:95;
+
+
+}
+
+
+#vid_how_to_find_a_planet {
+/*position:absolute;
+top:900px;*/
+max-width: 100%;
+height: auto;
+
+}
+
+video {
+
+max-width: 100%;
+height: auto;
+
+}
+
+#main_event_interactive {
+position:relative;
+/*top:300px;*/
+display:block;
+width:100%;
+z-index:70;
+}
+
+
+
