@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="css/exoplanets_alt3.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
+    
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  
+    <!--skrollr script from: https://github.com/Prinzhorn/skrollr-->
+    <script type="text/javascript" src="js/skrollr.min.js"></script>
+    
+    <!--initialize skrollr-->
+    <script type="text/javascript"> window.onload = function() {skrollr.init();} </script>
+  
+    <title>How Many Earths? | New Scientist</title>
+
+</head>
+
+<body>
+    
+    <div id="header">
+
+        <a href="http://www.newscientist.com/" target="_blank"><img src="img/NSlogo.png" alt="NS logo"/></a>
+
+    </div>
+    
+    <div id="intro_planet" data-1200="opacity:1;" data-1500="opacity:0;"><img id="planet_png" src="img/exoplanet_centered.png"/></div>
+	
+	<div id="intro" data-0="opacity:1;" data-250="opacity:0;">
+	
+		<!--<h1>How many <br> earths?</h1>-->
+		<h1>Other earths</h1>
+		<br>
+		
+		
+		<p class="flasher">▼</p>  
+	
+	</div>
+
+	<div class="overlay" id="Stargazing" data-0="position:fixed;top:100%;opacity:0;" data-500="position:fixed;top:0%;opacity:1;" data-700="position:fixed;top:0%;opacity:1;" data-1000="position:fixed;top:-100%;opacity:0;"> 	
+		
+		<h3>Stargazing</h3>
+		
+		<p>Looking up at the night sky, have you ever wondered how many other planets might be circling those pinpricks of light – some maybe populated by sentient beings gazing back at us?</p> 
+		
+		<p>Today, thanks to NASA's <a href="http://kepler.nasa.gov/" target= "_blank">Kepler space telescope</a>, we're starting to get a handle on the number of roughly Earth-sized worlds that sit within the Goldilocks zone – neither too hot, nor too cold for life to emerge – around their parent stars. </p>
+		
+		<p class="flasher">▼</p>
+		
+		</div>
+		
+	
+	<div class="overlay" id="how_to_spot_a_planet" data-700="position:fixed;top:100%;opacity:0;" data-900="position:fixed;top:0%;opacity:1;" data-1300="position:fixed;top:0%;opacity:1;" data-1500="position:fixed;top:-100%;opacity:0;">
+
+		<h3>How to spot a planet</h3>
+	
+		<p>Kepler's success in finding distant worlds depends on a conceptually simple method – recording the dip in the glow from their parent stars as the planets pass in front.</p> 
+	
+		<p><video autoplay loop src="img/how_to_find_a_planet.mp4" type="video.mp4"/></video></p>
+
+		<p class="flasher">▼</p> 
+
+	</div>
+
+	
+	<div id="main_event_interactive" data-1300="position:fixed;top:0%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;">
+
+		<img id="finale_2" src="img/Kepler_Sky.jpg"/> <!--needed a placeholder image here to verify that the next div overlays properly, remove when integrating the interactive-->
+		
+		</div>
+	
+	
+	<div class="overlay" id="in_the_frame" data-1300="position:fixed;top:100%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;" data-2000="position:fixed;top:0%;opacity:1;" data-2500="position:fixed;top:-100%;opacity:0;">
+
+		<h3>In the frame</h3>
+
+		<p>This is the Kepler field of view, a grid of squares near the constellation of Cygnus – the Swan – in the northern hemisphere sky. From Kepler's <a href="http://www.newscientist.com/article/mg20126944.700-kepler-telescope-launches-to-hunt-for-alien-earths.html" target="_blank">launch in 2009</a> to the <a href="http://www.newscientist.com/article/dn23550-kepler-telescopes-planethunting-days-crunch-to-a-close.html" target="_blank">end of its active planet-hunting days in May 2013</a>, the telescope's detectors were trained on some 150,000 target stars in this grid.</p> 
+
+		<p class="flasher">▼</p>  
+
+	</div>
+
+	<div class="overlay" id="Keplers_haul" data-2000="position:fixed;top:100%;opacity:0;" data-2500="position:fixed;top:0%;opacity:1;" data-3000="position:fixed;top:0%;opacity:1;" data-3500="position:fixed;top:-100%;opacity:0;">
+
+		<h3>Kepler's haul</h3>
+
+		<p>Here are the candidate planets discovered in Kepler's data so far. Some will turn out to be false alarms. Other planets will be missed because their signals are too faint to be seen against the natural variability in a star's glow. As it happens, these two numbers, representing about 10 per cent of Kepler's planet candidates, roughly cancel one another out. </p> 
+
+		<p>More important to our quest is the large number of planets that remain invisible becasue the tilt of their orbits means they never pass between their parent stars and Kepler's vantage point, as shown below.</p> 
+
+		<p><video autoplay loop src="img/planets_habitable_extrapolation.mp4" type="video.mp4"/></video></p>
+
+		<p class="flasher">▼</p> 
+
+	</div>
+
+	<div class="temp_overlay" data-2600="position:fixed;top:30%;opacity:0;" data-2700="position:fixed;top:30%;opacity:1;" data-3000="position:fixed;top:30%;opacity:1;"data-3200="position:fixed;top:30%;opacity:0;">STUFF HAPPENS HERE</div>
+
+
+	<div class="overlay" id="Planets_galore" data-3000="position:fixed;top:100%;opacity:0;" data-3500="position:fixed;top:0%;opacity:1;" data-4000="position:fixed;top:0%;opacity:1;" data-4500="position:fixed;top:-100%;opacity:0;">
+
+		<h3>Planets galore</h3>
+
+		<p>Adding in these invisible worlds, distributed across Kepler's target stars, the telescope's field of view becomes dense with planets. But many of them will be nothing like our Earth. </p>
+
+		<p>First, we need to remove gas giants, the size of Neptune and above.</p>
+
+		<p class="flasher">▼</p>
+
+	</div>
+
+	<div class="temp_overlay" data-3600="position:fixed;top:30%;opacity:0;" data-3700="position:fixed;top:30%;opacity:1;" data-4000="position:fixed;top:30%;opacity:1;"data-4200="position:fixed;top:30%;opacity:0;">STUFF HAPPENS HERE</div>
+
+
+	<div class="overlay" id="Ripe_for_life" data-4000="position:fixed;top:100%;opacity:0;" data-4500="position:fixed;top:0%;opacity:1;" data-5000="position:fixed;top:0%;opacity:1;" data-5500="position:fixed;top:-100%;opacity:0;">
+
+		<h3>Ripe for life?</h3>
+
+		<p>Not all of these planets will be rocky worlds like our Earth, with life-sustaining liquid water. In some systems, for instance, <a href="http://www.newscientist.com/article/dn23477-astrophile-diamond-planets-get-even-more-precious.html" target="_blank">carbon-rich planets</a> could form with a crust made from graphite, layers of diamond below, plus rivers and lakes of oils and tar. </p>
+
+		<p>Kepler cannot determine a planet's composition, but it can establish whether a roughly Earth-sized planet is orbiting in the habitable zone around its parent star – the range of distances where its surface temperature would allow water to exist in liquid form.</p>
+
+		<p><video autoplay loop src="img/planets_many_habitable_mp4.mp4" type="video.mp4"/></video></p>
+
+		<p class="flasher">▼</p> 
+
+	</div>
+
+	<div class="temp_overlay" data-4600="position:fixed;top:30%;opacity:0;" data-4700="position:fixed;top:30%;opacity:1;" data-5000="position:fixed;top:30%;opacity:1;"data-5200="position:fixed;top:30%;opacity:0;">STUFF HAPPENS HERE</div>
+
+
+	<div class="overlay" id="These_might_be_like_home" data-5000="position:fixed;top:100%;opacity:0;" data-5500="position:fixed;top:0%;opacity:1;" data-6000="position:fixed;top:0%;opacity:1;" data-6500="position:fixed;top:-100%;opacity:0;" >
+
+		<h3>These might be like home</h3>
+
+		<p>Having removed everything lying outside habitable zones, we're left with our best estimate of the number of potentially life-bearing worlds in the Kepler field of view. The true number will be higher: the telescope failed before it was able to census planets around Sun-like stars with orbits of longer than about 200 days – had Kepler been made by an alien race, looking in our direction, it would have failed to detect the Earth. </p>
+
+		<p>What's more, some of the gas giants we excluded earlier could have rocky moons that would be good candidates to host life.</p>
+
+		<p>Now consider this: Kepler's field of view covered just 0.28 per cent of the sky. And the telescope was only able to peer up to 3000 light years away, looking just above the plane of our Galaxy.<p>
+
+		<p>So to estimate the number of potentially habitable planets in the entire Milky Way, we need to extrapolate again.</p>  
+
+		<p class="flasher">▼</p> 
+
+	</div>
+
+	<div class="temp_overlay" data-5600="position:fixed;top:30%;opacity:0;" data-5700="position:fixed;top:30%;opacity:1;" data-6000="position:fixed;top:30%;opacity:1;"data-6200="position:fixed;top:30%;opacity:0;">STUFF HAPPENS HERE</div>
+
+
+	<div class="overlay" id="The_bigger_picture" data-6000="position:fixed;top:100%;opacity:0;" data-6500="position:fixed;top:0%;opacity:1;" data-7000="position:fixed;top:0%;opacity:1;" data-7500="position:fixed;top:-100%;opacity:0;">
+
+		<h3>The bigger picture</h3>
+
+		<p>Here the Kepler field is zoomed out against an area of sky similar to what you'd see standing on Earth gazing to the heavens. Estimating the number of alien earths in this view, and in the entire Galaxy, is difficult, because astronomers don't know whether Kepler's field of view contains a population of stars typical of the Milky Way as a whole.</p>
+
+		<p>As the view rotates, the enormity of the task of scouring the entire sky for habitable worlds becomes clear. Yet this is the mission of Kepler's successor, the <a href="http://www.kavlifoundation.org/science-spotlights/searching-best-and-brightest" target="_blank">Transiting Exoplanet Survey Satellite</a> (TESS), <a href="http://www.newscientist.com/article/dn23359-nasas-next-exoplanet-hunter-to-launch-in-2017.html" target="_blank">scheduled for launch in 2017</a>.</p>
+		<p><em>###########might be good to put an image of TESS here#######</em></p>
+		<p>Click and drag to tour of TESS's hunting ground, but bear in mind that even TESS will target only some 500,000 of the nearest and brightest stars in its first two years of life. In all, the Milky Way contains as many as 400 billion stars, and it is just one of at least 100 billion galaxies in the Universe.</p>
+
+		<p>Viewed from this perspective, the chances that we're alone in the cosmos seem very slim, indeed. </p>
+
+		<p class="flasher">▼</p>
+
+	</div>
+
+	<div class="temp_overlay" data-6600="position:fixed;top:30%;opacity:0;" data-6700="position:fixed;top:30%;opacity:1;" data-7000="position:fixed;top:30%;opacity:1;"data-7200="position:fixed;top:30%;opacity:0;">STUFF HAPPENS HERE</div>
+
+
+	<div class="overlay" id="credits" data-7000="position:fixed;top:100%;opacity:0;" data-7500="position:fixed;top:0%;opacity:1;" data-8000="position:fixed;top:0%;opacity:1;" data-8500="position:fixed;top:-100%;opacity:0;">
+
+		<h3>Credits</h3>
+
+		<p>Thanks to [names/urls t/k] and the <a href="http://kepler.nasa.gov/Mission/team/" target="_blank">Kepler Science Team</a> for technical advice and data. </p>
+
+		<p>Graphics and text by MacGregor Campbell, Adam Becker and Peter Aldhous.</p>
+		
+		<p class="flasher">Scroll to explore ▼</p>
+
+	</div>
+
+</body>
+
+</html>
+
