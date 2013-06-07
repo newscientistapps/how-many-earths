@@ -8,6 +8,8 @@ a img {border: none; }
 
 h1 {font-size: 80px;}
 
+
+
 h3 {font-size: 30px;
 	line-height:110%}
 
@@ -53,11 +55,24 @@ body  {
 
 #intro {
 	position:fixed;
-	top:250px;
+	top:210px;
 	width:50%;
 	max-width:500px;
 	padding:20px 50px;
 	color: #fff;
+}
+
+#intro h2 {
+
+margin-left:20%;
+
+}
+
+#intro_blurb {
+
+font-size: 18px;
+margin-left:20%;
+
 }
 
 #intro_planet{
