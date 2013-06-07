@@ -19,6 +19,7 @@ var min_magnitude = 5,
 	magnitude_scaling = .75;
 
 var projection = d3.geo.stereographic()
+// var projection = d3.geo.gnomonic()
     .clipAngle(140)
     .scale(2000)
     // .translate([width, height])
@@ -61,12 +62,15 @@ var dragmove = function() {
   	projection.rotate([λ(mapx) + initial_ra, φ(mapy) + initial_dec]);
   	svg.selectAll(".star").attr("d", path);
   	svg.selectAll(".kepler").attr("d", kepler_path);
+	svg.selectAll(".constellation").attr("d", kepler_path);
 };
 
 var dragobj = d3.behavior.drag().on("drag", dragmove);
 
 d3.json("new_stars.geojson", function(error, stars) {
 	d3.json("keplerFOV.geojson", function(error, keplerfov){
+		d3.json("constellations_collection.geojson", function(error, constellations){
+	
 			
 		svg.append("rect")
 			.attr("width", width)
@@ -87,9 +91,13 @@ d3.json("new_stars.geojson", function(error, stars) {
 			.attr("d", kepler_path)
 			.attr("fill", "none")
 			.attr("stroke", "white");
-		
-		// kepler_centroid = kepler_path.centroid(keplerfov);
-		// projection.center(projection.invert(kepler_centroid));
+			
+		svg.append("path")
+			.datum(constellations)
+			.attr("class", "constellation")
+			.attr("d", kepler_path)
+			.attr("fill", "none")
+			.attr("stroke", "white");
 		
 		projection.scale(1000);		
 		
@@ -109,9 +117,21 @@ d3.json("new_stars.geojson", function(error, stars) {
 				})
 			// .attr("d", kepler_path);   // can't do it this way, it behaves strangely if you do.
 			.attr("transform", "scale(0.5)translate(" + width/2 + "," + height/2 + ")");
+			
+		svg.selectAll(".constellation")
+			.transition()
+			.delay(5000)
+			.duration(1000)
+			.each("end", function(){
+				d3.select(this).attr("transform", "scale(1)");
+				d3.select(this).attr("d", kepler_path);
+				})
+			// .attr("d", kepler_path);   // can't do it this way, it behaves strangely if you do.
+			.attr("transform", "scale(0.5)translate(" + width/2 + "," + height/2 + ")");
 		
 		svg.call(dragobj);
-		
+
+		});		
 	});
 });
 
