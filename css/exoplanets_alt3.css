@@ -81,6 +81,13 @@ margin-left:20%;
 	left: 50%;
 }
 
+
+#kepler {
+
+margin-left:20%;
+
+}
+
 .overlay {
 position:absolute;
 margin-top:50px;
@@ -121,6 +128,12 @@ max-width: 100%;
 height: auto;
 }
 
+#small_video {
+margin-left:20%;
+max-width: 50%;
+height: auto;
+
+}
 
 
 #main_event_interactive {
