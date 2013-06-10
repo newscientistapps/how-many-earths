@@ -226,8 +226,8 @@ var render_func = function(obj){
     
 };
 
-// // Initialize Skrollr, setting the previously-defined render-listening function.
-// skrollr.init();
+// Initialize Skrollr, setting the previously-defined render-listening function.
+skrollr.init({render: render_func});
 
 
 
