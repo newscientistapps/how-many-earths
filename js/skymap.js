@@ -92,7 +92,7 @@ var dragmove = function() {
 };
 
 // Create the drag object and add the drag event function to it.
-var dragobj = d3.behavior.drag().on("drag", dragmove);
+var dragobj = d3.behavior.drag();
 
 //////////////////////////
 // Actually draw stuff! //
@@ -104,9 +104,9 @@ var svg = d3.select("#main_event_interactive").append("svg")
     .attr("height", height);
 
 // Load the GeoJSON files.
-d3.json("new_stars.geojson", function(error_stars, stars) {
-	d3.json("keplerFOV.geojson", function(error_kepler, keplerfov){
-		d3.json("constellations_collection.geojson", function(error_constellation, constellations){
+d3.json("json/new_stars.geojson", function(error_stars, stars) {
+	d3.json("json/keplerFOV.geojson", function(error_kepler, keplerfov){
+		d3.json("json/constellations_collection.geojson", function(error_constellation, constellations){
 	    
 	    // Once the GeoJSON files have loaded, do the following:
 	    
@@ -147,10 +147,13 @@ d3.json("new_stars.geojson", function(error_stars, stars) {
 			.attr("d", line_path)
 			.attr("fill", "none")
 			.attr("stroke", "white");
-		
-		// Finally, attach the drag event object to the SVG canvas.
+			
+		// Attach the drag event object to the SVG canvas.
+		// Note that we have not yet actually attached any listeners to the drag object!
+		// That comes later.
 		svg.call(dragobj);
-
+    	
+		
 		});		
 	});
 });
@@ -207,7 +210,6 @@ var zoom = function(new_zoom){
 
 // A map rotation function.
 var d_ra = 0;
-
 var map_rotate = function(){
         d_ra += 0.5
       	projection.rotate([d_ra + initial_ra, initial_dec]);
@@ -217,18 +219,31 @@ var map_rotate = function(){
       	svg.selectAll(".lines").attr("d", line_path);
 };
 
+
+
+
 // Define a few scrolling variables, to control the transitions.
-var zoom_position = 6100,
-    rotate_position = 6500;
+var planets_position = 2500,
+    zoom_position = 6100,
+    rotate_position = 6500,
+    interactive_position = 8000;
 
 // Define the render-listening function.
 var render_func = function(obj){
+
+    // Zooming in and out.
+    if (obj.lastTop < planets_position && obj.curTop >= planets_position){
+        // starload("json/kepler_fakes.geojson", "candidates", "red");
+    };
+    if (obj.lastTop >= planets_position && obj.curTop < planets_position){
+        // g.selectAll(".candidates").remove();
+    };
     
     // Zooming in and out.
     if (obj.lastTop < zoom_position && obj.curTop >= zoom_position){
         zoom(zoom_min);
-    }
-    else if (obj.lastTop >= zoom_position && obj.curTop < zoom_position){
+    };
+    if (obj.lastTop >= zoom_position && obj.curTop < zoom_position){
         zoom(zoom_max);
     };  
     
@@ -240,8 +255,21 @@ var render_func = function(obj){
     //     clearInterval(rotation);
     //     projection.rotate([initial_ra, initial_dec]);
     //     svg.selectAll(".star").attr("d", star_path);
-    //      svg.selectAll(".lines").attr("d", line_path);
+    //     svg.selectAll(".lines").attr("d", line_path);
     // };
+    
+    // Turning interactivity on and off.
+    if (obj.lastTop < interactive_position && obj.curTop >= interactive_position){
+		
+		// Attach a listener to the drag event object.
+		dragobj.on("drag", dragmove);
+    };
+    if (obj.lastTop >= interactive_position && obj.curTop < interactive_position){
+		dragobj.on("drag", null);
+        projection.rotate([initial_ra, initial_dec]);
+        svg.selectAll(".star").attr("d", star_path);
+        svg.selectAll(".lines").attr("d", line_path);
+    };
       
 };
 
