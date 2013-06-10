@@ -232,16 +232,26 @@ var map_rotate = function(){
 };
 
 
-var starload = function(filename, id, color){
-    d3.json(filename, function(error, newstars) {
-		g.append("path")
-			.datum(newstars)
+var starload = function(filename, id, color, storage_var){
+    if (storage_var === 0){
+        d3.json(filename, function(error, newstars) {
+    		g.append("path")
+    			.datum(newstars)
+    			.attr("class", "exoplanet")
+                .attr("id", id)
+    			.attr("d", exoplanet_path)
+    			.attr("fill", color);
+                // .attr("opacity", 0.5);
+        });
+    }
+    else {
+        g.append("path")
+			.datum(storage_var)
 			.attr("class", "exoplanet")
             .attr("id", id)
 			.attr("d", exoplanet_path)
 			.attr("fill", color);
-            // .attr("opacity", 0.5);
-    });
+    };
 };
 
 
@@ -255,12 +265,21 @@ var planets_position = 2300,
     rotate_position = 6500,
     interactive_position = 8000;
 
+// And define a few variables that will be filled in by files that are loaded in.
+var e1 = 0,
+    e2 = 0,
+    e3 = 0,
+    e4 = 0,
+    e5 = 0,
+    e6 = 0,
+    e7 = 0;
+
 // Define the render-listening function.
 var render_func = function(obj){
 
     // Placing Kepler candidates.
     if (obj.lastTop < planets_position && obj.curTop >= planets_position){
-        starload("json/kepler_fakes.geojson", "candidates", "red");
+        starload("json/kepler_fakes.geojson", "candidates", "red", e1);
     };
     if (obj.lastTop >= planets_position && obj.curTop < planets_position){
         g.selectAll("#candidates").remove();
@@ -268,7 +287,7 @@ var render_func = function(obj){
     
     // Correcting for geometric bias.
     if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
-        starload("json/kepler_geometry.geojson", "geometric", "green");
+        starload("json/kepler_geometry.geojson", "geometric", "green", e2);
     };
     if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
         g.selectAll("#geometric").remove();
@@ -278,12 +297,12 @@ var render_func = function(obj){
     if (obj.lastTop < size_position && obj.curTop >= size_position){
         g.selectAll("#candidates").remove();
         g.selectAll("#geometric").remove();
-        starload("json/kepler_fakes_size.geojson", "candidates_size", "red");
-        starload("json/kepler_size.geojson", "size", "green");
+        starload("json/kepler_fakes_size.geojson", "candidates_size", "red", e3);
+        starload("json/kepler_size.geojson", "size", "green", e4);
     };
     if (obj.lastTop >= size_position && obj.curTop < size_position){
-        starload("json/kepler_fakes.geojson", "candidates", "red");
-        starload("json/kepler_geometry.geojson", "geometric", "green");
+        starload("json/kepler_fakes.geojson", "candidates", "red", e1);
+        starload("json/kepler_geometry.geojson", "geometric", "green", e2);
         g.selectAll("#candidates_size").remove();
         g.selectAll("#size").remove();
     };
@@ -292,19 +311,19 @@ var render_func = function(obj){
     if (obj.lastTop < habitable_position && obj.curTop >= habitable_position){
         g.selectAll("#candidates_size").remove();
         g.selectAll("#size").remove();
-        starload("json/kepler_fakes_habitable.geojson", "candidates_habitable", "red");
-        starload("json/kepler_habitable.geojson", "habitable", "green");
+        starload("json/kepler_fakes_habitable.geojson", "candidates_habitable", "red", e5);
+        starload("json/kepler_habitable.geojson", "habitable", "green", e6);
     };
     if (obj.lastTop >= habitable_position && obj.curTop < habitable_position){
-        starload("json/kepler_fakes_size.geojson", "candidates_size", "red");
-        starload("json/kepler_size.geojson", "size", "green");
+        starload("json/kepler_fakes_size.geojson", "candidates_size", "red", e3);
+        starload("json/kepler_size.geojson", "size", "green", e4);
         g.selectAll("#candidates_habitable").remove();
         g.selectAll("#habitable").remove();
     };
     
     // Filling in the whole sky.
     if (obj.lastTop < all_sky_position && obj.curTop >= all_sky_position){
-        starload("json/all_sky_habitable.geojson", "all_sky", "green");
+        starload("json/all_sky_habitable.geojson", "all_sky", "green", e7);
     };
     if (obj.lastTop >= all_sky_position && obj.curTop < all_sky_position){
         g.selectAll("#all_sky").remove();
