@@ -7,7 +7,7 @@ var width = window.innerWidth,
 
 // Note that these are negative -- that has to do with how rotation works on the stereographic projection.
 // Really, the initial dec (and RA, I believe) is positive.
-var initial_ra = -105,  // in degrees
+var initial_ra = -95,  // in degrees
 	initial_dec = -45;
 	
 // Brighter stars have lower magnitudes, so max_magnitude determines the dimmest stars displayed.
@@ -18,7 +18,10 @@ var max_magnitude = 5,
 
 // Determine how far the map zooms in and out during the zoom transition.
 var zoom_min = 1000,
-    zoom_max = 2000;
+    zoom_max = 2500;
+
+// Does what it says on the tin, in milliseconds.
+var zoom_transition_time = 2000;
 
 /////////////////////////
 // Setting up the map. //
@@ -85,8 +88,7 @@ var dragmove = function() {
   	
   	// Finally, redraw the stars, the Kepler field, and the constellations in the newly-rotated projection.
   	svg.selectAll(".star").attr("d", star_path);
-  	svg.selectAll(".kepler").attr("d", line_path);
-	svg.selectAll(".constellation").attr("d", line_path);
+  	svg.selectAll(".lines").attr("d", line_path);
 };
 
 // Create the drag object and add the drag event function to it.
@@ -113,9 +115,12 @@ d3.json("new_stars.geojson", function(error_stars, stars) {
 			.attr("width", width)
 			.attr("height", height)
 			.attr("fill", "black");
+		
+		// Create a group that will contain the stars and lines.
+		g = svg.append("g");
 
         // Add in the stars, using the star_path, which assigns sizes for the stars based on their brightness.
-	 	svg.selectAll("path")
+	 	g.selectAll("path")
 	 		  		.data(stars)
 	 		  		.enter()
 	 		  		.append("path")
@@ -126,17 +131,19 @@ d3.json("new_stars.geojson", function(error_stars, stars) {
 		// Add in the Kepler FOV.
 		// For whatever reason, there's a giant damn circle that's also loaded in this GeoJSON,
 		// but it doesn't show up unless you zoom *WAY* out, so it's not a problem for now.
-		svg.append("path")
+		g.append("path")
 			.datum(keplerfov)
-			.attr("class", "kepler")
+            .attr("class", "lines")
+            .attr("id", "kepler")
 			.attr("d", line_path)
 			.attr("fill", "none")
 			.attr("stroke", "white");
 		
 		// Add in the constellation lines.
-		svg.append("path")
+		g.append("path")
 			.datum(constellations)
-			.attr("class", "constellation")
+            .attr("class", "lines")
+            .attr("id", "constellations")
 			.attr("d", line_path)
 			.attr("fill", "none")
 			.attr("stroke", "white");
@@ -152,78 +159,90 @@ d3.json("new_stars.geojson", function(error_stars, stars) {
 // Scroll transitions //
 ////////////////////////
 
+// Given a scale factor, 
+// this function returns the translation factor needed to keep an image centered when scaled by that factor.
 var rescale_translation = function(r){
-    if (r > 1){
-        return -1/(2*r);
-    }
-    else{
         return 1/2 * (1/r - 1);
-    };
 };
 
-// A redrawing-with-transition function, to be used after the projection has changed.
-var map_redraw = function(zoom_ratio){
-    
-    rt = rescale_translation(zoom_ratio);
-    
-    // Redraw the stars to the new projection.
-    svg.selectAll(".star")
-     .transition()
-     .duration(2000)
-     .attr("d", star_path);
-    
-    // Redraw the Kepler field to the new projection.
-    // Simply altering the path leads to some really wonky behavior in the transition, and I'm not sure why.
-    // Probably something to do with the math behind the stereographic projection.
-    // So we'll fudge it: transition to a direct rescaling of the Kepler field by 1/2, and recenter accordingly.
-    // Then, when that transition ends, immediately restore the scale and alter the path, to allow for proper dragging.
-    svg.selectAll(".kepler")
-     .transition()
-     .duration(2000)
-     .each("end", function(){
-         d3.select(this).attr("transform", "scale(1)");
-         d3.select(this).attr("d", line_path);
-         })
-     .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
-     
-    // Do the same thing for the constellation lines that you did for the Kepler field.
-    svg.selectAll(".constellation")
-     .transition()
-     .duration(2000)
-     .each("end", function(){
-         d3.select(this).attr("transform", "scale(1)");
-         d3.select(this).attr("d", line_path);
-         })
-     .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
-}
-
-// A zooming-out function.
+// A zooming function.
 var zoom = function(new_zoom){
     
+    // Find out what the old projection scale was.
     var old_zoom = projection.scale();
-    var zoom_ratio = new_zoom/old_zoom;
-    
+        
     // Rescale the projection.
     projection.scale(new_zoom);
     
-    // Redraw the map!
-    map_redraw(zoom_ratio);  
+    var zoom_ratio = new_zoom/old_zoom;
+    
+    // This try-catch clause handles the case where the user is scrolling up and down really fast around a single location.
+    // Under those circumstances, the transforms can break.
+    // Specifically, if a previous rescaling was in progress, and now the "old" scale is being requested again,
+    // we need to make sure that we serve up a scale of 1 and not a scale of 1/2 or 2 or something weird like that.
+    try{
+        var old_transform = g.attr("transform");
+        var scale_start = old_transform.lastIndexOf("(") + 1;
+        var scale_end = g.attr("transform").lastIndexOf(",");
+        var old_scale = old_transform.slice(scale_start, scale_end);
+    
+        if ((1 - zoom_ratio)*(1 - old_scale) < 0){
+            zoom_ratio = 1;
+        };
+    }
+    catch (error){};
+    
+    var rt = rescale_translation(zoom_ratio);
+    
+    g.transition()
+     .duration(zoom_transition_time)
+     .each("end", function(){
+         g.attr("transform", "scale(1)");
+         g.selectAll(".star").attr("d", star_path);
+         g.selectAll(".lines").attr("d", line_path);
+         })
+     .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
 };
+
+
+// A map rotation function.
+var d_ra = 0;
+
+var map_rotate = function(){
+        d_ra += 0.5
+      	projection.rotate([d_ra + initial_ra, initial_dec]);
+  	
+      	// Finally, redraw the stars, the Kepler field, and the constellations in the newly-rotated projection.
+      	svg.selectAll(".star").attr("d", star_path);
+      	svg.selectAll(".lines").attr("d", line_path);
+};
+
+// Define a few scrolling variables, to control the transitions.
+var zoom_position = 6100,
+    rotate_position = 6500;
 
 // Define the render-listening function.
 var render_func = function(obj){
-    // console.log(obj.lastTop, obj.curTop)
-    if (obj.direction === "down"){
-        if (obj.lastTop < 6100 && obj.curTop >= 6100){
-            zoom(zoom_min);
-        };
-    }
-    else {
-        if (obj.lastTop >= 6100 && obj.curTop < 6100){
-            zoom(zoom_max);
-        };
-    };
     
+    // Zooming in and out.
+    if (obj.lastTop < zoom_position && obj.curTop >= zoom_position){
+        zoom(zoom_min);
+    }
+    else if (obj.lastTop >= zoom_position && obj.curTop < zoom_position){
+        zoom(zoom_max);
+    };  
+    
+    // // Rotating.
+    // if (obj.lastTop < rotate_position && obj.curTop >= rotate_position){
+    //     rotation = setInterval(map_rotate, 50);
+    // };
+    // if (obj.lastTop >= rotate_position && obj.curTop < rotate_position){
+    //     clearInterval(rotation);
+    //     projection.rotate([initial_ra, initial_dec]);
+    //     svg.selectAll(".star").attr("d", star_path);
+    //      svg.selectAll(".lines").attr("d", line_path);
+    // };
+      
 };
 
 // // Initialize Skrollr, setting the previously-defined render-listening function.
