@@ -10,9 +10,9 @@
   
     <!--skrollr script from: https://github.com/Prinzhorn/skrollr-->
     <script type="text/javascript" src="js/skrollr.min.js"></script>
-    
+
     <!--initialize skrollr-->
-    <!-- <script type="text/javascript"> window.onload = function() {skrollr.init();} </script> -->
+    <script type="text/javascript"> window.onload = function() {skrollr.init({render: render_func});} </script>
   
     <title>How Many Earths? | New Scientist</title>
 
@@ -68,10 +68,7 @@
 
 	
 	<div id="main_event_interactive" data-1300="position:fixed;top:0%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;" data-8200="z-index:0;" data-8500="z-index:10000;">
-
-		<!-- <img id="finale_2" src="img/Kepler_Sky.jpg"/> --> <!--needed a placeholder image here to verify that the next div overlays properly, remove when integrating the interactive-->
-		<script src="js/skymap.js"></script>
-		
+		<script src="js/skymap.js"></script>		
 		</div>
 	
 	
@@ -152,7 +149,7 @@
 
 	</div>
 
-	<div class="temp_overlay" data-5600="position:fixed;top:30%;opacity:0;" data-5700="position:fixed;top:30%;opacity:1;" data-6000="position:fixed;top:30%;opacity:1;"data-6200="position:fixed;top:30%;opacity:0;">STUFF HAPPENS HERE</div>
+	<!-- <div class="temp_overlay" data-5600="position:fixed;top:30%;opacity:0;" data-5700="position:fixed;top:30%;opacity:1;" data-6000="position:fixed;top:30%;opacity:1;"data-6200="position:fixed;top:30%;opacity:0;">STUFF HAPPENS HERE</div> -->
 
 
 	<div class="overlay" id="The_bigger_picture" data-6000="position:fixed;top:100%;opacity:0;" data-6500="position:fixed;top:0%;opacity:1;" data-7000="position:fixed;top:0%;opacity:1;" data-7500="position:fixed;top:-100%;opacity:0;">

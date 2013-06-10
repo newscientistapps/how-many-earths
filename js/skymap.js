@@ -7,7 +7,7 @@ var width = window.innerWidth,
 
 // Note that these are negative -- that has to do with how rotation works on the stereographic projection.
 // Really, the initial dec (and RA, I believe) is positive.
-var initial_ra = -115,  // in degrees
+var initial_ra = -105,  // in degrees
 	initial_dec = -45;
 	
 // Brighter stars have lower magnitudes, so max_magnitude determines the dimmest stars displayed.
@@ -102,9 +102,9 @@ var svg = d3.select("#main_event_interactive").append("svg")
     .attr("height", height);
 
 // Load the GeoJSON files.
-d3.json("../new_stars.geojson", function(error_stars, stars) {
-	d3.json("../keplerFOV.geojson", function(error_kepler, keplerfov){
-		d3.json("../constellations_collection.geojson", function(error_constellation, constellations){
+d3.json("new_stars.geojson", function(error_stars, stars) {
+	d3.json("keplerFOV.geojson", function(error_kepler, keplerfov){
+		d3.json("constellations_collection.geojson", function(error_constellation, constellations){
 	    
 	    // Once the GeoJSON files have loaded, do the following:
 	    
@@ -140,42 +140,6 @@ d3.json("../new_stars.geojson", function(error_stars, stars) {
 			.attr("d", line_path)
 			.attr("fill", "none")
 			.attr("stroke", "white");
-				
-        // // Rescale the projection to half the linear scale -- so four times as much area appears on screen.
-        // projection.scale(1000);      
-        // 
-        // // Redraw the stars to the new projection, but delay the transtion.
-        // svg.selectAll(".star")
-        //  .transition()
-        //  .delay(5000)
-        //  .duration(1000)
-        //  .attr("d", star_path);
-        // 
-        // // Redraw the Kepler field to the new projection.
-        // // Simply altering the path leads to some really wonky behavior in the transition, and I'm not sure why.
-        // // Probably something to do with the math behind the stereographic projection.
-        // // So we'll fudge it: transition to a direct rescaling of the Kepler field by 1/2, and recenter accordingly.
-        // // Then, when that transition ends, immediately restore the scale and alter the path, to allow for proper dragging.
-        // svg.selectAll(".kepler")
-        //  .transition()
-        //  .delay(5000)
-        //  .duration(1000)
-        //  .each("end", function(){
-        //      d3.select(this).attr("transform", "scale(1)");
-        //      d3.select(this).attr("d", line_path);
-        //      })
-        //  .attr("transform", "scale(0.5)translate(" + width/2 + "," + height/2 + ")");
-        //  
-        // // Do the same thing for the constellation lines that you did for the Kepler field.
-        // svg.selectAll(".constellation")
-        //  .transition()
-        //  .delay(5000)
-        //  .duration(1000)
-        //  .each("end", function(){
-        //      d3.select(this).attr("transform", "scale(1)");
-        //      d3.select(this).attr("d", line_path);
-        //      })
-        //  .attr("transform", "scale(0.5)translate(" + width/2 + "," + height/2 + ")");
 		
 		// Finally, attach the drag event object to the SVG canvas.
 		svg.call(dragobj);
@@ -188,13 +152,24 @@ d3.json("../new_stars.geojson", function(error_stars, stars) {
 // Scroll transitions //
 ////////////////////////
 
+var rescale_translation = function(r){
+    if (r > 1){
+        return -1/(2*r);
+    }
+    else{
+        return 1/2 * (1/r - 1);
+    };
+};
+
 // A redrawing-with-transition function, to be used after the projection has changed.
 var map_redraw = function(zoom_ratio){
-        
+    
+    rt = rescale_translation(zoom_ratio);
+    
     // Redraw the stars to the new projection.
     svg.selectAll(".star")
      .transition()
-     .duration(1000)
+     .duration(2000)
      .attr("d", star_path);
     
     // Redraw the Kepler field to the new projection.
@@ -204,22 +179,22 @@ var map_redraw = function(zoom_ratio){
     // Then, when that transition ends, immediately restore the scale and alter the path, to allow for proper dragging.
     svg.selectAll(".kepler")
      .transition()
-     .duration(1000)
+     .duration(2000)
      .each("end", function(){
          d3.select(this).attr("transform", "scale(1)");
          d3.select(this).attr("d", line_path);
          })
-     .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*zoom_ratio + "," + height*zoom_ratio + ")");
+     .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
      
     // Do the same thing for the constellation lines that you did for the Kepler field.
     svg.selectAll(".constellation")
      .transition()
-     .duration(1000)
+     .duration(2000)
      .each("end", function(){
          d3.select(this).attr("transform", "scale(1)");
          d3.select(this).attr("d", line_path);
          })
-     .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*zoom_ratio + "," + height*zoom_ratio + ")");
+     .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
 }
 
 // A zooming-out function.
@@ -235,40 +210,24 @@ var zoom = function(new_zoom){
     map_redraw(zoom_ratio);  
 };
 
-// A zooming-in function.
-var zoom_in = function(){
-    
-    // Rescale the projection.
-    projection.scale(zoom_max);
-    
-    // Redraw the map!
-    map_redraw();  
-};
-
 // Define the render-listening function.
 var render_func = function(obj){
     // console.log(obj.lastTop, obj.curTop)
-    // cur_ratio = obj.curTop/obj.maxTop;
-    // last_ratio = obj.lastTop/obj.maxTop;
     if (obj.direction === "down"){
-        if (obj.lastTop < 6200 && obj.curTop >= 6200){
-            // zoom_out();
+        if (obj.lastTop < 6100 && obj.curTop >= 6100){
             zoom(zoom_min);
         };
     }
     else {
-        if (obj.lastTop >= 6200 && obj.curTop < 6200){
-            // zoom_in();
+        if (obj.lastTop >= 6100 && obj.curTop < 6100){
             zoom(zoom_max);
         };
     };
     
 };
 
-// Initialize Skrollr, setting the previously-defined render-listening function.
-window.onload = function() skrollr.init({render: render_func}); 
-// skrollr.init({render: render_func}); 
-
+// // Initialize Skrollr, setting the previously-defined render-listening function.
+// skrollr.init();
 
 
 
