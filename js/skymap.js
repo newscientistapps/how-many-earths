@@ -23,6 +23,10 @@ var zoom_min = 1000,
 // Does what it says on the tin, in milliseconds.
 var zoom_transition_time = 2000;
 
+// Again, does what it says. 
+// Note that it's the radius, not the diameter.
+var exoplanet_radius = 1.5;
+
 /////////////////////////
 // Setting up the map. //
 /////////////////////////
@@ -45,6 +49,11 @@ var star_path = d3.geo.path()
 // The path for the lines, however, doesn't need anything fancy.
 var line_path = d3.geo.path()
     .projection(projection);
+
+// Finally, the path for the exoplanet-hosting stars -- it needs a smaller pointRadius.
+var exoplanet_path = d3.geo.path()
+    .projection(projection)
+	.pointRadius(exoplanet_radius);
 
 ////////////
 // Scales //
@@ -89,6 +98,7 @@ var dragmove = function() {
   	// Finally, redraw the stars, the Kepler field, and the constellations in the newly-rotated projection.
   	svg.selectAll(".star").attr("d", star_path);
   	svg.selectAll(".lines").attr("d", line_path);
+  	svg.selectAll(".exoplanet").attr("d", exoplanet_path);
 };
 
 // Create the drag object and add the drag event function to it.
@@ -203,6 +213,7 @@ var zoom = function(new_zoom){
          g.attr("transform", "scale(1)");
          g.selectAll(".star").attr("d", star_path);
          g.selectAll(".lines").attr("d", line_path);
+         g.selectAll(".exoplanet").attr("d", exoplanet_path);
          })
      .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
 };
@@ -217,13 +228,29 @@ var map_rotate = function(){
       	// Finally, redraw the stars, the Kepler field, and the constellations in the newly-rotated projection.
       	svg.selectAll(".star").attr("d", star_path);
       	svg.selectAll(".lines").attr("d", line_path);
+      	svg.selectAll(".exoplanet").attr("d", exoplanet_path);
 };
 
 
+var starload = function(filename, id, color){
+    d3.json(filename, function(error, newstars) {
+		g.append("path")
+			.datum(newstars)
+			.attr("class", "exoplanet")
+            .attr("id", id)
+			.attr("d", exoplanet_path)
+			.attr("fill", color);
+            // .attr("opacity", 0.5);
+    });
+};
 
 
 // Define a few scrolling variables, to control the transitions.
-var planets_position = 2500,
+var planets_position = 2300,
+    geometry_position = 3300,
+    size_position = 4300,
+    habitable_position = 5300,
+    all_sky_position = 6000,
     zoom_position = 6100,
     rotate_position = 6500,
     interactive_position = 8000;
@@ -231,12 +258,56 @@ var planets_position = 2500,
 // Define the render-listening function.
 var render_func = function(obj){
 
-    // Zooming in and out.
+    // Placing Kepler candidates.
     if (obj.lastTop < planets_position && obj.curTop >= planets_position){
-        // starload("json/kepler_fakes.geojson", "candidates", "red");
+        starload("json/kepler_fakes.geojson", "candidates", "red");
     };
     if (obj.lastTop >= planets_position && obj.curTop < planets_position){
-        // g.selectAll(".candidates").remove();
+        g.selectAll("#candidates").remove();
+    };
+    
+    // Correcting for geometric bias.
+    if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
+        starload("json/kepler_geometry.geojson", "geometric", "green");
+    };
+    if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
+        g.selectAll("#geometric").remove();
+    };
+    
+    // Removing planets of the wrong size.
+    if (obj.lastTop < size_position && obj.curTop >= size_position){
+        g.selectAll("#candidates").remove();
+        g.selectAll("#geometric").remove();
+        starload("json/kepler_fakes_size.geojson", "candidates_size", "red");
+        starload("json/kepler_size.geojson", "size", "green");
+    };
+    if (obj.lastTop >= size_position && obj.curTop < size_position){
+        starload("json/kepler_fakes.geojson", "candidates", "red");
+        starload("json/kepler_geometry.geojson", "geometric", "green");
+        g.selectAll("#candidates_size").remove();
+        g.selectAll("#size").remove();
+    };
+    
+    // Removing planets outside the habitable zone.
+    if (obj.lastTop < habitable_position && obj.curTop >= habitable_position){
+        g.selectAll("#candidates_size").remove();
+        g.selectAll("#size").remove();
+        starload("json/kepler_fakes_habitable.geojson", "candidates_habitable", "red");
+        starload("json/kepler_habitable.geojson", "habitable", "green");
+    };
+    if (obj.lastTop >= habitable_position && obj.curTop < habitable_position){
+        starload("json/kepler_fakes_size.geojson", "candidates_size", "red");
+        starload("json/kepler_size.geojson", "size", "green");
+        g.selectAll("#candidates_habitable").remove();
+        g.selectAll("#habitable").remove();
+    };
+    
+    // Filling in the whole sky.
+    if (obj.lastTop < all_sky_position && obj.curTop >= all_sky_position){
+        starload("json/all_sky_habitable.geojson", "all_sky", "green");
+    };
+    if (obj.lastTop >= all_sky_position && obj.curTop < all_sky_position){
+        g.selectAll("#all_sky").remove();
     };
     
     // Zooming in and out.
