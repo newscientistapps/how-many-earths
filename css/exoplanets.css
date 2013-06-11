@@ -13,6 +13,9 @@ body  {
     font-size: 14px;
     height: 100%;
     overflow: auto;
+    
+    background: #000;
+    background-image:url('../img/starry_background_tile-able.jpg');
 }
 
 #header {
@@ -35,4 +38,53 @@ body  {
     position: absolute;
     right: 1%;
 } 
+
+#head_title{
+position:fixed;
+top:300px;
+left:5%;
+font-size:40px;
+color: #fff;
+}
+
+#head_planet{
+position: fixed;
+top: 150px;
+left: 50%;
+}
+
+#left_box{
+position: absolute;
+top: 600px;
+width:30%;
+/*height:2000px;*/
+background:#fff;
+/*margin-left:5%;*/
+padding:20px;
+padding-right:20px;
+border-radius:10px;
+
+color:#000;
+
+z-index:90;
+}
+
+
+#vid_how_to_find_a_planet {
+/*position:absolute;
+top:900px;*/
+
+}
+
+
+
+
+#main_event_interactive {
+position:fixed;
+top:1000px;
+display:block;
+z-index:70;
+}
+
+
 

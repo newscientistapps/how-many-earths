@@ -1,0 +1,227 @@
+@charset "utf-8";
+
+a:link, a:visited, a:hover, a:active {color:#fff;}
+
+#back a {color:#ffffff;}
+
+a img {border: none; }
+
+h1 {font-size: 80px;}
+
+
+
+h3 {font-size: 30px;
+	line-height:110%}
+
+
+body  {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+    height: 9000px;
+    overflow: auto;
+    background: #000;
+    background-image:url('../img/starry_background_tile-able.jpg');
+    background-repeat:no-repeat;  /*this is so that we don't have stars scrolling under adam's interactive*/
+}
+
+#header {
+    position: fixed;
+    z-index:100;
+    background: #000;
+    color: #fff;
+    height: 50px;
+    width: 100%;
+    top: 0px;
+    border-bottom-width: 2px;
+    /*border-bottom-color: #fff;*/
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+    border-bottom-style: solid;
+} 
+
+#header img {
+    width: 200px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+
+#header #back {
+    position: absolute;
+    right: 1%;
+} 
+
+
+#intro {
+	position:fixed;
+	top:210px;
+	width:50%;
+	max-width:500px;
+	padding:20px 50px;
+	color: #fff;
+}
+
+#intro h2 {
+
+margin-left:20%;
+
+}
+
+#intro_blurb {
+
+font-size: 18px;
+margin-left:20%;
+
+}
+
+#intro_planet{
+	position: fixed;
+	top: 150px;
+	left: 50%;
+}
+
+
+#kepler {
+
+margin-left:20%;
+
+}
+
+.overlay {
+position:absolute;
+margin-top:50px;
+top:0%;
+display:block;
+width:50%;
+max-width:500px;
+padding:20px 50px;
+color:#fff;
+/*background: #000;*/
+background-color: rgba(0, 0, 0, 0.9);
+z-index:90;
+
+font-size: 16px;
+line-height:130%
+
+}
+
+.temp_overlay {
+
+position:absolute;
+margin-left:50%;
+top:50%;
+display:block;
+width:50%;
+max-width:500px;
+padding:20px;
+font-size:90px;
+color:#fff;
+
+z-index:95;
+}
+
+
+
+video {
+max-width: 100%;
+height: auto;
+}
+
+#small_video {
+margin-left:20%;
+max-width: 50%;
+height: auto;
+
+}
+
+
+#main_event_interactive {
+position:absolute;
+margin-top:50px;
+top:0%;
+/*top:300px;*/
+display:block;
+width:100%;
+z-index:70;
+}
+
+
+.flasher {
+
+font-size: 25px;
+margin-left: 50%;
+line-height:110%;
+
+-webkit-animation: fadein 3s linear infinite;
+-moz-animation: fadein 3s linear infinite;
+
+-webkit-animation-direction: alternate;
+-moz-animation-direction: alternate;
+
+/*-webkit-animation-delay: 1s;
+-moz-animation-delay: 1s;
+
+-webkit-animation-fill-mode:forwards; 
+-moz-animation-fill-mode:forwards;*/
+
+}
+
+@-webkit-keyframes fadein { from {opacity:0.0;} to {opacity:1.0;}}
+@-moz-keyframes fadein { from {opacity:0.0;} to {opacity:1.0;}}
+
+
+
+/* OLD!!!  #main_event_interactive {
+position:relative;
+display:block;
+width:100%;
+z-index:70;
+}*/
+
+
+/*#intro_text {
+background-color: rgba(0, 0, 0, 0.9);
+width:100%;
+max-width:500px;
+padding: 20px 50px 20px 0px;
+color: #fff;
+}*/
+
+
+
+
+/* ###OLD###
+#left_box{
+	margin-top:600px;
+	position: relative;
+	
+	width:50%;
+	max-width:500px;
+	color: #fff;
+	background: #000;
+	
+	padding:50px;
+	
+	z-index:90;
+}
+
+.interactive_overlay{
+position:fixed;
+margin-top:50px;
+display:block;
+
+width:50%;
+max-width:500px;
+
+padding:20px;
+color:#fff;
+z-index:90;
+}*/
+
+/*#vid_how_to_find_a_planet {
+
+max-width: 100%;
+height: auto;
+}*/
+
