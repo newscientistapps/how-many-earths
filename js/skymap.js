@@ -35,7 +35,6 @@ var exoplanet_radius = 1.5;
 var projection = d3.geo.stereographic()
     .clipAngle(140)
     .scale(zoom_max)
-    // .translate([width/2, height/2])
     .translate([width/2, height/2])
     .precision(10)              // We don't care much about precision at small scales -- it's a star map!
  	.rotate([initial_ra, initial_dec]);
@@ -265,15 +264,9 @@ var zoom = function(new_zoom){
          })
      .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
      
-     svg.select("#all_sky").transition()
-      .duration(zoom_transition_time)
-      .each("end", function(){
-          g.attr("transform", "scale(1)");
-          g.selectAll(".star").attr("d", star_path);
-          g.selectAll(".lines").attr("d", line_path);
-          g.selectAll(".exoplanet").attr("d", exoplanet_path);
-          })
-      .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
+     // svg.select("#all_sky").transition()
+     //  .duration(zoom_transition_time)
+     //  .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
 };
 
 
