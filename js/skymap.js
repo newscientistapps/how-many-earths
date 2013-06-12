@@ -25,7 +25,7 @@ var zoom_transition_time = 2000;
 
 // Again, does what it says. 
 // Note that it's the radius, not the diameter.
-var exoplanet_radius = 1.5;
+var exoplanet_radius = 2;
 
 /////////////////////////
 // Setting up the map. //
@@ -54,6 +54,20 @@ var line_path = d3.geo.path()
 var exoplanet_path = d3.geo.path()
     .projection(projection)
 	.pointRadius(exoplanet_radius);
+	
+
+var new_star_path = d3.geo.path()
+    .projection(projection)
+	.pointRadius(function(d){
+		return Math.max(0, magnitude_scaling*(max_magnitude - d.properties.brightness))/(zoom_max/zoom_min);
+	});
+
+var new_exoplanet_path = d3.geo.path()
+    .projection(projection)
+	.pointRadius(exoplanet_radius/(zoom_max/zoom_min));
+	
+var new_line_path = d3.geo.path()
+    .projection(projection);
 
 ////////////
 // Scales //
@@ -226,7 +240,7 @@ var rescale_translation = function(r){
 };
 
 // A zooming function.
-var zoom = function(new_zoom){
+var zoom = function(new_zoom, new_paths){
     
     // Find out what the old projection scale was.
     var old_zoom = projection.scale();
@@ -258,9 +272,16 @@ var zoom = function(new_zoom){
      .duration(zoom_transition_time)
      .each("end", function(){
          g.attr("transform", "scale(1)");
-         g.selectAll(".star").attr("d", star_path);
-         g.selectAll(".lines").attr("d", line_path);
-         g.selectAll(".exoplanet").attr("d", exoplanet_path);
+         if (new_paths){
+             g.selectAll(".star").attr("d", new_star_path);
+             g.selectAll(".lines").attr("d", line_path).attr("stroke-width", zoom_ratio);
+             g.selectAll(".exoplanet").attr("d", new_exoplanet_path);
+         }
+         else {
+             g.selectAll(".star").attr("d", star_path);
+             g.selectAll(".lines").attr("d", line_path).attr("stroke-width", 1);
+             g.selectAll(".exoplanet").attr("d", exoplanet_path);
+         };
          })
      .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
      
@@ -400,10 +421,10 @@ var render_func = function(obj){
     
     // Zooming in and out.
     if (obj.lastTop < zoom_position && obj.curTop >= zoom_position){
-        zoom(zoom_min);
+        zoom(zoom_min, true);
     };
     if (obj.lastTop >= zoom_position && obj.curTop < zoom_position){
-        zoom(zoom_max);
+        zoom(zoom_max, false);
     };  
     
     // // Rotating.
