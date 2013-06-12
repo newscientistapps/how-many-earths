@@ -157,6 +157,34 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
 			.attr("d", line_path)
 			.attr("fill", "none")
 			.attr("stroke", "white");
+		
+		// Pre-loading some SVGs for later on.
+		p1 = projection([103, 49]);
+		p2 = projection([119, 49]);
+		p3 = projection([119, 40]);
+		p4 = projection([103, 40]);
+		console.log(p1, p2, p3, p4);
+		origin = [p1[0], p2[1]];
+		pic_height = p4[1] - p2[1];
+		pic_width = p3[0] - p1[0];
+		console.log(origin, pic_width, pic_height);
+	    g.append("image")
+            .attr("xlink:href", "img/kepler_geometry.png")
+            .attr("id", "geometric")
+            .attr("x", origin[0])
+            .attr("y", origin[1])
+            .attr("width", pic_width)
+            .attr("height", pic_height)
+            .attr("opacity", 0);
+		
+	    g.append("image")
+            .attr("xlink:href", "img/exoplanets_giant_stereo.svg")
+            .attr("id", "all_sky")
+            .attr("x", (width - 2160)/2)
+            .attr("y", (height - 1149)/2)
+            .attr("width", 2160)
+            .attr("height", 1149)
+            .attr("opacity", 0);
 			
 		// Attach the drag event object to the SVG canvas.
 		// Note that we have not yet actually attached any listeners to the drag object!
@@ -287,22 +315,30 @@ var render_func = function(obj){
     
     // Correcting for geometric bias.
     if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
-        starload("json/kepler_geometry.geojson", "geometric", "green", e2);
+        // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
+        g.select("#geometric")
+            .attr("opacity", 1);
+        g.selectAll("#candidates").remove();
+        starload("json/kepler_fakes.geojson", "candidates", "red", e1);
     };
     if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
-        g.selectAll("#geometric").remove();
+        g.select("#geometric")
+            .attr("opacity", 0);
     };
     
     // Removing planets of the wrong size.
     if (obj.lastTop < size_position && obj.curTop >= size_position){
         g.selectAll("#candidates").remove();
-        g.selectAll("#geometric").remove();
+        g.select("#geometric")
+            .attr("opacity", 0);
         starload("json/kepler_fakes_size.geojson", "candidates_size", "red", e3);
         starload("json/kepler_size.geojson", "size", "green", e4);
     };
     if (obj.lastTop >= size_position && obj.curTop < size_position){
         starload("json/kepler_fakes.geojson", "candidates", "red", e1);
-        starload("json/kepler_geometry.geojson", "geometric", "green", e2);
+        // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
+        g.select("#geometric")
+            .attr("opacity", 1);
         g.selectAll("#candidates_size").remove();
         g.selectAll("#size").remove();
     };
@@ -323,7 +359,15 @@ var render_func = function(obj){
     
     // Filling in the whole sky.
     if (obj.lastTop < all_sky_position && obj.curTop >= all_sky_position){
-        starload("json/all_sky_habitable.geojson", "all_sky", "green", e7);
+        // starload("json/all_sky_habitable.geojson", "all_sky", "green", e7);
+        g.append("image")
+            .attr("xlink:href", "img/exoplanets_giant_stereo.svg")
+            .attr("id", "all_sky")
+            .attr("x", (width - 2160)/2)
+            .attr("y", (height - 1149)/2)
+            .attr("width", 2160)
+            .attr("height", 1149);
+            // .attr("preserveAspectRatio", "xMinYMin");
     };
     if (obj.lastTop >= all_sky_position && obj.curTop < all_sky_position){
         g.selectAll("#all_sky").remove();
@@ -348,18 +392,18 @@ var render_func = function(obj){
     //     svg.selectAll(".lines").attr("d", line_path);
     // };
     
-    // Turning interactivity on and off.
-    if (obj.lastTop < interactive_position && obj.curTop >= interactive_position){
-		
-		// Attach a listener to the drag event object.
-		dragobj.on("drag", dragmove);
-    };
-    if (obj.lastTop >= interactive_position && obj.curTop < interactive_position){
-		dragobj.on("drag", null);
-        projection.rotate([initial_ra, initial_dec]);
-        svg.selectAll(".star").attr("d", star_path);
-        svg.selectAll(".lines").attr("d", line_path);
-    };
+        //     // Turning interactivity on and off.
+        //     if (obj.lastTop < interactive_position && obj.curTop >= interactive_position){
+        // 
+        // // Attach a listener to the drag event object.
+        // dragobj.on("drag", dragmove);
+        //     };
+        //     if (obj.lastTop >= interactive_position && obj.curTop < interactive_position){
+        // dragobj.on("drag", null);
+        //         projection.rotate([initial_ra, initial_dec]);
+        //         svg.selectAll(".star").attr("d", star_path);
+        //         svg.selectAll(".lines").attr("d", line_path);
+        //     };
       
 };
 
