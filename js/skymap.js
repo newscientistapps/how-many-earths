@@ -35,7 +35,8 @@ var exoplanet_radius = 1.5;
 var projection = d3.geo.stereographic()
     .clipAngle(140)
     .scale(zoom_max)
-	.translate([width/2, height/2])
+    // .translate([width/2, height/2])
+    .translate([width/2, height/2])
     .precision(10)              // We don't care much about precision at small scales -- it's a star map!
  	.rotate([initial_ra, initial_dec]);
 
@@ -112,6 +113,11 @@ var dragobj = d3.behavior.drag();
 var svg = d3.select("#main_event_interactive").append("svg")
     .attr("width", width)
     .attr("height", height);
+    // .attr("width", 2160)
+    // .attr("height", 1149)
+    // .style("position", "absolute")
+    // .style("top", (height-1149)/2)
+    // .style("left", (width-2160)/2);
 
 // Load the GeoJSON files.
 d3.json("json/new_stars.geojson", function(error_stars, stars) {
@@ -177,19 +183,33 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
             .attr("height", pic_height)
             .attr("opacity", 0);
 		
-	    g.append("image")
-            .attr("xlink:href", "img/exoplanets_giant_stereo.svg")
+        // svg.append("g").attr("id", "all_sky").attr("opacity", 0);
+        // // svg.select("#all_sky").append("svg").attr("width", 2160).attr("height", 1149);
+        //      
+        // // g.append("image")
+        // svg.select("#all_sky").append("image")
+        //             .attr("xlink:href", "img/exoplanets_giant_stereo.svg")
+        //             .attr("id", "all_sky")
+        //             .attr("x", (width - 2160)/2)
+        //             .attr("y", (height - 1149)/2)
+        //             .attr("width", 2160)
+        //             .attr("height", 1149);
+        //             // .attr("opacity", 0);
+        
+        d3.json("json/all_sky_habitable.geojson", function(error, newstars) {
+            g.append("path")
+             .datum(newstars)
+             .attr("class", "exoplanet")
             .attr("id", "all_sky")
-            .attr("x", (width - 2160)/2)
-            .attr("y", (height - 1149)/2)
-            .attr("width", 2160)
-            .attr("height", 1149)
+             .attr("d", exoplanet_path)
+             .attr("fill", "green")
             .attr("opacity", 0);
+        });
 			
 		// Attach the drag event object to the SVG canvas.
 		// Note that we have not yet actually attached any listeners to the drag object!
 		// That comes later.
-		svg.call(dragobj);
+        // svg.call(dragobj);
     	
 		
 		});		
@@ -244,6 +264,16 @@ var zoom = function(new_zoom){
          g.selectAll(".exoplanet").attr("d", exoplanet_path);
          })
      .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
+     
+     svg.select("#all_sky").transition()
+      .duration(zoom_transition_time)
+      .each("end", function(){
+          g.attr("transform", "scale(1)");
+          g.selectAll(".star").attr("d", star_path);
+          g.selectAll(".lines").attr("d", line_path);
+          g.selectAll(".exoplanet").attr("d", exoplanet_path);
+          })
+      .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
 };
 
 
@@ -359,18 +389,20 @@ var render_func = function(obj){
     
     // Filling in the whole sky.
     if (obj.lastTop < all_sky_position && obj.curTop >= all_sky_position){
+        svg.select("#all_sky").attr("opacity", 1);
         // starload("json/all_sky_habitable.geojson", "all_sky", "green", e7);
-        g.append("image")
-            .attr("xlink:href", "img/exoplanets_giant_stereo.svg")
-            .attr("id", "all_sky")
-            .attr("x", (width - 2160)/2)
-            .attr("y", (height - 1149)/2)
-            .attr("width", 2160)
-            .attr("height", 1149);
-            // .attr("preserveAspectRatio", "xMinYMin");
+        // g.append("image")
+        //     .attr("xlink:href", "img/exoplanets_giant_stereo.svg")
+        //     .attr("id", "all_sky")
+        //     .attr("x", (width - 2160)/2)
+        //     .attr("y", (height - 1149)/2)
+        //     .attr("width", 2160)
+        //     .attr("height", 1149);
+        //     // .attr("preserveAspectRatio", "xMinYMin");
     };
     if (obj.lastTop >= all_sky_position && obj.curTop < all_sky_position){
-        g.selectAll("#all_sky").remove();
+        // g.selectAll("#all_sky").remove();
+        svg.select("#all_sky").attr("opacity", 0);
     };
     
     // Zooming in and out.
