@@ -7,7 +7,7 @@ var width = window.innerWidth,
 
 // Note that these are negative -- that has to do with how rotation works on the stereographic projection.
 // Really, the initial dec (and RA, I believe) is positive.
-var initial_ra = -75,  // in degrees
+var initial_ra = -55,  // in degrees
 	initial_dec = -45;
 	
 // Brighter stars have lower magnitudes, so max_magnitude determines the dimmest stars displayed.
