@@ -182,11 +182,11 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
 		p2 = projection([119, 49]);
 		p3 = projection([119, 40]);
 		p4 = projection([103, 40]);
-		console.log(p1, p2, p3, p4);
+        // console.log(p1, p2, p3, p4);
 		origin = [p1[0], p2[1]];
 		pic_height = p4[1] - p2[1];
 		pic_width = p3[0] - p1[0];
-		console.log(origin, pic_width, pic_height);
+        // console.log(origin, pic_width, pic_height);
 	    g.append("image")
             .attr("xlink:href", "img/kepler_geometry.png")
             .attr("id", "geometric")
@@ -305,7 +305,7 @@ var map_rotate = function(){
 
 
 var starload = function(filename, id, color, storage_var){
-    if (storage_var === 0){
+    // if (storage_var === 0){
         d3.json(filename, function(error, newstars) {
     		g.append("path")
     			.datum(newstars)
@@ -314,16 +314,18 @@ var starload = function(filename, id, color, storage_var){
     			.attr("d", exoplanet_path)
     			.attr("fill", color);
                 // .attr("opacity", 0.5);
+                
+            console.log(filename);
         });
-    }
-    else {
-        g.append("path")
-			.datum(storage_var)
-			.attr("class", "exoplanet")
-            .attr("id", id)
-			.attr("d", exoplanet_path)
-			.attr("fill", color);
-    };
+    // }
+            //     else {
+            //         g.append("path")
+            // .datum(storage_var)
+            // .attr("class", "exoplanet")
+            //             .attr("id", id)
+            // .attr("d", exoplanet_path)
+            // .attr("fill", color);
+            //     };
 };
 
 
