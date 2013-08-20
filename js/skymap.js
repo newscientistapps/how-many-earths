@@ -331,9 +331,9 @@ var starload = function(filename, id, color, storage_var){
 
 // Define a few scrolling variables, to control the transitions.
 var planets_position = 2300,
-    geometry_position = 3300,
-    size_position = 4300,
-    habitable_position = 5300,
+    size_position = 3300,
+    habitable_position = 4300,
+    geometry_position = 5300,
     all_sky_position = 6000,
     zoom_position = 6100,
     rotate_position = 6500,
@@ -361,14 +361,14 @@ var render_func = function(obj){
     };
     
     
-    // Correcting for geometric bias.
-    if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
+    // Removing planets larger than 2 Earth radii.
+    if (obj.lastTop < size_position && obj.curTop >= size_position){
+        starload("json/kepler_data_size.geojson", "size", "#55FF00", e2);
         g.selectAll("#candidates").remove();
-        starload("json/kepler_data_size.geojson", "geometric", "#55FF00", e2);
     };
-    if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
+    if (obj.lastTop >= size_position && obj.curTop < size_position){
         starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
-        g.selectAll("#geometric").remove();
+        g.selectAll("#size").remove();
     };
     
     // // Correcting for geometric bias.
@@ -384,35 +384,33 @@ var render_func = function(obj){
     //         .attr("opacity", 0);
     // };
     
-    // Removing planets of the wrong size.
-    if (obj.lastTop < size_position && obj.curTop >= size_position){
-        g.selectAll("#candidates").remove();
-        g.select("#geometric")
-            .attr("opacity", 0);
-        starload("json/kepler_fakes_size.geojson", "candidates_size", "#55FF00", e3);
-        starload("json/kepler_size.geojson", "size", "#55FF00", e4);
-    };
-    if (obj.lastTop >= size_position && obj.curTop < size_position){
-        starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
-        // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
-        g.select("#geometric")
-            .attr("opacity", 1);
-        g.selectAll("#candidates_size").remove();
-        g.selectAll("#size").remove();
-    };
-    
     // Removing planets outside the habitable zone.
     if (obj.lastTop < habitable_position && obj.curTop >= habitable_position){
-        g.selectAll("#candidates_size").remove();
-        g.selectAll("#size").remove();
-        starload("json/kepler_fakes_habitable.geojson", "candidates_habitable", "#55FF00", e5);
-        starload("json/kepler_habitable.geojson", "habitable", "#55FF00", e6);
+        // g.selectAll("#candidates").remove();
+        starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
+        // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
+        g.select("#size").remove();
     };
     if (obj.lastTop >= habitable_position && obj.curTop < habitable_position){
-        starload("json/kepler_fakes_size.geojson", "candidates_size", "#55FF00", e3);
-        starload("json/kepler_size.geojson", "size", "#55FF00", e4);
+        starload("json/kepler_data_size.geojson", "candidates", "#55FF00", e2);
+        // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
+        g.select("#habitable").remove();
+        // g.selectAll("#candidates_size").remove();
+        // g.selectAll("#size").remove();
+    };
+    
+    // Adding in the planets that we can't see because of the geometry of their orbits
+    if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
+        // g.selectAll("#candidates_size").remove();
+        // g.selectAll("#size").remove();
+        starload("json/kepler_fakes_habitable.geojson", "candidates_habitable", "#55FF00", e5);
+        // starload("json/kepler_habitable.geojson", "habitable", "#55FF00", e6);
+    };
+    if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
+        starload("json/kepler_data_size.geojson", "size", "#55FF00", e3);
+        // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
         g.selectAll("#candidates_habitable").remove();
-        g.selectAll("#habitable").remove();
+        // g.selectAll("#habitable").remove();
     };
     
     // Filling in the whole sky.
