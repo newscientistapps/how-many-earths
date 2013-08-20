@@ -360,18 +360,29 @@ var render_func = function(obj){
         g.selectAll("#candidates").remove();
     };
     
+    
     // Correcting for geometric bias.
     if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
-        // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
-        g.select("#geometric")
-            .attr("opacity", 1);
         g.selectAll("#candidates").remove();
-        starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+        starload("json/kepler_data_size.geojson", "geometric", "#55FF00", e2);
     };
     if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
-        g.select("#geometric")
-            .attr("opacity", 0);
+        starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+        g.selectAll("#geometric").remove();
     };
+    
+    // // Correcting for geometric bias.
+    // if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
+    //     // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
+    //     g.select("#geometric")
+    //         .attr("opacity", 1);
+    //     g.selectAll("#candidates").remove();
+    //     starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+    // };
+    // if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
+    //     g.select("#geometric")
+    //         .attr("opacity", 0);
+    // };
     
     // Removing planets of the wrong size.
     if (obj.lastTop < size_position && obj.curTop >= size_position){
