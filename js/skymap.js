@@ -25,7 +25,7 @@ var zoom_transition_time = 2000;
 
 // Again, does what it says. 
 // Note that it's the radius, not the diameter.
-var exoplanet_radius = 2;
+var exoplanet_radius = 1;
 
 /////////////////////////
 // Setting up the map. //
@@ -215,7 +215,7 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
              .attr("class", "exoplanet")
             .attr("id", "all_sky")
              .attr("d", exoplanet_path)
-             .attr("fill", "green")
+             .attr("fill", "#55FF00")
             .attr("opacity", 0);
         });
 			
@@ -353,7 +353,8 @@ var render_func = function(obj){
 
     // Placing Kepler candidates.
     if (obj.lastTop < planets_position && obj.curTop >= planets_position){
-        starload("json/kepler_fakes.geojson", "candidates", "red", e1);
+        // starload("json/kepler_fakes.geojson", "candidates", "red", e1);
+        starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
     };
     if (obj.lastTop >= planets_position && obj.curTop < planets_position){
         g.selectAll("#candidates").remove();
@@ -365,7 +366,7 @@ var render_func = function(obj){
         g.select("#geometric")
             .attr("opacity", 1);
         g.selectAll("#candidates").remove();
-        starload("json/kepler_fakes.geojson", "candidates", "red", e1);
+        starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
     };
     if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
         g.select("#geometric")
@@ -377,11 +378,11 @@ var render_func = function(obj){
         g.selectAll("#candidates").remove();
         g.select("#geometric")
             .attr("opacity", 0);
-        starload("json/kepler_fakes_size.geojson", "candidates_size", "red", e3);
-        starload("json/kepler_size.geojson", "size", "green", e4);
+        starload("json/kepler_fakes_size.geojson", "candidates_size", "#55FF00", e3);
+        starload("json/kepler_size.geojson", "size", "#55FF00", e4);
     };
     if (obj.lastTop >= size_position && obj.curTop < size_position){
-        starload("json/kepler_fakes.geojson", "candidates", "red", e1);
+        starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
         // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
         g.select("#geometric")
             .attr("opacity", 1);
@@ -393,12 +394,12 @@ var render_func = function(obj){
     if (obj.lastTop < habitable_position && obj.curTop >= habitable_position){
         g.selectAll("#candidates_size").remove();
         g.selectAll("#size").remove();
-        starload("json/kepler_fakes_habitable.geojson", "candidates_habitable", "red", e5);
-        starload("json/kepler_habitable.geojson", "habitable", "green", e6);
+        starload("json/kepler_fakes_habitable.geojson", "candidates_habitable", "#55FF00", e5);
+        starload("json/kepler_habitable.geojson", "habitable", "#55FF00", e6);
     };
     if (obj.lastTop >= habitable_position && obj.curTop < habitable_position){
-        starload("json/kepler_fakes_size.geojson", "candidates_size", "red", e3);
-        starload("json/kepler_size.geojson", "size", "green", e4);
+        starload("json/kepler_fakes_size.geojson", "candidates_size", "#55FF00", e3);
+        starload("json/kepler_size.geojson", "size", "#55FF00", e4);
         g.selectAll("#candidates_habitable").remove();
         g.selectAll("#habitable").remove();
     };
