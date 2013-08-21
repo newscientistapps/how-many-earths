@@ -403,13 +403,13 @@ var render_func = function(obj){
     if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
         // g.selectAll("#candidates_size").remove();
         // g.selectAll("#size").remove();
-        starload("json/kepler_fakes_habitable.geojson", "candidates_habitable", "#55FF00", e5);
+        starload("json/kepler_fakes.geojson", "geometry", "#55FF00", e5);
         // starload("json/kepler_habitable.geojson", "habitable", "#55FF00", e6);
     };
     if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
-        starload("json/kepler_data_size.geojson", "size", "#55FF00", e3);
+        // starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
         // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
-        g.selectAll("#candidates_habitable").remove();
+        g.selectAll("#geometry").remove();
         // g.selectAll("#habitable").remove();
     };
     
