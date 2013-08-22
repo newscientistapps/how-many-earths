@@ -106,13 +106,18 @@ var dragmove = function() {
   	mapx += d3.event.dx;
 	mapy += d3.event.dy;
 	
+	console.log(projection.invert(String(d3.event.x), String(d3.event.y)));
+	
 	// Then, rotate the map projection by the appropriate amount.
   	projection.rotate([λ(mapx) + initial_ra, φ(mapy) + initial_dec]);
   	
   	// Finally, redraw the stars, the Kepler field, and the constellations in the newly-rotated projection.
-  	svg.selectAll(".star").attr("d", star_path);
-  	svg.selectAll(".lines").attr("d", line_path);
-  	svg.selectAll(".exoplanet").attr("d", exoplanet_path);
+    // svg.selectAll(".star").attr("d", star_path);
+    // svg.selectAll(".lines").attr("d", line_path);
+    // svg.selectAll(".exoplanet").attr("d", exoplanet_path);
+  	svg.selectAll(".star").attr("d", new_star_path);
+  	svg.selectAll(".lines").attr("d", new_line_path);
+  	svg.selectAll(".exoplanet").attr("d", new_exoplanet_path);
 };
 
 // Create the drag object and add the drag event function to it.
@@ -222,7 +227,7 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
 		// Attach the drag event object to the SVG canvas.
 		// Note that we have not yet actually attached any listeners to the drag object!
 		// That comes later.
-        // svg.call(dragobj);
+        svg.call(dragobj);
     	
 		
 		});		
@@ -298,9 +303,12 @@ var map_rotate = function(){
       	projection.rotate([d_ra + initial_ra, initial_dec]);
   	
       	// Finally, redraw the stars, the Kepler field, and the constellations in the newly-rotated projection.
-      	svg.selectAll(".star").attr("d", star_path);
-      	svg.selectAll(".lines").attr("d", line_path);
-      	svg.selectAll(".exoplanet").attr("d", exoplanet_path);
+        // svg.selectAll(".star").attr("d", star_path);
+        // svg.selectAll(".lines").attr("d", line_path);
+        // svg.selectAll(".exoplanet").attr("d", exoplanet_path);
+        svg.selectAll(".star").attr("d", new_star_path);
+      	svg.selectAll(".lines").attr("d", new_line_path);
+      	svg.selectAll(".exoplanet").attr("d", new_exoplanet_path);
 };
 
 
@@ -450,18 +458,18 @@ var render_func = function(obj){
     //     svg.selectAll(".lines").attr("d", line_path);
     // };
     
-        //     // Turning interactivity on and off.
-        //     if (obj.lastTop < interactive_position && obj.curTop >= interactive_position){
-        // 
-        // // Attach a listener to the drag event object.
-        // dragobj.on("drag", dragmove);
-        //     };
-        //     if (obj.lastTop >= interactive_position && obj.curTop < interactive_position){
-        // dragobj.on("drag", null);
-        //         projection.rotate([initial_ra, initial_dec]);
-        //         svg.selectAll(".star").attr("d", star_path);
-        //         svg.selectAll(".lines").attr("d", line_path);
-        //     };
+            // Turning interactivity on and off.
+            if (obj.lastTop < interactive_position && obj.curTop >= interactive_position){
+        
+        // Attach a listener to the drag event object.
+        dragobj.on("drag", dragmove);
+            };
+            if (obj.lastTop >= interactive_position && obj.curTop < interactive_position){
+        dragobj.on("drag", null);
+                projection.rotate([initial_ra, initial_dec]);
+                svg.selectAll(".star").attr("d", star_path);
+                svg.selectAll(".lines").attr("d", line_path);
+            };
       
 };
 
