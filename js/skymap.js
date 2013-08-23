@@ -458,18 +458,18 @@ var render_func = function(obj){
     //     svg.selectAll(".lines").attr("d", line_path);
     // };
     
-            // Turning interactivity on and off.
-            if (obj.lastTop < interactive_position && obj.curTop >= interactive_position){
-        
-        // Attach a listener to the drag event object.
-        dragobj.on("drag", dragmove);
-            };
-            if (obj.lastTop >= interactive_position && obj.curTop < interactive_position){
-        dragobj.on("drag", null);
-                projection.rotate([initial_ra, initial_dec]);
-                svg.selectAll(".star").attr("d", star_path);
-                svg.selectAll(".lines").attr("d", line_path);
-            };
+        //     // Turning interactivity on and off.
+        //     if (obj.lastTop < interactive_position && obj.curTop >= interactive_position){
+        // 
+        // // Attach a listener to the drag event object.
+        // dragobj.on("drag", dragmove);
+        //     };
+        //     if (obj.lastTop >= interactive_position && obj.curTop < interactive_position){
+        // dragobj.on("drag", null);
+        //         projection.rotate([initial_ra, initial_dec]);
+        //         svg.selectAll(".star").attr("d", star_path);
+        //         svg.selectAll(".lines").attr("d", line_path);
+        //     };
       
 };
 
