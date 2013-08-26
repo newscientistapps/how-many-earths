@@ -151,7 +151,7 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
         //  .attr("fill", "black");
         // 
         // Create a group that will contain the stars and lines.
-        g = svg.append("g");
+        // g = svg.append("g");
         // 
         //         // Add in the stars, using the star_path, which assigns sizes for the stars based on their brightness.
         //      g.selectAll("path")
@@ -237,6 +237,8 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
             .attr("width", 1280)
             .attr("height", 895)
             .attr("opacity", 1);
+        
+        g = svg.append("g");
     	
 		
 		});		
