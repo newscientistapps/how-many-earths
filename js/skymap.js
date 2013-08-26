@@ -138,9 +138,9 @@ var svg = d3.select("#main_event_interactive").append("svg")
     // .style("left", (width-2160)/2);
 
 // Load the GeoJSON files.
-d3.json("json/new_stars.geojson", function(error_stars, stars) {
-	d3.json("json/keplerFOV.geojson", function(error_kepler, keplerfov){
-		d3.json("json/constellations_collection.geojson", function(error_constellation, constellations){
+// d3.json("json/new_stars.geojson", function(error_stars, stars) {
+//  d3.json("json/keplerFOV.geojson", function(error_kepler, keplerfov){
+//      d3.json("json/constellations_collection.geojson", function(error_constellation, constellations){
 	    
 	    // Once the GeoJSON files have loaded, do the following:
 	    
@@ -241,9 +241,9 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
         g = svg.append("g");
     	
 		
-		});		
-	});
-});
+//      });     
+//  });
+// });
 
 ////////////////////////
 // Scroll transitions //
@@ -356,7 +356,7 @@ var planets_position = 2300,
     habitable_position = 4300,
     geometry_position = 5300,
     all_sky_position = 6000,
-    zoom_position = 6100,
+    zoom_position = 6500,
     rotate_position = 6500,
     interactive_position = 8000;
 
