@@ -144,62 +144,62 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
 	    
 	    // Once the GeoJSON files have loaded, do the following:
 	    
-		// Draw in a black background.	
-		svg.append("rect")
-			.attr("width", width)
-			.attr("height", height)
-			.attr("fill", "black");
+        // // Draw in a black background. 
+        // svg.append("rect")
+        //  .attr("width", width)
+        //  .attr("height", height)
+        //  .attr("fill", "black");
+        // 
+        // Create a group that will contain the stars and lines.
+        g = svg.append("g");
+        // 
+        //         // Add in the stars, using the star_path, which assigns sizes for the stars based on their brightness.
+        //      g.selectAll("path")
+        //                  .data(stars)
+        //                  .enter()
+        //                  .append("path")
+        //                  .attr("class", "star")
+        //                  .attr("d", star_path)
+        //                  .attr("fill", function(d){return color(d.properties.color)}); // assigning colors to each star.
+        //                  
+        // // Add in the Kepler FOV.
+        // // For whatever reason, there's a giant damn circle that's also loaded in this GeoJSON,
+        // // but it doesn't show up unless you zoom *WAY* out, so it's not a problem for now.
+        // g.append("path")
+        //  .datum(keplerfov)
+        //             .attr("class", "lines")
+        //             .attr("id", "kepler")
+        //  .attr("d", line_path)
+        //  .attr("fill", "none")
+        //  .attr("stroke", "white");
+        // 
+        // // Add in the constellation lines.
+        // g.append("path")
+        //  .datum(constellations)
+        //             .attr("class", "lines")
+        //             .attr("id", "constellations")
+        //  .attr("d", line_path)
+        //  .attr("fill", "none")
+        //  .attr("stroke", "white");
 		
-		// Create a group that will contain the stars and lines.
-		g = svg.append("g");
-
-        // Add in the stars, using the star_path, which assigns sizes for the stars based on their brightness.
-	 	g.selectAll("path")
-	 		  		.data(stars)
-	 		  		.enter()
-	 		  		.append("path")
-	 				.attr("class", "star")
-	 		      	.attr("d", star_path)
-	 		  		.attr("fill", function(d){return color(d.properties.color)}); // assigning colors to each star.
-	 		  		
-		// Add in the Kepler FOV.
-		// For whatever reason, there's a giant damn circle that's also loaded in this GeoJSON,
-		// but it doesn't show up unless you zoom *WAY* out, so it's not a problem for now.
-		g.append("path")
-			.datum(keplerfov)
-            .attr("class", "lines")
-            .attr("id", "kepler")
-			.attr("d", line_path)
-			.attr("fill", "none")
-			.attr("stroke", "white");
-		
-		// Add in the constellation lines.
-		g.append("path")
-			.datum(constellations)
-            .attr("class", "lines")
-            .attr("id", "constellations")
-			.attr("d", line_path)
-			.attr("fill", "none")
-			.attr("stroke", "white");
-		
-		// Pre-loading some SVGs for later on.
-		p1 = projection([62, 49]);
-		p2 = projection([77, 49]);
-		p3 = projection([77, 40]);
-		p4 = projection([62, 40]);
-        // console.log(p1, p2, p3, p4);
-		origin = [p1[0], p2[1]];
-		pic_height = p4[1] - p2[1];
-		pic_width = p3[0] - p1[0];
+        // // Pre-loading some SVGs for later on.
+        // p1 = projection([62, 49]);
+        // p2 = projection([77, 49]);
+        // p3 = projection([77, 40]);
+        // p4 = projection([62, 40]);
+        //         // console.log(p1, p2, p3, p4);
+        // origin = [p1[0], p2[1]];
+        // pic_height = p4[1] - p2[1];
+        // pic_width = p3[0] - p1[0];
         // console.log(origin, pic_width, pic_height);
-	    g.append("image")
-            .attr("xlink:href", "img/kepler_geometry.png")
-            .attr("id", "geometric")
-            .attr("x", origin[0])
-            .attr("y", origin[1])
-            .attr("width", pic_width)
-            .attr("height", pic_height)
-            .attr("opacity", 0);
+        // g.append("image")
+        //             .attr("xlink:href", "img/kepler_geometry.png")
+        //             .attr("id", "geometric")
+        //             .attr("x", origin[0])
+        //             .attr("y", origin[1])
+        //             .attr("width", pic_width)
+        //             .attr("height", pic_height)
+        //             .attr("opacity", 0);
 		
         // svg.append("g").attr("id", "all_sky").attr("opacity", 0);
         // // svg.select("#all_sky").append("svg").attr("width", 2160).attr("height", 1149);
@@ -214,20 +214,29 @@ d3.json("json/new_stars.geojson", function(error_stars, stars) {
         //             .attr("height", 1149);
         //             // .attr("opacity", 0);
         
-        d3.json("json/all_sky_habitable.geojson", function(error, newstars) {
-            g.append("path")
-             .datum(newstars)
-             .attr("class", "exoplanet")
-            .attr("id", "all_sky")
-             .attr("d", exoplanet_path)
-             .attr("fill", "#55FF00")
-            .attr("opacity", 0);
-        });
+        // d3.json("json/all_sky_habitable.geojson", function(error, newstars) {
+        //     g.append("path")
+        //      .datum(newstars)
+        //      .attr("class", "exoplanet")
+        //     .attr("id", "all_sky")
+        //      .attr("d", exoplanet_path)
+        //      .attr("fill", "#55FF00")
+        //     .attr("opacity", 0);
+        // });
 			
 		// Attach the drag event object to the SVG canvas.
 		// Note that we have not yet actually attached any listeners to the drag object!
 		// That comes later.
-        svg.call(dragobj);
+        // svg.call(dragobj);
+        
+        svg.append("image")
+            .attr("xlink:href", "img/test0.png")
+            .attr("id", "background")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
     	
 		
 		});		
@@ -247,47 +256,49 @@ var rescale_translation = function(r){
 // A zooming function.
 var zoom = function(new_zoom, new_paths){
     
-    // Find out what the old projection scale was.
-    var old_zoom = projection.scale();
-        
-    // Rescale the projection.
-    projection.scale(new_zoom);
+    // // Find out what the old projection scale was.
+    // var old_zoom = projection.scale();
+    //     
+    // // Rescale the projection.
+    // projection.scale(new_zoom);
+    // 
+    // var zoom_ratio = new_zoom/old_zoom;
     
-    var zoom_ratio = new_zoom/old_zoom;
+    zoom_ratio = new_zoom;
     
-    // This try-catch clause handles the case where the user is scrolling up and down really fast around a single location.
-    // Under those circumstances, the transforms can break.
-    // Specifically, if a previous rescaling was in progress, and now the "old" scale is being requested again,
-    // we need to make sure that we serve up a scale of 1 and not a scale of 1/2 or 2 or something weird like that.
-    try{
-        var old_transform = g.attr("transform");
-        var scale_start = old_transform.lastIndexOf("(") + 1;
-        var scale_end = g.attr("transform").lastIndexOf(",");
-        var old_scale = old_transform.slice(scale_start, scale_end);
-    
-        if ((1 - zoom_ratio)*(1 - old_scale) < 0){
-            zoom_ratio = 1;
-        };
-    }
-    catch (error){};
+    // // This try-catch clause handles the case where the user is scrolling up and down really fast around a single location.
+    // // Under those circumstances, the transforms can break.
+    // // Specifically, if a previous rescaling was in progress, and now the "old" scale is being requested again,
+    // // we need to make sure that we serve up a scale of 1 and not a scale of 1/2 or 2 or something weird like that.
+    // try{
+    //     var old_transform = g.attr("transform");
+    //     var scale_start = old_transform.lastIndexOf("(") + 1;
+    //     var scale_end = g.attr("transform").lastIndexOf(",");
+    //     var old_scale = old_transform.slice(scale_start, scale_end);
+    // 
+    //     if ((1 - zoom_ratio)*(1 - old_scale) < 0){
+    //         zoom_ratio = 1;
+    //     };
+    // }
+    // catch (error){};
     
     var rt = rescale_translation(zoom_ratio);
     
     g.transition()
      .duration(zoom_transition_time)
-     .each("end", function(){
-         g.attr("transform", "scale(1)");
-         if (new_paths){
-             g.selectAll(".star").attr("d", new_star_path);
-             g.selectAll(".lines").attr("d", line_path).attr("stroke-width", zoom_ratio);
-             g.selectAll(".exoplanet").attr("d", new_exoplanet_path);
-         }
-         else {
-             g.selectAll(".star").attr("d", star_path);
-             g.selectAll(".lines").attr("d", line_path).attr("stroke-width", 1);
-             g.selectAll(".exoplanet").attr("d", exoplanet_path);
-         };
-         })
+     // .each("end", function(){
+     //     g.attr("transform", "scale(1)");
+     //     if (new_paths){
+     //         g.selectAll(".star").attr("d", new_star_path);
+     //         g.selectAll(".lines").attr("d", line_path).attr("stroke-width", zoom_ratio);
+     //         g.selectAll(".exoplanet").attr("d", new_exoplanet_path);
+     //     }
+     //     else {
+     //         g.selectAll(".star").attr("d", star_path);
+     //         g.selectAll(".lines").attr("d", line_path).attr("stroke-width", 1);
+     //         g.selectAll(".exoplanet").attr("d", exoplanet_path);
+     //     };
+     //     })
      .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
      
      // svg.select("#all_sky").transition()
@@ -362,21 +373,45 @@ var render_func = function(obj){
     // Placing Kepler candidates.
     if (obj.lastTop < planets_position && obj.curTop >= planets_position){
         // starload("json/kepler_fakes.geojson", "candidates", "red", e1);
-        starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+        // starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+        svg.append("image")
+            .attr("xlink:href", "img/test1.png")
+            .attr("id", "candidates")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
     };
     if (obj.lastTop >= planets_position && obj.curTop < planets_position){
-        g.selectAll("#candidates").remove();
+        svg.selectAll("#candidates").remove();
     };
     
     
     // Removing planets larger than 2 Earth radii.
     if (obj.lastTop < size_position && obj.curTop >= size_position){
-        starload("json/kepler_data_size.geojson", "size", "#55FF00", e2);
-        g.selectAll("#candidates").remove();
+        // starload("json/kepler_data_size.geojson", "size", "#55FF00", e2);
+        svg.append("image")
+            .attr("xlink:href", "img/test2.png")
+            .attr("id", "size")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
+        svg.selectAll("#candidates").remove();
     };
     if (obj.lastTop >= size_position && obj.curTop < size_position){
-        starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
-        g.selectAll("#size").remove();
+        // starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+        svg.append("image")
+            .attr("xlink:href", "img/test1.png")
+            .attr("id", "candidates")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", pic_width)
+            .attr("height", pic_height)
+            .attr("opacity", 0);
+        svg.selectAll("#size").remove();
     };
     
     // // Correcting for geometric bias.
@@ -395,14 +430,30 @@ var render_func = function(obj){
     // Removing planets outside the habitable zone.
     if (obj.lastTop < habitable_position && obj.curTop >= habitable_position){
         // g.selectAll("#candidates").remove();
-        starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
+        // starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
         // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
-        g.select("#size").remove();
+        svg.append("image")
+            .attr("xlink:href", "img/test3.png")
+            .attr("id", "habitable")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
+        svg.select("#size").remove();
     };
     if (obj.lastTop >= habitable_position && obj.curTop < habitable_position){
-        starload("json/kepler_data_size.geojson", "candidates", "#55FF00", e2);
+        // starload("json/kepler_data_size.geojson", "candidates", "#55FF00", e2);
         // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
-        g.select("#habitable").remove();
+        svg.append("image")
+            .attr("xlink:href", "img/test2.png")
+            .attr("id", "size")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
+        svg.select("#habitable").remove();
         // g.selectAll("#candidates_size").remove();
         // g.selectAll("#size").remove();
     };
@@ -411,19 +462,36 @@ var render_func = function(obj){
     if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
         // g.selectAll("#candidates_size").remove();
         // g.selectAll("#size").remove();
-        starload("json/kepler_fakes.geojson", "geometry", "#55FF00", e5);
+        // starload("json/kepler_fakes.geojson", "geometry", "#55FF00", e5);
+        svg.append("image")
+            .attr("xlink:href", "img/test4.png")
+            .attr("id", "geometry")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
+        svg.select("#habitable").remove();
         // starload("json/kepler_habitable.geojson", "habitable", "#55FF00", e6);
     };
     if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
         // starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
         // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
-        g.selectAll("#geometry").remove();
+        svg.append("image")
+            .attr("xlink:href", "img/test3.png")
+            .attr("id", "habitable")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
+        svg.selectAll("#geometry").remove();
         // g.selectAll("#habitable").remove();
     };
     
     // Filling in the whole sky.
     if (obj.lastTop < all_sky_position && obj.curTop >= all_sky_position){
-        svg.select("#all_sky").attr("opacity", 1);
+        // svg.select("#all_sky").attr("opacity", 1);
         // starload("json/all_sky_habitable.geojson", "all_sky", "green", e7);
         // g.append("image")
         //     .attr("xlink:href", "img/exoplanets_giant_stereo.svg")
@@ -433,19 +501,72 @@ var render_func = function(obj){
         //     .attr("width", 2160)
         //     .attr("height", 1149);
         //     // .attr("preserveAspectRatio", "xMinYMin");
+        
+        svg.append("image")
+            .attr("xlink:href", "img/test5.png")
+            .attr("id", "all_sky")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
+        
+        svg.selectAll("#geometry").remove();
+        
+        g.append("image")
+            .attr("xlink:href", "img/test6.png")
+            .attr("id", "zoom_sky")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
+        
+        // zoom(zoom_max*zoom_max/zoom_min, false);
+        zoom(zoom_max/zoom_min, false);
+        
+        // zoom(zoom_max, false);
+        
     };
     if (obj.lastTop >= all_sky_position && obj.curTop < all_sky_position){
-        // g.selectAll("#all_sky").remove();
-        svg.select("#all_sky").attr("opacity", 0);
+        svg.append("image")
+            .attr("xlink:href", "img/test4.png")
+            .attr("id", "geometry")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1280)
+            .attr("height", 895)
+            .attr("opacity", 1);
+        
+        svg.selectAll("#all_sky").remove();
+        g.selectAll("#zoom_sky").remove();
+        // svg.select("#all_sky").attr("opacity", 0);
     };
     
     // Zooming in and out.
     if (obj.lastTop < zoom_position && obj.curTop >= zoom_position){
-        zoom(zoom_min, true);
+        svg.selectAll("#all_sky").remove();
+        // zoom(zoom_min/(zoom_max*zoom_max), false);
+        // zoom(zoom_min/zoom_max, false);
+        zoom(1, false)
+
+        // zoom(zoom_min, true);
     };
     if (obj.lastTop >= zoom_position && obj.curTop < zoom_position){
-        zoom(zoom_max, false);
-    };  
+        // svg.append("image")
+        //     .attr("xlink:href", "img/test5.png")
+        //     .attr("id", "all_sky")
+        //     .attr("x", 0)
+        //     .attr("y", 0)
+        //     .attr("width", 1280)
+        //     .attr("height", 895)
+        //     .attr("opacity", 1);
+        
+        // g.selectAll("#zoom_sky").remove();
+        // zoom(zoom_max, true);
+        // zoom(zoom_min, true);
+        zoom(zoom_max/zoom_min, false);
+    };
     
     // // Rotating.
     // if (obj.lastTop < rotate_position && obj.curTop >= rotate_position){
