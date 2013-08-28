@@ -18,7 +18,8 @@ body  {
     padding: 0px;
     font-size: 14px;
     height: 9500px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     background: #000;
     background-image:url('../img/starry_background_tile-able.jpg');
     background-repeat:no-repeat;  /*this is so that we don't have stars scrolling under adam's interactive*/
