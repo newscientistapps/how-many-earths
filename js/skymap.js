@@ -17,8 +17,10 @@ var zoom_min = 1000,
 // Does what it says on the tin, in milliseconds.
 var zoom_transition_time = 2000;
 
-var pic_width = 1440,
-    pic_height = 771;
+// var pic_width = 1440,
+//     pic_height = 771;
+var pic_width = 3000,
+    pic_height = 2000;
 
 //////////////////////////
 // Actually draw stuff! //
@@ -39,7 +41,7 @@ var pic_x = (width - pic_width)/2,
 
 // Load the images.
     svg.append("image")
-        .attr("xlink:href", "img/test0.png")
+        .attr("xlink:href", "img/test_big_0.png")
         .attr("class", "skyimage")
         .attr("id", "background")
         .attr("x", pic_x)
@@ -51,7 +53,7 @@ var pic_x = (width - pic_width)/2,
     g = svg.append("g");
     
     svg.append("image")
-        .attr("xlink:href", "img/test1.png")
+        .attr("xlink:href", "img/test_big_1.png")
         .attr("class", "skyimage")
         .attr("id", "candidates")
         .attr("x", pic_x)
@@ -61,7 +63,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
 	
     svg.append("image")
-        .attr("xlink:href", "img/test2.png")
+        .attr("xlink:href", "img/test_big_2.png")
         .attr("class", "skyimage")
         .attr("id", "size")
         .attr("x", pic_x)
@@ -71,7 +73,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
     
     svg.append("image")
-        .attr("xlink:href", "img/test3.png")
+        .attr("xlink:href", "img/test_big_3.png")
         .attr("class", "skyimage")
         .attr("id", "habitable")
         .attr("x", pic_x)
@@ -81,7 +83,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
     
     svg.append("image")
-        .attr("xlink:href", "img/test4.png")
+        .attr("xlink:href", "img/test_big_4.png")
         .attr("class", "skyimage")
         .attr("id", "geometry")
         .attr("x", pic_x)
@@ -91,7 +93,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
     
     svg.append("image")
-        .attr("xlink:href", "img/test5.png")
+        .attr("xlink:href", "img/test_big_5.png")
         .attr("class", "skyimage")
         .attr("id", "all_sky")
         .attr("x", pic_x)
@@ -101,7 +103,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
 
     g.append("image")
-        .attr("xlink:href", "img/test6.png")
+        .attr("xlink:href", "img/test_big_6.png")
         .attr("class", "skyimage")
         .attr("id", "zoom_sky")
         .attr("x", pic_x)
