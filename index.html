@@ -7,13 +7,15 @@
     <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
     
     <script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="js/jquery-1.10.2.min.js"></script>
   
     <!--skrollr script from: https://github.com/Prinzhorn/skrollr-->
-    <script type="text/javascript" src="js/skrollr.min.js"></script>
+    <!-- <script type="text/javascript" src="js/skrollr.min.js"></script> -->
 
     <!--initialize skrollr-->
-    <script type="text/javascript"> window.onload = function() {skrollr.init({render: render_func});} </script>
-  
+    <!-- <script type="text/javascript"> window.onload = function() {skrollr.init({render: render_func});} </script>
+   -->
+
     <title>How Many Earths? | New Scientist </title>
 
 </head>
@@ -26,9 +28,13 @@
 
     </div>
     
-    <div id="intro_planet" data-1200="opacity:1;" data-1500="opacity:0;"><img id="planet_png" src="img/exoplanet_centered.png"/></div>
+    <!-- <div id="intro_planet" data-1200="opacity:1;" data-1500="opacity:0;"> -->
+	<div id="intro_planet" style="z=index:1000;">
+	<img id="planet_png" src="img/exoplanet_centered.png"/>
+	</div>
 	
-	<div id="intro" data-0="opacity:1;" data-250="opacity:0;">
+	<!-- <div id="intro" data-0="opacity:1;" data-250="opacity:0;"> -->
+	<div id="intro">
 	
 		<h1>HOW MANY <br> EARTHS?</h1>
 
@@ -41,8 +47,9 @@
 	</div>
 
 	
-	<div class="overlay" id="how_to_spot_a_planet" data-300="position:fixed;top:100%;opacity:0;" data-900="position:fixed;top:0%;opacity:1;" data-1300="position:fixed;top:0%;opacity:1;" data-1500="position:fixed;top:-100%;opacity:0;">
-
+	<!-- <div class="overlay" id="how_to_spot_a_planet" data-300="position:fixed;top:100%;opacity:0;" data-900="position:fixed;top:0%;opacity:1;" data-1300="position:fixed;top:0%;opacity:1;" data-1500="position:fixed;top:-100%;opacity:0;"> -->
+	<!-- <div class="overlay" id="how_to_spot_a_planet" style="position:fixed;opacity:0;"> -->
+	<div class="overlay" id="how_to_spot_a_planet">
 		<h3>How to spot a planet</h3>
 	
 		<p>This understanding comes from NASA's <a href="http://kepler.nasa.gov/" target= "_blank">Kepler space telescope</a>. Its success in finding distant worlds depends on a conceptually simple method – recording the dip in the glow from their parent stars as the planets pass in front.</p> 
@@ -54,13 +61,15 @@
 	</div>
 
 	
-	<div id="main_event_interactive" data-1300="position:fixed;top:0%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;" data-8200="z-index:0;" data-8500="z-index:10000;">
+	<!-- <div id="main_event_interactive" data-1300="position:fixed;top:0%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;" data-8200="z-index:0;" data-8500="z-index:10000;"> -->
+		<!-- <div id="main_event_interactive", style ="position:fixed;top:0%;z-index:-1;opacity:0;"> -->
+	<div id="main_event_interactive", style ="position:fixed;top:0%;opacity:0;">
 		<script src="js/skymap.js"></script>		
 	</div>
 	
 	
-	<div class="overlay" id="in_the_frame" data-1300="position:fixed;top:100%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;" data-2000="position:fixed;top:0%;opacity:1;" data-2500="position:fixed;top:-100%;opacity:0;">
-
+	<!-- <div class="overlay" id="in_the_frame" data-1300="position:fixed;top:100%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;" data-2000="position:fixed;top:0%;opacity:1;" data-2500="position:fixed;top:-100%;opacity:0;"> -->
+	<div class="overlay" id="in_the_frame">
 		<h3>In the frame</h3>
 
 		<p>This is the Kepler field of view, a grid of squares in the northern hemisphere sky. From Kepler's <a href="http://www.newscientist.com/article/mg20126944.700-kepler-telescope-launches-to-hunt-for-alien-earths.html" target="_blank">launch in 2009</a> to the <a href="http://www.newscientist.com/article/dn23550-kepler-telescopes-planethunting-days-crunch-to-a-close.html" target="_blank">end of its active planet-hunting days in May 2013</a>, the telescope's detectors were trained on some 150,000 target stars in this grid.</p> 
@@ -69,8 +78,8 @@
 
 	</div>
 
-	<div class="overlay" id="Keplers_haul" data-2000="position:fixed;top:100%;opacity:0;" data-2500="position:fixed;top:0%;opacity:1;" data-3000="position:fixed;top:0%;opacity:1;" data-3500="position:fixed;top:-100%;opacity:0;">
-
+	<!-- <div class="overlay" id="Keplers_haul" data-2000="position:fixed;top:100%;opacity:0;" data-2500="position:fixed;top:0%;opacity:1;" data-3000="position:fixed;top:0%;opacity:1;" data-3500="position:fixed;top:-100%;opacity:0;"> -->
+	<div class="overlay" id="Keplers_haul">
 		<h3>Kepler's haul</h3>
 
 		<p>Here are the candidate planets discovered in Kepler's data so far. </p>
@@ -81,8 +90,8 @@
 
 	</div>
 
-	<div class="overlay" id="ripe_for_life" data-3000="position:fixed;top:100%;opacity:0;" data-3500="position:fixed;top:0%;opacity:1;" data-4000="position:fixed;top:0%;opacity:1;" data-4500="position:fixed;top:-100%;opacity:0;">
-
+	<!-- <div class="overlay" id="ripe_for_life" data-3000="position:fixed;top:100%;opacity:0;" data-3500="position:fixed;top:0%;opacity:1;" data-4000="position:fixed;top:0%;opacity:1;" data-4500="position:fixed;top:-100%;opacity:0;"> -->
+	<div class="overlay" id="ripe_for_life">
 		<h3>Ripe for life?</h3>
 
 		<p>Not all of the remaining planets will be like our Earth, with life-sustaining liquid water. Kepler could not determine a planet's composition, but it could establish whether a roughly Earth-sized world is orbiting in the habitable zone around its parent star, illustrated below.</p>
@@ -93,7 +102,8 @@
 
 	</div>
 
-	<div class="overlay" id="these_might_be_like_home" data-4000="position:fixed;top:100%;opacity:0;" data-4500="position:fixed;top:0%;opacity:1;" data-5000="position:fixed;top:0%;opacity:1;" data-5500="position:fixed;top:-100%;opacity:0;">
+	<!-- <div class="overlay" id="these_might_be_like_home" data-4000="position:fixed;top:100%;opacity:0;" data-4500="position:fixed;top:0%;opacity:1;" data-5000="position:fixed;top:0%;opacity:1;" data-5500="position:fixed;top:-100%;opacity:0;"> -->
+	<div class="overlay" id="these_might_be_like_home">
 
 		<h3>These might be like home</h3>
 				
@@ -107,8 +117,8 @@
 
 	</div>
 
-	<div class="overlay" id="Earths_galore" data-5000="position:fixed;top:100%;opacity:0;" data-5500="position:fixed;top:0%;opacity:1;" data-6000="position:fixed;top:0%;opacity:1;" data-6500="position:fixed;top:-100%;opacity:0;" >
-
+	<!-- <div class="overlay" id="Earths_galore" data-5000="position:fixed;top:100%;opacity:0;" data-5500="position:fixed;top:0%;opacity:1;" data-6000="position:fixed;top:0%;opacity:1;" data-6500="position:fixed;top:-100%;opacity:0;" > -->
+	<div class="overlay" id="Earths_galore">
 		<h3>Earths galore</h3>
 
 		<p>Adding in these invisible worlds, Kepler's field of view becomes dense with Earth-sized planets.
@@ -119,7 +129,8 @@
 
 	</div>
 
-	<div class="overlay" id="the_bigger_picture" data-6000="position:fixed;top:100%;opacity:0;" data-6500="position:fixed;top:0%;opacity:1;" data-7000="position:fixed;top:0%;opacity:1;" data-7500="position:fixed;top:-100%;opacity:0;">
+	<!-- <div class="overlay" id="the_bigger_picture" data-6000="position:fixed;top:100%;opacity:0;" data-6500="position:fixed;top:0%;opacity:1;" data-7000="position:fixed;top:0%;opacity:1;" data-7500="position:fixed;top:-100%;opacity:0;"> -->
+	<div class="overlay" id="the_bigger_picture">
 
 		<h3>The bigger picture</h3>
 
@@ -132,7 +143,8 @@
 	</div>
 
 
-	<div class="overlay" id="the_search_continues" data-7000="position:fixed;top:100%;opacity:0;" data-7500="position:fixed;top:0%;opacity:1;" data-8000="position:fixed;top:0%;opacity:1;" data-8500="position:fixed;top:-100%;opacity:0;">
+	<!-- <div class="overlay" id="the_search_continues" data-7000="position:fixed;top:100%;opacity:0;" data-7500="position:fixed;top:0%;opacity:1;" data-8000="position:fixed;top:0%;opacity:1;" data-8500="position:fixed;top:-100%;opacity:0;"> -->
+	<div class="overlay" id="the_search_continues">
 
 		<h3>The search continues</h3>
 

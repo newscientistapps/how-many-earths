@@ -17,7 +17,7 @@ body  {
     margin: 0px;
     padding: 0px;
     font-size: 14px;
-    height: 9000px;
+    height: 9500px;
     overflow: auto;
     background: #000;
     background-image:url('../img/starry_background_tile-able.jpg');
@@ -90,7 +90,9 @@ float:right;
 }
 
 .overlay {
-position:absolute;
+/*position:absolute;*/
+position:fixed;
+opacity:0;
 margin-top:50px;
 top:0%;
 display:block;

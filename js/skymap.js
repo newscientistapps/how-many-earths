@@ -234,12 +234,65 @@ var svg = d3.select("#main_event_interactive").append("svg")
             .attr("id", "background")
             .attr("x", 0)
             .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
+            .attr("width", 1440)
+            .attr("height", 771)
             .attr("opacity", 1);
         
         g = svg.append("g");
+        
+        svg.append("image")
+            .attr("xlink:href", "img/test1.png")
+            .attr("id", "candidates")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1440)
+            .attr("height", 771)
+            .style("opacity", 0);
     	
+	    svg.append("image")
+            .attr("xlink:href", "img/test2.png")
+            .attr("id", "size")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1440)
+            .attr("height", 771)
+            .style("opacity", 0);
+        
+        svg.append("image")
+            .attr("xlink:href", "img/test3.png")
+            .attr("id", "habitable")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1440)
+            .attr("height", 771)
+            .style("opacity", 0);
+        
+        svg.append("image")
+            .attr("xlink:href", "img/test4.png")
+            .attr("id", "geometry")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1440)
+            .attr("height", 771)
+            .style("opacity", 0);
+        
+        svg.append("image")
+            .attr("xlink:href", "img/test5.png")
+            .attr("id", "all_sky")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1440)
+            .attr("height", 771)
+            .style("opacity", 0);
+
+        g.append("image")
+            .attr("xlink:href", "img/test6.png")
+            .attr("id", "zoom_sky")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 1440)
+            .attr("height", 771)
+            .style("opacity", 0);
 		
 //      });     
 //  });
@@ -355,8 +408,8 @@ var planets_position = 2300,
     size_position = 3300,
     habitable_position = 4300,
     geometry_position = 5300,
-    all_sky_position = 6000,
-    zoom_position = 6500,
+    all_sky_position = 6500,
+    zoom_position = 6800,
     rotate_position = 6500,
     interactive_position = 8000;
 
@@ -370,129 +423,313 @@ var e1 = 0,
     e7 = 0;
 
 // Define the render-listening function.
-var render_func = function(obj){
+// var render_func = function(obj){
+var scrollobj = {
+    lastTop: -1,
+    curTop: 0
+};
+$(window).scroll(function(){
+   scrollobj.lastTop = scrollobj.curTop;
+   scrollobj.curTop = $(window).scrollTop();
+   console.log("lastTop is " + scrollobj.lastTop);
+   console.log("curTop is " + scrollobj.curTop); 
 
-    // Placing Kepler candidates.
-    if (obj.lastTop < planets_position && obj.curTop >= planets_position){
-        // starload("json/kepler_fakes.geojson", "candidates", "red", e1);
-        // starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
-        svg.append("image")
-            .attr("xlink:href", "img/test1.png")
-            .attr("id", "candidates")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
-    };
-    if (obj.lastTop >= planets_position && obj.curTop < planets_position){
-        svg.selectAll("#candidates").remove();
-    };
-    
-    
-    // Removing planets larger than 2 Earth radii.
-    if (obj.lastTop < size_position && obj.curTop >= size_position){
-        // starload("json/kepler_data_size.geojson", "size", "#55FF00", e2);
-        svg.append("image")
-            .attr("xlink:href", "img/test2.png")
-            .attr("id", "size")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
-        svg.selectAll("#candidates").remove();
-    };
-    if (obj.lastTop >= size_position && obj.curTop < size_position){
-        // starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
-        svg.append("image")
-            .attr("xlink:href", "img/test1.png")
-            .attr("id", "candidates")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", pic_width)
-            .attr("height", pic_height)
-            .attr("opacity", 0);
-        svg.selectAll("#size").remove();
-    };
-    
-    // // Correcting for geometric bias.
-    // if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
+   
+   // Handling divs.
+   if (scrollobj.curTop <= 250){
+       $("#intro").css("opacity", (250 - scrollobj.curTop)/250);
+       $("#how_to_spot_a_planet").css({"opacity": 0, "top": "100%"});      
+   };
+   if (scrollobj.curTop > 250){
+       $("#intro").css("opacity", 0);
+   };
+   if (scrollobj.curTop >= 300 && scrollobj.curTop <= 900){
+       $("#how_to_spot_a_planet").css({"opacity": (scrollobj.curTop - 300)/600, "top": 100 - (scrollobj.curTop - 300)/6 + "%"});
+   }
+   if (scrollobj.curTop <= 1200 && scrollobj.curTop > 900){
+       $("#how_to_spot_a_planet").css({"opacity": 1, "top": "0%"});      
+   };   
+   if (scrollobj.curTop < 1200){
+       $("#intro_planet").css("opacity", 1);
+       $("#main_event_interactive").css("opacity", 0);
+       $("#in_the_frame").css({"opacity":0, "top":"100%"});    
+   };
+   if (scrollobj.curTop > 1200 && scrollobj.curTop <= 1500){
+       $("#intro_planet").css("opacity", (300 - (scrollobj.curTop - 1200))/300);
+       $("#how_to_spot_a_planet").css({"opacity": (300 - (scrollobj.curTop - 1200))/300, "top": -(scrollobj.curTop - 1200)/3 + "%"});
+       $("#main_event_interactive").css("opacity", (scrollobj.curTop - 1200)/300);
+       $("#in_the_frame").css({"opacity":(scrollobj.curTop - 1200)/300, "top": 100 - (scrollobj.curTop - 1200)/3 +"%"});
+   };
+   if (scrollobj.curTop > 1500){
+       $("#intro_planet").css("opacity", 0);
+       $("#how_to_spot_a_planet").css({"opacity": 0, "top": "-100%"}); 
+       $("#main_event_interactive").css("opacity", 1);
+   };
+   
+   
+   if (scrollobj.curTop > 1500 && scrollobj.curTop <= 2000){
+       $("#in_the_frame").css({"opacity":1, "top":"0%"});
+   };
+   if (scrollobj.curTop <= 2000){
+       $("#Keplers_haul").css({"opacity": 0, "top":"100%"});
+       $("#candidates").css("opacity", 0);
+   };
+   if (scrollobj.curTop > 2000 && scrollobj.curTop <= 2500){
+       $("#in_the_frame").css({"opacity":1 - (scrollobj.curTop - 2000)/500, "top": -(scrollobj.curTop - 2000)/5 +"%"});
+       $("#Keplers_haul").css({"opacity": (scrollobj.curTop - 2000)/500, "top": 100 - (scrollobj.curTop - 2000)/5 +"%"});
+       $("#candidates").css("opacity", (scrollobj.curTop - 2000)/500);
+   };
+   if (scrollobj.curTop > 2500){
+       $("#in_the_frame").css({"opacity":0, "top":"-100%"});
+   }
+   
+   
+   if (scrollobj.curTop > 2500 && scrollobj.curTop <= 3000){
+       $("#Keplers_haul").css({"opacity":1, "top":"0%"});
+       $("#candidates").css("opacity", 1);
+   };
+   if (scrollobj.curTop <= 3000){
+       $("#ripe_for_life").css({"opacity": 0, "top":"100%"});
+       $("#size").css("opacity", 0);
+   };
+   if (scrollobj.curTop > 3000 && scrollobj.curTop <= 3500){
+       $("#Keplers_haul").css({"opacity":1 - (scrollobj.curTop - 3000)/500, "top": -(scrollobj.curTop - 3000)/5 +"%"});
+       // $("#candidates").css("opacity", 1 - (scrollobj.curTop - 3000)/500);
+       $("#ripe_for_life").css({"opacity": (scrollobj.curTop - 3000)/500, "top": 100 - (scrollobj.curTop - 3000)/5 +"%"});
+       $("#size").css("opacity", (scrollobj.curTop - 3000)/500);
+       
+   };
+   if (scrollobj.curTop > 3500){
+       $("#Keplers_haul").css({"opacity":0, "top":"-100%"});
+       $("#candidates").css("opacity", 0);
+   }
+   
+   
+   if (scrollobj.curTop > 3500 && scrollobj.curTop <= 4000){
+       $("#ripe_for_life").css({"opacity":1, "top":"0%"});
+       $("#size").css("opacity", 1);
+   };
+   if (scrollobj.curTop <= 4000){
+       $("#these_might_be_like_home").css({"opacity": 0, "top":"100%"});
+       $("#habitable").css("opacity", 0);
+   };
+   if (scrollobj.curTop > 4000 && scrollobj.curTop <= 4500){
+       $("#ripe_for_life").css({"opacity":1 - (scrollobj.curTop - 4000)/500, "top": -(scrollobj.curTop - 4000)/5 +"%"});
+       // $("#size").css("opacity", 1 - (scrollobj.curTop - 4000)/500);
+       
+       $("#these_might_be_like_home").css({"opacity": (scrollobj.curTop - 4000)/500, "top": 100 - (scrollobj.curTop - 4000)/5 +"%"});
+       $("#habitable").css("opacity", (scrollobj.curTop - 4000)/500);
+   };
+   if (scrollobj.curTop > 4500){
+       $("#ripe_for_life").css({"opacity":0, "top":"-100%"});
+       $("#size").css("opacity", 0);
+   }
+   
+   //
+   if (scrollobj.curTop > 4500 && scrollobj.curTop <= 5000){
+       $("#these_might_be_like_home").css({"opacity":1, "top":"0%"});
+       $("#habitable").css("opacity", 1);
+   };
+   if (scrollobj.curTop <= 5000){
+       $("#Earths_galore").css({"opacity": 0, "top":"100%"});
+       $("#geometry").css("opacity", 0);
+   };
+   if (scrollobj.curTop > 5000 && scrollobj.curTop <= 5500){
+       $("#these_might_be_like_home").css({"opacity":1 - (scrollobj.curTop - 5000)/500, "top": -(scrollobj.curTop - 5000)/5 +"%"});
+       // $("#habitable").css("opacity", 1 - (scrollobj.curTop - 5000)/500);
+       
+       $("#Earths_galore").css({"opacity": (scrollobj.curTop - 5000)/500, "top": 100 - (scrollobj.curTop - 5000)/5 +"%"});
+       $("#geometry").css("opacity", (scrollobj.curTop - 5000)/500);
+   };
+   if (scrollobj.curTop > 5500){
+       $("#these_might_be_like_home").css({"opacity":0, "top":"-100%"});
+       $("#habitable").css("opacity", 0);
+   }
+   
+   //
+   if (scrollobj.curTop > 5500 && scrollobj.curTop <= 6000){
+       $("#Earths_galore").css({"opacity":1, "top":"0%"});
+       $("#geometry").css("opacity", 1);
+   };
+   if (scrollobj.curTop <= 6000){
+       $("#the_bigger_picture").css({"opacity": 0, "top":"100%"});
+       $("#all_sky").css("opacity", 0);
+   };
+   if (scrollobj.curTop > 6000 && scrollobj.curTop <= 6500){
+       $("#Earths_galore").css({"opacity":1 - (scrollobj.curTop - 6000)/500, "top": -(scrollobj.curTop - 6000)/5 +"%"});
+       // $("#geometry").css("opacity", 1 - (scrollobj.curTop - 6000)/500);
+       
+       $("#the_bigger_picture").css({"opacity": (scrollobj.curTop - 6000)/500, "top": 100 - (scrollobj.curTop - 6000)/5 +"%"});
+       $("#all_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
+   };
+   if (scrollobj.curTop > 6500){
+       $("#Earths_galore").css({"opacity":0, "top":"-100%"});
+       $("#geometry").css("opacity", 0);
+   }
+   
+   //
+   if (scrollobj.curTop > 6500 && scrollobj.curTop <= 7000){
+       $("#the_bigger_picture").css({"opacity":1, "top":"0%"});
+   };
+   if (scrollobj.curTop <= 7000){
+       $("#the_search_continues").css({"opacity": 0, "top":"100%"});
+   };
+   if (scrollobj.curTop > 7000 && scrollobj.curTop <= 7500){
+       $("#the_bigger_picture").css({"opacity":1 - (scrollobj.curTop - 7000)/500, "top": -(scrollobj.curTop - 7000)/5 +"%"});
+       $("#the_search_continues").css({"opacity": (scrollobj.curTop - 7000)/500, "top": 100 - (scrollobj.curTop - 7000)/5 +"%"});
+   };
+   if (scrollobj.curTop > 7500){
+       $("#the_bigger_picture").css({"opacity":0, "top":"-100%"});
+   }
+   
+   //
+   if (scrollobj.curTop > 7500 && scrollobj.curTop <= 8000){
+       $("#the_search_continues").css({"opacity":1, "top":"0%"});
+   };
+   if (scrollobj.curTop > 8000 && scrollobj.curTop <= 8500){
+       $("#the_search_continues").css({"opacity":1 - (scrollobj.curTop - 8000)/500, "top": -(scrollobj.curTop - 8000)/5 +"%"});
+   };
+   if (scrollobj.curTop > 8500){
+       $("#the_search_continues").css({"opacity":0, "top":"-100%"});
+   }
+   
+   
+   
+    // // Placing images of Kepler candidates and forecasted candidates.
+    // if (scrollobj.lastTop < planets_position && scrollobj.curTop >= planets_position){
+    //     // starload("json/kepler_fakes.geojson", "candidates", "red", e1);
+    //     // starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+    //     // svg.append("image")
+    //     //     .attr("xlink:href", "img/test1.png")
+    //     //     .attr("id", "candidates")
+    //     //     .attr("x", 0)
+    //     //     .attr("y", 0)
+    //     //     .attr("width", 1440)
+    //     //     .attr("height", 771)
+    //     //     .attr("opacity", 1);
+    //     svg.select("#candidates").attr("opacity", 1);
+    // };
+    // if (scrollobj.lastTop >= planets_position && scrollobj.curTop < planets_position){
+    //     // svg.selectAll("#candidates").remove();
+    //     svg.select("#candidates").attr("opacity", 0);
+    // };
+    // 
+    // 
+    // // Removing planets larger than 2 Earth radii.
+    // if (scrollobj.lastTop < size_position && scrollobj.curTop >= size_position){
+    //     // starload("json/kepler_data_size.geojson", "size", "#55FF00", e2);
+    //     // svg.append("image")
+    //     //     .attr("xlink:href", "img/test2.png")
+    //     //     .attr("id", "size")
+    //     //     .attr("x", 0)
+    //     //     .attr("y", 0)
+    //     //     .attr("width", 1440)
+    //     //     .attr("height", 771)
+    //     //     .attr("opacity", 1);
+    //     // svg.selectAll("#candidates").remove();
+    //     svg.select("#size").attr("opacity", 1);
+    //     svg.select("#candidates").attr("opacity", 0);
+    // };
+    // if (scrollobj.lastTop >= size_position && scrollobj.curTop < size_position){
+    //     // starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+    //     // svg.append("image")
+    //     //     .attr("xlink:href", "img/test1.png")
+    //     //     .attr("id", "candidates")
+    //     //     .attr("x", 0)
+    //     //     .attr("y", 0)
+    //     //     .attr("width", 1440)
+    //     //     .attr("height", 771)
+    //     //     .attr("opacity", 1);
+    //     // svg.selectAll("#size").remove();
+    //     svg.select("#size").attr("opacity", 0);
+    //     svg.select("#candidates").attr("opacity", 1);
+    // };
+    // 
+    // // // Correcting for geometric bias.
+    // // if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
+    // //     // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
+    // //     g.select("#geometric")
+    // //         .attr("opacity", 1);
+    // //     g.selectAll("#candidates").remove();
+    // //     starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+    // // };
+    // // if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
+    // //     g.select("#geometric")
+    // //         .attr("opacity", 0);
+    // // };
+    // 
+    // // Removing planets outside the habitable zone.
+    // if (scrollobj.lastTop < habitable_position && scrollobj.curTop >= habitable_position){
+    //     // g.selectAll("#candidates").remove();
+    //     // starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
+    //     // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
+    //     // svg.append("image")
+    //     //     .attr("xlink:href", "img/test3.png")
+    //     //     .attr("id", "habitable")
+    //     //     .attr("x", 0)
+    //     //     .attr("y", 0)
+    //     //     .attr("width", 1440)
+    //     //     .attr("height", 771)
+    //     //     .attr("opacity", 1);
+    //     // svg.select("#size").remove();
+    //     svg.select("#habitable").attr("opacity", 1);
+    //     svg.select("#size").attr("opacity", 0);
+    // };
+    // if (scrollobj.lastTop >= habitable_position && scrollobj.curTop < habitable_position){
+    //     // starload("json/kepler_data_size.geojson", "candidates", "#55FF00", e2);
     //     // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
-    //     g.select("#geometric")
-    //         .attr("opacity", 1);
-    //     g.selectAll("#candidates").remove();
-    //     starload("json/kepler_data.geojson", "candidates", "#55FF00", e1);
+    //     // svg.append("image")
+    //     //     .attr("xlink:href", "img/test2.png")
+    //     //     .attr("id", "size")
+    //     //     .attr("x", 0)
+    //     //     .attr("y", 0)
+    //     //     .attr("width", 1440)
+    //     //     .attr("height", 771)
+    //     //     .attr("opacity", 1);
+    //     // svg.select("#habitable").remove();
+    //     // g.selectAll("#candidates_size").remove();
+    //     // g.selectAll("#size").remove();
+    //     svg.select("#habitable").attr("opacity", 0);
+    //     svg.select("#size").attr("opacity", 1);
     // };
-    // if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
-    //     g.select("#geometric")
-    //         .attr("opacity", 0);
+    // 
+    // // Adding in the planets that we can't see because of the geometry of their orbits
+    // if (scrollobj.lastTop < geometry_position && scrollobj.curTop >= geometry_position){
+    //     // g.selectAll("#candidates_size").remove();
+    //     // g.selectAll("#size").remove();
+    //     // starload("json/kepler_fakes.geojson", "geometry", "#55FF00", e5);
+    //     // svg.append("image")
+    //     //     .attr("xlink:href", "img/test4.png")
+    //     //     .attr("id", "geometry")
+    //     //     .attr("x", 0)
+    //     //     .attr("y", 0)
+    //     //     .attr("width", 1440)
+    //     //     .attr("height", 771)
+    //     //     .attr("opacity", 1);
+    //     // svg.select("#habitable").remove();
+    //     // starload("json/kepler_habitable.geojson", "habitable", "#55FF00", e6);
+    //     svg.select("#geometry").attr("opacity", 1);
+    //     svg.select("#habitable").attr("opacity", 0);
     // };
-    
-    // Removing planets outside the habitable zone.
-    if (obj.lastTop < habitable_position && obj.curTop >= habitable_position){
-        // g.selectAll("#candidates").remove();
-        // starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
-        // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
-        svg.append("image")
-            .attr("xlink:href", "img/test3.png")
-            .attr("id", "habitable")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
-        svg.select("#size").remove();
-    };
-    if (obj.lastTop >= habitable_position && obj.curTop < habitable_position){
-        // starload("json/kepler_data_size.geojson", "candidates", "#55FF00", e2);
-        // starload("json/kepler_geometry.geojson", "geometric", "green", e2);
-        svg.append("image")
-            .attr("xlink:href", "img/test2.png")
-            .attr("id", "size")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
-        svg.select("#habitable").remove();
-        // g.selectAll("#candidates_size").remove();
-        // g.selectAll("#size").remove();
-    };
-    
-    // Adding in the planets that we can't see because of the geometry of their orbits
-    if (obj.lastTop < geometry_position && obj.curTop >= geometry_position){
-        // g.selectAll("#candidates_size").remove();
-        // g.selectAll("#size").remove();
-        // starload("json/kepler_fakes.geojson", "geometry", "#55FF00", e5);
-        svg.append("image")
-            .attr("xlink:href", "img/test4.png")
-            .attr("id", "geometry")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
-        svg.select("#habitable").remove();
-        // starload("json/kepler_habitable.geojson", "habitable", "#55FF00", e6);
-    };
-    if (obj.lastTop >= geometry_position && obj.curTop < geometry_position){
-        // starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
-        // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
-        svg.append("image")
-            .attr("xlink:href", "img/test3.png")
-            .attr("id", "habitable")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
-        svg.selectAll("#geometry").remove();
-        // g.selectAll("#habitable").remove();
-    };
+    // if (scrollobj.lastTop >= geometry_position && scrollobj.curTop < geometry_position){
+    //     // starload("json/kepler_data_habitable.geojson", "habitable", "#55FF00", e3);
+    //     // starload("json/kepler_size.geojson", "size", "#55FF00", e4);
+    //     // svg.append("image")
+    //     //     .attr("xlink:href", "img/test3.png")
+    //     //     .attr("id", "habitable")
+    //     //     .attr("x", 0)
+    //     //     .attr("y", 0)
+    //     //     .attr("width", 1440)
+    //     //     .attr("height", 771)
+    //     //     .attr("opacity", 1);
+    //     // svg.selectAll("#geometry").remove();
+    //     // g.selectAll("#habitable").remove();
+    //     svg.select("#geometry").attr("opacity", 0);
+    //     svg.select("#habitable").attr("opacity", 1);
+    // };
     
     // Filling in the whole sky.
-    if (obj.lastTop < all_sky_position && obj.curTop >= all_sky_position){
+    if (scrollobj.lastTop < all_sky_position && scrollobj.curTop >= all_sky_position){
         // svg.select("#all_sky").attr("opacity", 1);
         // starload("json/all_sky_habitable.geojson", "all_sky", "green", e7);
         // g.append("image")
@@ -504,25 +741,29 @@ var render_func = function(obj){
         //     .attr("height", 1149);
         //     // .attr("preserveAspectRatio", "xMinYMin");
         
-        svg.append("image")
-            .attr("xlink:href", "img/test5.png")
-            .attr("id", "all_sky")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
+        // svg.append("image")
+        //     .attr("xlink:href", "img/test5.png")
+        //     .attr("id", "all_sky")
+        //     .attr("x", 0)
+        //     .attr("y", 0)
+        //     .attr("width", 1440)
+        //     .attr("height", 771)
+        //     .attr("opacity", 1);
+        // 
+        // svg.selectAll("#geometry").remove();
+        // 
+        // g.append("image")
+        //     .attr("xlink:href", "img/test6.png")
+        //     .attr("id", "zoom_sky")
+        //     .attr("x", 0)
+        //     .attr("y", 0)
+        //     .attr("width", 1440)
+        //     .attr("height", 771)
+        //     .attr("opacity", 1);
         
-        svg.selectAll("#geometry").remove();
-        
-        g.append("image")
-            .attr("xlink:href", "img/test6.png")
-            .attr("id", "zoom_sky")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
+        // svg.select("#geometry").attr("opacity", 0);
+        // svg.select("#all_sky").attr("opacity", 1);
+        // g.select("#zoom_sky").style("opacity", 1);
         
         // zoom(zoom_max*zoom_max/zoom_min, false);
         zoom(zoom_max/zoom_min, false);
@@ -530,38 +771,44 @@ var render_func = function(obj){
         // zoom(zoom_max, false);
         
     };
-    if (obj.lastTop >= all_sky_position && obj.curTop < all_sky_position){
-        svg.append("image")
-            .attr("xlink:href", "img/test4.png")
-            .attr("id", "geometry")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 1280)
-            .attr("height", 895)
-            .attr("opacity", 1);
-        
-        svg.selectAll("#all_sky").remove();
-        g.selectAll("#zoom_sky").remove();
+    if (scrollobj.lastTop >= all_sky_position && scrollobj.curTop < all_sky_position){
+        // svg.append("image")
+        //     .attr("xlink:href", "img/test4.png")
+        //     .attr("id", "geometry")
+        //     .attr("x", 0)
+        //     .attr("y", 0)
+        //     .attr("width", 1440)
+        //     .attr("height", 771)
+        //     .attr("opacity", 1);
+        // 
+        // svg.selectAll("#all_sky").remove();
+        // g.selectAll("#zoom_sky").remove();
         // svg.select("#all_sky").attr("opacity", 0);
+        
+        // svg.select("#geometry").attr("opacity", 1);
+        // svg.select("#all_sky").attr("opacity", 0);
+        g.select("#zoom_sky").style("opacity", 0);
     };
     
     // Zooming in and out.
-    if (obj.lastTop < zoom_position && obj.curTop >= zoom_position){
-        svg.selectAll("#all_sky").remove();
+    if (scrollobj.lastTop < zoom_position && scrollobj.curTop >= zoom_position){
+        // svg.selectAll("#all_sky").remove();
         // zoom(zoom_min/(zoom_max*zoom_max), false);
         // zoom(zoom_min/zoom_max, false);
+        svg.select("#all_sky").style("opacity", 0);
+        g.select("#zoom_sky").style("opacity", 1);
         zoom(1, false)
 
         // zoom(zoom_min, true);
     };
-    if (obj.lastTop >= zoom_position && obj.curTop < zoom_position){
+    if (scrollobj.lastTop >= zoom_position && scrollobj.curTop < zoom_position){
         // svg.append("image")
         //     .attr("xlink:href", "img/test5.png")
         //     .attr("id", "all_sky")
         //     .attr("x", 0)
         //     .attr("y", 0)
-        //     .attr("width", 1280)
-        //     .attr("height", 895)
+        //     .attr("width", 1440)
+        //     .attr("height", 771)
         //     .attr("opacity", 1);
         
         // g.selectAll("#zoom_sky").remove();
@@ -594,7 +841,9 @@ var render_func = function(obj){
         //         svg.selectAll(".lines").attr("d", line_path);
         //     };
       
-};
+// };
+
+});
 
 // // Initialize Skrollr, setting the previously-defined render-listening function.
 // skrollr.init();
