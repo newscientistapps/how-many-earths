@@ -495,9 +495,10 @@ $(window).scroll(function(){
    if (scrollobj.curTop > 3000 && scrollobj.curTop <= 3500){
        $("#Keplers_haul").css({"opacity":1 - (scrollobj.curTop - 3000)/500, "top": -(scrollobj.curTop - 3000)/5 +"%"});
        // $("#candidates").css("opacity", 1 - (scrollobj.curTop - 3000)/500);
-       $("#ripe_for_life").css({"opacity": (scrollobj.curTop - 3000)/500, "top": 100 - (scrollobj.curTop - 3000)/5 +"%"});
-       $("#size").css("opacity", (scrollobj.curTop - 3000)/500);
+       $("#candidates").css("opacity", 1);
        
+       $("#ripe_for_life").css({"opacity": (scrollobj.curTop - 3000)/500, "top": 100 - (scrollobj.curTop - 3000)/5 +"%"});
+       $("#size").css("opacity", (scrollobj.curTop - 3000)/500);   
    };
    if (scrollobj.curTop > 3500){
        $("#Keplers_haul").css({"opacity":0, "top":"-100%"});
@@ -516,6 +517,7 @@ $(window).scroll(function(){
    if (scrollobj.curTop > 4000 && scrollobj.curTop <= 4500){
        $("#ripe_for_life").css({"opacity":1 - (scrollobj.curTop - 4000)/500, "top": -(scrollobj.curTop - 4000)/5 +"%"});
        // $("#size").css("opacity", 1 - (scrollobj.curTop - 4000)/500);
+       $("#size").css("opacity", 1);
        
        $("#these_might_be_like_home").css({"opacity": (scrollobj.curTop - 4000)/500, "top": 100 - (scrollobj.curTop - 4000)/5 +"%"});
        $("#habitable").css("opacity", (scrollobj.curTop - 4000)/500);
@@ -537,6 +539,7 @@ $(window).scroll(function(){
    if (scrollobj.curTop > 5000 && scrollobj.curTop <= 5500){
        $("#these_might_be_like_home").css({"opacity":1 - (scrollobj.curTop - 5000)/500, "top": -(scrollobj.curTop - 5000)/5 +"%"});
        // $("#habitable").css("opacity", 1 - (scrollobj.curTop - 5000)/500);
+       $("#habitable").css("opacity", 1);
        
        $("#Earths_galore").css({"opacity": (scrollobj.curTop - 5000)/500, "top": 100 - (scrollobj.curTop - 5000)/5 +"%"});
        $("#geometry").css("opacity", (scrollobj.curTop - 5000)/500);
@@ -558,6 +561,7 @@ $(window).scroll(function(){
    if (scrollobj.curTop > 6000 && scrollobj.curTop <= 6500){
        $("#Earths_galore").css({"opacity":1 - (scrollobj.curTop - 6000)/500, "top": -(scrollobj.curTop - 6000)/5 +"%"});
        // $("#geometry").css("opacity", 1 - (scrollobj.curTop - 6000)/500);
+       $("#geometry").css("opacity", 1);
        
        $("#the_bigger_picture").css({"opacity": (scrollobj.curTop - 6000)/500, "top": 100 - (scrollobj.curTop - 6000)/5 +"%"});
        $("#all_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
