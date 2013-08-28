@@ -121,7 +121,9 @@ var rescale_translation = function(r){
 };
 
 // A zooming function.
-var zoom = function(new_zoom, new_paths){
+// I think it needs to be defined as a function statement, rather than a function expression,
+// in order to dynamically read the values of width and height, instead of baking them in when the function is defined.
+function zoom(new_zoom, new_paths){
     
     zoom_ratio = new_zoom;
     
@@ -152,12 +154,12 @@ var e1 = 0,
     e6 = 0,
     e7 = 0;
 
-// Define the render-listening function.
-// var render_func = function(obj){
+// Define a scroll-listening object and function.
 var scrollobj = {
     lastTop: -1,
     curTop: 0
 };
+
 $(window).scroll(function(){
    scrollobj.lastTop = scrollobj.curTop;
    scrollobj.curTop = $(window).scrollTop();
