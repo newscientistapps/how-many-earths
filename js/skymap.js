@@ -40,6 +40,7 @@ var pic_x = (width - pic_width)/2,
 // Load the images.
     svg.append("image")
         .attr("xlink:href", "img/test0.png")
+        .attr("class", "skyimage")
         .attr("id", "background")
         .attr("x", pic_x)
         .attr("y", pic_y)
@@ -51,6 +52,7 @@ var pic_x = (width - pic_width)/2,
     
     svg.append("image")
         .attr("xlink:href", "img/test1.png")
+        .attr("class", "skyimage")
         .attr("id", "candidates")
         .attr("x", pic_x)
         .attr("y", pic_y)
@@ -60,6 +62,7 @@ var pic_x = (width - pic_width)/2,
 	
     svg.append("image")
         .attr("xlink:href", "img/test2.png")
+        .attr("class", "skyimage")
         .attr("id", "size")
         .attr("x", pic_x)
         .attr("y", pic_y)
@@ -69,6 +72,7 @@ var pic_x = (width - pic_width)/2,
     
     svg.append("image")
         .attr("xlink:href", "img/test3.png")
+        .attr("class", "skyimage")
         .attr("id", "habitable")
         .attr("x", pic_x)
         .attr("y", pic_y)
@@ -78,6 +82,7 @@ var pic_x = (width - pic_width)/2,
     
     svg.append("image")
         .attr("xlink:href", "img/test4.png")
+        .attr("class", "skyimage")
         .attr("id", "geometry")
         .attr("x", pic_x)
         .attr("y", pic_y)
@@ -87,6 +92,7 @@ var pic_x = (width - pic_width)/2,
     
     svg.append("image")
         .attr("xlink:href", "img/test5.png")
+        .attr("class", "skyimage")
         .attr("id", "all_sky")
         .attr("x", pic_x)
         .attr("y", pic_y)
@@ -96,6 +102,7 @@ var pic_x = (width - pic_width)/2,
 
     g.append("image")
         .attr("xlink:href", "img/test6.png")
+        .attr("class", "skyimage")
         .attr("id", "zoom_sky")
         .attr("x", pic_x)
         .attr("y", pic_y)
@@ -340,6 +347,29 @@ $(window).scroll(function(){
     };
 
 });
+
+
+// Handling window resizing behavior.
+$(window).resize(function(){
+    
+    // Reset the width and height variables.
+    width = window.innerWidth;
+    height = window.innerHeight;
+    
+    // Reset image offset locations.
+    pic_x = (width - pic_width)/2;
+    pic_y = (height - pic_height)/2;
+
+    // Resize the SVG canvas.
+    svg.attr("width", width)
+        .attr("height", height);
+    
+    // Reset the image offsets.
+    svg.selectAll(".skyimage")
+            .attr("x", pic_x)
+            .attr("y", pic_y);
+});
+
 
 // $("p.flasher").click(function(){
 //     console.log("click!")
