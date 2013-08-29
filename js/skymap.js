@@ -378,8 +378,10 @@ $(".flasher").click(function(){
 
     // $(window).scrollTop(scrollobj.curTop + 1000); // this just jumps the page to the appropriate location.
     
-    // Animating the scroll transition through judicious use of jQuery, along with CSS properties on the top-level HTML tag.
-    $("html").animate({
+    // Animating the scroll transition through judicious use of jQuery, 
+    // along with CSS properties on the top-level HTML tag.
+    // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
+    $("body,html").animate({
         scrollTop: scrollobj.curTop + 1000
     }, "slow"); // slow is 600ms.
 });
