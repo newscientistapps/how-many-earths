@@ -122,39 +122,15 @@ var rescale_translation = function(r){
         return 1/2 * (1/r - 1);
 };
 
-// A zooming function.
-// I think it needs to be defined as a function statement, rather than a function expression,
-// in order to dynamically read the values of width and height, instead of baking them in when the function is defined.
-function zoom(new_zoom, new_paths){
-    
-    zoom_ratio = new_zoom;
-    
-    var rt = rescale_translation(zoom_ratio);
-    
-    g.transition()
-     .duration(zoom_transition_time)
-     .attr("transform", "scale(" + zoom_ratio + ")translate(" + width*rt + "," + height*rt + ")");
-};
-
-
 // Define a few scrolling variables, to control the transitions.
 var planets_position = 2300,
     size_position = 3300,
     habitable_position = 4300,
     geometry_position = 5300,
     all_sky_position = 6500,
-    zoom_position = 6800,
+    zoom_position = 7001,
     rotate_position = 6500,
     interactive_position = 8000;
-
-// And define a few variables that will be filled in by files that are loaded in.
-var e1 = 0,
-    e2 = 0,
-    e3 = 0,
-    e4 = 0,
-    e5 = 0,
-    e6 = 0,
-    e7 = 0;
 
 // Define a scroll-listening object and function.
 var scrollobj = {
@@ -169,13 +145,13 @@ $(window).scroll(function(){
    console.log("curTop is " + scrollobj.curTop); 
 
    
-   // Handling divs.
+   // Handling divs and images.
    if (scrollobj.curTop <= 250){
-       $("#intro").css("opacity", (250 - scrollobj.curTop)/250);
+       $("#intro").css({"opacity": (250 - scrollobj.curTop)/250, "top": "100px"});
        $("#how_to_spot_a_planet").css({"opacity": 0, "top": "100%"});      
    };
    if (scrollobj.curTop > 250){
-       $("#intro").css("opacity", 0);
+       $("#intro").css({"opacity": 0, "top": "-100%"});
    };
    if (scrollobj.curTop >= 300 && scrollobj.curTop <= 900){
        $("#how_to_spot_a_planet").css({"opacity": (scrollobj.curTop - 300)/600, "top": 100 - (scrollobj.curTop - 300)/6 + "%"});
@@ -332,26 +308,47 @@ $(window).scroll(function(){
    };
    
     
-    // Filling in the whole sky.
-    if (scrollobj.lastTop < all_sky_position && scrollobj.curTop >= all_sky_position){
-        zoom(zoom_max/zoom_min, false);        
-    };
+    // Prepping for zoom.
+    // if (scrollobj.lastTop < all_sky_position && scrollobj.curTop >= all_sky_position){
+    //     zoom(zoom_max/zoom_min);        
+    // };
     if (scrollobj.lastTop >= all_sky_position && scrollobj.curTop < all_sky_position){
         g.select("#zoom_sky").style("opacity", 0);
     };
     
     // Zooming in and out.
+    // if (scrollobj.lastTop < zoom_position && scrollobj.curTop >= zoom_position){
+    //     svg.select("#all_sky").style("opacity", 0);
+    //     g.select("#zoom_sky").style("opacity", 1);
+    //     zoom(1)
+    // };
+    // if (scrollobj.lastTop >= zoom_position && scrollobj.curTop < zoom_position){
+    //     zoom(zoom_max/zoom_min);
+    // };
     if (scrollobj.lastTop < zoom_position && scrollobj.curTop >= zoom_position){
         svg.select("#all_sky").style("opacity", 0);
         g.select("#zoom_sky").style("opacity", 1);
-        zoom(1, false)
     };
     if (scrollobj.lastTop >= zoom_position && scrollobj.curTop < zoom_position){
-        zoom(zoom_max/zoom_min, false);
+        svg.select("#all_sky").style("opacity", 1);
+        g.select("#zoom_sky").style("opacity", 0);
+    };
+    if (scrollobj.curTop <= zoom_position){
+        var new_zoom = zoom_max/zoom_min;
+        var rt = rescale_translation(new_zoom);
+        g.attr("transform", "scale(" + new_zoom + ")translate(" + width*rt + "," + height*rt + ")");
+    };
+    if (scrollobj.curTop >= zoom_position && scrollobj.curTop <= (zoom_position + 800)){
+        var scroll_ratio = (scrollobj.curTop - zoom_position)/800; // varies from 0 to 1 over the relevant scroll range
+        var new_zoom = zoom_max/zoom_min * (1 + (zoom_min/zoom_max - 1) * scroll_ratio); // varies from zoom_max/zoom_min to 1 over the relevant scroll range
+        var rt = rescale_translation(new_zoom);
+        g.attr("transform", "scale(" + new_zoom + ")translate(" + width*rt + "," + height*rt + ")");
+    };
+    if (scrollobj.curTop >= (zoom_position + 800)){
+        g.attr("transform", "scale(1)");
     };
 
 });
-
 
 // Handling window resizing behavior.
 $(window).resize(function(){
@@ -375,7 +372,14 @@ $(window).resize(function(){
 });
 
 
-// $("p.flasher").click(function(){
-//     console.log("click!")
-//     $("window").scrollTo(scrollobj.curTop + 500);
-// });
+// Making the page scroll when the flashers are clicked.
+$(".flasher").click(function(){
+    console.log("click!"); // for debugging purposes.
+
+    // $(window).scrollTop(scrollobj.curTop + 1000); // this just jumps the page to the appropriate location.
+    
+    // Animating the scroll transition through judicious use of jQuery, along with CSS properties on the top-level HTML tag.
+    $("html").animate({
+        scrollTop: scrollobj.curTop + 1000
+    }, "slow"); // slow is 600ms.
+});

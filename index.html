@@ -8,13 +8,6 @@
     
     <script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="js/jquery-1.10.2.min.js"></script>
-  
-    <!--skrollr script from: https://github.com/Prinzhorn/skrollr-->
-    <!-- <script type="text/javascript" src="js/skrollr.min.js"></script> -->
-
-    <!--initialize skrollr-->
-    <!-- <script type="text/javascript"> window.onload = function() {skrollr.init({render: render_func});} </script>
-   -->
 
     <title>How Many Earths? | New Scientist </title>
 
@@ -28,12 +21,10 @@
 
     </div>
     
-    <!-- <div id="intro_planet" data-1200="opacity:1;" data-1500="opacity:0;"> -->
 	<div id="intro_planet" style="z=index:1000;">
 	<img id="planet_png" src="img/exoplanet_centered.png"/>
 	</div>
 	
-	<!-- <div id="intro" data-0="opacity:1;" data-250="opacity:0;"> -->
 	<div id="intro">
 	
 		<h1>HOW MANY <br> EARTHS?</h1>
@@ -41,14 +32,13 @@
 		<p id="intro_blurb">Looking up at the night sky, many have wondered how many other planets might be circling those pinpricks of light – some maybe populated by sentient beings gazing back at us.</p>
 
 		<p id="intro_blurb">Today, we're starting to get a handle on the number of roughly Earth-sized worlds that might be suitable for life to emerge.</p>
-
-		<p class="flasher">▼ Scroll</p>  
+		
+		<div class = "flash-container">
+		<p class="flasher">▼ Click here or scroll to continue</p>
+		</div>  
 	
 	</div>
 
-	
-	<!-- <div class="overlay" id="how_to_spot_a_planet" data-300="position:fixed;top:100%;opacity:0;" data-900="position:fixed;top:0%;opacity:1;" data-1300="position:fixed;top:0%;opacity:1;" data-1500="position:fixed;top:-100%;opacity:0;"> -->
-	<!-- <div class="overlay" id="how_to_spot_a_planet" style="position:fixed;opacity:0;"> -->
 	<div class="overlay" id="how_to_spot_a_planet">
 		<h3>How to spot a planet</h3>
 	
@@ -56,19 +46,13 @@
 	
 		<p><video width="70%" autoplay loop src="img/how_to_find_a_planet.mp4" type="video.mp4"/></video></p>
 
+		<!-- <div class = "flash-container"> -->
 		<p class="flasher">▼</p> 
+		<!-- </div> -->
 
 	</div>
-
-	
-	<!-- <div id="main_event_interactive" data-1300="position:fixed;top:0%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;" data-8200="z-index:0;" data-8500="z-index:10000;"> -->
-		<!-- <div id="main_event_interactive", style ="position:fixed;top:0%;z-index:-1;opacity:0;"> -->
-	<div id="main_event_interactive", style ="position:fixed;top:0%;opacity:0;">
-		<script src="js/skymap.js"></script>		
-	</div>
 	
 	
-	<!-- <div class="overlay" id="in_the_frame" data-1300="position:fixed;top:100%;opacity:0;" data-1500="position:fixed;top:0%;opacity:1;" data-2000="position:fixed;top:0%;opacity:1;" data-2500="position:fixed;top:-100%;opacity:0;"> -->
 	<div class="overlay" id="in_the_frame">
 		<h3>In the frame</h3>
 
@@ -78,7 +62,6 @@
 
 	</div>
 
-	<!-- <div class="overlay" id="Keplers_haul" data-2000="position:fixed;top:100%;opacity:0;" data-2500="position:fixed;top:0%;opacity:1;" data-3000="position:fixed;top:0%;opacity:1;" data-3500="position:fixed;top:-100%;opacity:0;"> -->
 	<div class="overlay" id="Keplers_haul">
 		<h3>Kepler's haul</h3>
 
@@ -90,7 +73,6 @@
 
 	</div>
 
-	<!-- <div class="overlay" id="ripe_for_life" data-3000="position:fixed;top:100%;opacity:0;" data-3500="position:fixed;top:0%;opacity:1;" data-4000="position:fixed;top:0%;opacity:1;" data-4500="position:fixed;top:-100%;opacity:0;"> -->
 	<div class="overlay" id="ripe_for_life">
 		<h3>Ripe for life?</h3>
 
@@ -102,7 +84,6 @@
 
 	</div>
 
-	<!-- <div class="overlay" id="these_might_be_like_home" data-4000="position:fixed;top:100%;opacity:0;" data-4500="position:fixed;top:0%;opacity:1;" data-5000="position:fixed;top:0%;opacity:1;" data-5500="position:fixed;top:-100%;opacity:0;"> -->
 	<div class="overlay" id="these_might_be_like_home">
 
 		<h3>These might be like home</h3>
@@ -117,7 +98,6 @@
 
 	</div>
 
-	<!-- <div class="overlay" id="Earths_galore" data-5000="position:fixed;top:100%;opacity:0;" data-5500="position:fixed;top:0%;opacity:1;" data-6000="position:fixed;top:0%;opacity:1;" data-6500="position:fixed;top:-100%;opacity:0;" > -->
 	<div class="overlay" id="Earths_galore">
 		<h3>Earths galore</h3>
 
@@ -129,7 +109,6 @@
 
 	</div>
 
-	<!-- <div class="overlay" id="the_bigger_picture" data-6000="position:fixed;top:100%;opacity:0;" data-6500="position:fixed;top:0%;opacity:1;" data-7000="position:fixed;top:0%;opacity:1;" data-7500="position:fixed;top:-100%;opacity:0;"> -->
 	<div class="overlay" id="the_bigger_picture">
 
 		<h3>The bigger picture</h3>
@@ -142,8 +121,6 @@
 
 	</div>
 
-
-	<!-- <div class="overlay" id="the_search_continues" data-7000="position:fixed;top:100%;opacity:0;" data-7500="position:fixed;top:0%;opacity:1;" data-8000="position:fixed;top:0%;opacity:1;" data-8500="position:fixed;top:-100%;opacity:0;"> -->
 	<div class="overlay" id="the_search_continues">
 
 		<h3>The search continues</h3>
@@ -159,6 +136,11 @@
 		<p style="font-size:14px">Graphics and text by MacGregor Campbell, Adam Becker and Peter Aldhous. Published xx xxxx 2013.</p>
 		
 
+	</div>
+	
+	<!-- This div has to be at the bottom, so it doesn't obscure the clickability of the overlay divs -->
+	<div id="main_event_interactive", style ="position:fixed;top:0%;opacity:0;">
+		<script src="js/skymap.js"></script>		
 	</div>
 
 </body>
