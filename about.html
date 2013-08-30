@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="css/exoplanets_about.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
+    
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="js/jquery-1.10.2.min.js"></script>
+
+    <title>How Many Earths? | New Scientist </title>
+
+</head>
+
+<body>
+    
+    <div id="header">
+
+        <a href="http://www.newscientist.com/" target="_blank"><img src="img/NSlogo.png" alt="NS logo"/></a>
+
+        <p id="back"><a href="index.html" target="_parent">Back to interactive</a></p>
+
+    </div>
+    
+    <div id="about">
+    
+    	<h3>HOW MANY EARTHS?</h3>
+
+		<p>This interactive graphic is based on <a href="http://exoplanetarchive.ipac.caltech.edu/cgi-bin/ExoTables/nph-exotbls?dataset=cumulative" target= "_blank">data for candidate planets</a> identified by NASA's <a href="http://kepler.nasa.gov/" target= "_blank">Kepler Space Telescope</a>, which looked for barely perceptible reductions in the light coming from its target stars as planets passed in front.</p>
+
+		<p>About 10 per cent of these candidates <a href="http://arxiv.org/abs/1301.0842" target= "_blank">will turn out to be false positives</a> – it's possible, for instance, to mistake the second star in a binary system for a giant planet. Kepler is also thought to have missed around 10 per cent of the planets that transited across its target stars, because their signal was too weak to detect against natural variability in the stars' output of light. These two numbers roughly cancel one another out, so we were able to ignore them.</p>
+
+		<p>The first step in answering our question was to remove planets larger than twice the Earth's diameter, which are likely to be <a href="http://en.wikipedia.org/wiki/Gas_giant" target= "_blank">gas giants</a>, without a solid surface. Kepler gives reasonably good estimates of a planet's size, so this filter was straightforward. (Some of the planets removed at this stage <a href="http://www.newscientist.com/article/mg21628864.700-exomoons-may-give-us-first-glimpse-of-habitable-worlds.html" target= "_blank">may possess rocky moons</a>, however, which could be good candidates to host life.) </p>
+
+		<p>Not all of the remaining planets will provide hospitable environments like those of our home world. In some systems, for instance, <a href="http://www.newscientist.com/article/dn23477-astrophile-diamond-planets-get-even-more-precious.html" target= "_blank">carbon-rich planets</a> could form with a crust made from graphite, layers of diamond below, plus rivers and lakes of oils and tar.</p>
+
+		<p>Kepler was not able to determine a planet's composition, but we could narrow the search for Earth-like worlds by considering those likely to lie in stars' habitable zones – neither too hot, nor too cold, for water to exist in liquid form. Defining a star's <a href="http://www.newscientist.com/article/mg21829202.100-goodbye-goldilocks-the-untimely-end-of-life-on-earth.html" target="_blank">habitable zone is a complex process</a>, but as a reasonable proxy we used Kepler's estimates of candidate planets' <a href="http://en.wikipedia.org/wiki/Equilibrium_temperature" target="_blank">equilibrium temperature</a>. This is the temperature at a planet's surface if it were a black body being heated only by its parent star, ignoring any atmospheric greenhouse effect. Many of Kepler's estimates for equilibrium temperature have fairly wide margins of error, however. This is why at this point we stopped giving absolute numbers.</p>
+
+		<p>Extrapolating to the total number of roughly Earth-sized planets likely to be orbiting Kepler's 150,000 target stars is the most uncertain part of our quest. Simple geometry tells us that Kepler will miss the majority of these planets, because the tilt of their orbits means they never pass between their parent stars and the telescope. Also, Kepler's data so far comes mostly from planets with fairly short orbital periods, close into their parent stars. </p>
+
+		<p>The best estimate for the average number of roughly Earth-sized planets in habitable zones, based on <a href="http://arxiv.org/abs/1302.1647" target="_blank"> simulations</a> performed by <a href="https://www.cfa.harvard.edu/~cdressing/" target="_blank">    Courtney Dressing</a>  and <a href="https://www.cfa.harvard.edu/~dcharbon/Site/Welcome.html" target="_blank">David Charbonneau</a> of the Harvard-Smithsonian Center for Astrophysics in Cambridge, Massachusetts, is 0.15. Applying this number to Kepler's 150,000 target stars gave our estimate of 22,500 potentially habitable, roughly Earth-sized planets. </p>
+
+		<p>There's an important caveat, here, however. Dressing and Charbonneau's calculations are for <a href="http://en.wikipedia.org/wiki/Stellar_classification#Class_M" target="_blank">class M</a> stars, which have a reddish hue and account for about three-quarters of the stars in our galaxy. About 80 per cent of Kepler's target stars are <a href="http://en.wikipedia.org/wiki/Stellar_classification#Class_G" target="_blank">class G</a> stars, like our Sun, which are yellowish in colour. Nobody knows for sure whether these different classes of stars will have similar populations of planets. </p>
+
+		<p>The final step in our quest was to extrapolate to the entire galaxy. Estimates of the number stars in the Milky Way vary from 100 billion to 200 billion. Applying the same estimate of 0.15 potentially Earth-like planets per star gave our figure of between 15 and 30 billion. </p>
+   
+    </div>
+    
+</body>
+
+</html>
+
+	

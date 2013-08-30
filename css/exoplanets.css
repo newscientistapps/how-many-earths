@@ -35,7 +35,6 @@ body  {
     width: 100%;
     top: 0px;
     border-bottom-width: 2px;
-    /*border-bottom-color: #fff;*/
     border-bottom-color: rgba(255, 255, 255, 0.2);
     border-bottom-style: solid;
 } 
@@ -51,7 +50,6 @@ body  {
     position: absolute;
     right: 1%;
 } 
-
 
 #intro {
 	position:fixed;

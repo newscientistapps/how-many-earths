@@ -1,0 +1,65 @@
+@charset "utf-8";
+
+a:link, a:visited, a:hover, a:active {color:#fff;}
+
+#back a {color:#ffffff;}
+
+a img {border: none; }
+
+h1 {font-size: 50px;}
+
+h3 {font-size: 25px;
+	line-height:110%}
+
+
+body  {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #000;
+    background-image:url('../img/starry_background_tile-able.jpg');
+    background-repeat:no-repeat;  /*this is so that we don't have stars scrolling under adam's interactive*/
+	background-size:100%;
+}
+
+#header {
+    position: fixed;
+    z-index:100;
+    background: #000;
+    color: #fff;
+    height: 50px;
+    width: 100%;
+    top: 0px;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+    border-bottom-style: solid;
+} 
+
+#header img {
+    width: 200px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+
+#header #back {
+    position: absolute;
+    right: 1%;
+} 
+
+#about {
+	position:relative;
+	top:50px;
+	width:70%;
+	margin:auto;
+	font-size: 16px;
+	padding:20px 10px;
+	color: #fff;
+    background-color:rgba(0,0,0,0.7);
+	z-index: 90;
+}
+
+
