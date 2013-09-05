@@ -127,16 +127,16 @@ var pic_x = (width - pic_width)/2,
         .attr("fill", "black")
         .attr("opacity", 0.85);
     
-    var number = svg.append("text")
-                    .attr("id", "number-planets")
-                    .attr("text-anchor", "middle")
-                    .attr("x", width - 10 - rect_width/2)
-                    .attr("y", 10 + rect_height/2) 
-                    .attr("dy", number_size/3)   // because friggin IE doesn't support dominant-baseline!
-                    .attr("font-family", "sans-serif")
-                    .attr("fill", "white")
-                    .attr("font-size", number_size)
-                    .attr("font-style", "bold");
+   svg.append("text")
+        .attr("id", "number-planets")
+        .attr("text-anchor", "middle")
+        .attr("x", width - 10 - rect_width/2)
+        .attr("y", 10 + rect_height/2) 
+        .attr("dy", number_size/3)   // because friggin IE doesn't support dominant-baseline!
+        .attr("font-family", "sans-serif")
+        .attr("fill", "white")
+        .attr("font-size", number_size)
+        .attr("font-style", "bold");
 
 ////////////////////////
 // Scroll transitions //
@@ -406,6 +406,14 @@ $(window).resize(function(){
     svg.selectAll(".skyimage")
             .attr("x", pic_x)
             .attr("y", pic_y);
+    
+    // Reset number box and text location.
+     svg.select("#number-box")
+         .attr("x", width - rect_width - 10);
+
+    svg.select("#number-planets")
+         .attr("x", width - 10 - rect_width/2);
+    
 });
 
 
