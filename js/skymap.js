@@ -96,8 +96,18 @@ var pic_x = (width - pic_width)/2,
         .attr("height", pic_height)
         .style("opacity", 0);
     
-    svg.append("image")
-        .attr("xlink:href", "img/test_newstars_5_1px.png")
+    // svg.append("image")
+    //     .attr("xlink:href", "img/test_newstars_5_1px.png")
+    //     .attr("class", "skyimage")
+    //     .attr("id", "all_sky")
+    //     .attr("x", pic_x)
+    //     .attr("y", pic_y)
+    //     .attr("width", pic_width)
+    //     .attr("height", pic_height)
+    //     .style("opacity", 0);
+    
+    g.append("image")
+        .attr("xlink:href", "img/kepler_geometry_allsky.png")
         .attr("class", "skyimage")
         .attr("id", "all_sky")
         .attr("x", pic_x)
@@ -149,14 +159,17 @@ var rescale_translation = function(r){
 };
 
 // Define a few scrolling variables, to control the transitions.
-var planets_position = 2300,
-    size_position = 3300,
-    habitable_position = 4300,
-    geometry_position = 5300,
-    all_sky_position = 6501,
-    zoom_position = 6501,
-    rotate_position = 6500,
-    interactive_position = 8000;
+// var planets_position = 2300,
+//     size_position = 3300,
+//     habitable_position = 4300,
+//     geometry_position = 5300,
+//     all_sky_position = 6501,
+//     zoom_position = 6501,
+//     rotate_position = 6500,
+//     interactive_position = 8000;
+var all_sky_position = 6000,
+    zoom_position = 6000, 
+    zoom_scroll_length = 500;
 
 // Define a scroll-listening object and function.
 var scrollobj = {
@@ -301,21 +314,25 @@ $(window).scroll(function(){
    };
    if (scrollobj.curTop <= 6000){
        $("#the_bigger_picture").css({"opacity": 0, "top":"100%"});
-       $("#all_sky").css("opacity", 0);
+       // $("#all_sky").css("opacity", 0);
    };
    if (scrollobj.curTop > 6000 && scrollobj.curTop <= 6500){
        d3.select("#number-planets").text("~10,000,000,000 planets");
        $("#Earths_galore").css({"opacity":1 - (scrollobj.curTop - 6000)/500, "top": -(scrollobj.curTop - 6000)/5 +"%"});
-       // $("#geometry").css("opacity", 1 - (scrollobj.curTop - 6000)/500);
-       $("#geometry").css("opacity", 1);
+       // $("#geometry").css("opacity", 1);
+       $("#geometry").css("opacity", 0);
+       $("#all_sky").css("opacity", 1);
        
        $("#the_bigger_picture").css({"opacity": (scrollobj.curTop - 6000)/500, "top": 100 - (scrollobj.curTop - 6000)/5 +"%"});
-       $("#all_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
+       // $("#all_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
+       $("#zoom_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
    };
    if (scrollobj.curTop > 6500){
        d3.select("#number-planets").text("~10,000,000,000 planets");
        $("#Earths_galore").css({"opacity":0, "top":"-100%"});
        $("#geometry").css("opacity", 0);
+       $("#all_sky").css("opacity", 0);
+       $("#zoom_sky").css("opacity", 1);  
    };
    
    //
@@ -351,6 +368,7 @@ $(window).scroll(function(){
     // };
     if (scrollobj.lastTop >= all_sky_position && scrollobj.curTop < all_sky_position){
         g.select("#zoom_sky").style("opacity", 0);
+        g.select("#all_sky").style("opacity", 0);
     };
     
     // Zooming in and out.
@@ -363,11 +381,15 @@ $(window).scroll(function(){
     //     zoom(zoom_max/zoom_min);
     // };
     if (scrollobj.lastTop < zoom_position && scrollobj.curTop >= zoom_position){
-        svg.select("#all_sky").style("opacity", 0);
-        g.select("#zoom_sky").style("opacity", 1);
+        // svg.select("#all_sky").style("opacity", 0);
+        svg.select("#geometry").css("opacity", 0);
+        // g.select("#all_sky").style("opacity", 1);
+        // g.select("#zoom_sky").style("opacity", 1);
     };
     if (scrollobj.lastTop >= zoom_position && scrollobj.curTop < zoom_position){
-        svg.select("#all_sky").style("opacity", 1);
+        // svg.select("#all_sky").style("opacity", 1);
+        svg.select("#geometry").css("opacity", 1);
+        g.select("#all_sky").style("opacity", 0);
         g.select("#zoom_sky").style("opacity", 0);
     };
     if (scrollobj.curTop <= zoom_position){
@@ -375,13 +397,13 @@ $(window).scroll(function(){
         var rt = rescale_translation(new_zoom);
         g.attr("transform", "scale(" + new_zoom + ")translate(" + width*rt + "," + height*rt + ")");
     };
-    if (scrollobj.curTop >= zoom_position && scrollobj.curTop <= (zoom_position + 800)){
-        var scroll_ratio = (scrollobj.curTop - zoom_position)/800; // varies from 0 to 1 over the relevant scroll range
+    if (scrollobj.curTop >= zoom_position && scrollobj.curTop <= (zoom_position + zoom_scroll_length)){
+        var scroll_ratio = (scrollobj.curTop - zoom_position)/zoom_scroll_length; // varies from 0 to 1 over the relevant scroll range
         var new_zoom = zoom_max/zoom_min * (1 + (zoom_min/zoom_max - 1) * scroll_ratio); // varies from zoom_max/zoom_min to 1 over the relevant scroll range
         var rt = rescale_translation(new_zoom);
         g.attr("transform", "scale(" + new_zoom + ")translate(" + (width*rt + scroll_ratio*100) + "," + height*rt + ")");
     };
-    if (scrollobj.curTop >= (zoom_position + 800)){
+    if (scrollobj.curTop >= (zoom_position + zoom_scroll_length)){
         g.attr("transform", "scale(1)translate(100,0)");
     };
 
