@@ -151,7 +151,7 @@ z-index:70;
 }
 
 
-.flasher {
+.flasher, .flasher-up, #back-to-top {
 
 font-size: 16px;
 line-height:110%;

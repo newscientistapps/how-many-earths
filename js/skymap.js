@@ -2,7 +2,7 @@
 // Defining some global variables //
 ////////////////////////////////////
 
-var width = window.innerWidth,
+var width = $("body").innerWidth(),
 	height = window.innerHeight;
 
 // Note that these are negative -- that has to do with how rotation works on the stereographic projection.
@@ -21,6 +21,10 @@ var zoom_transition_time = 2000;
 //     pic_height = 771;
 var pic_width = 3000,
     pic_height = 2000;
+
+var rect_width = 300,
+    rect_height = rect_width/3.2,
+    number_size = 25;
 
 //////////////////////////
 // Actually draw stuff! //
@@ -93,7 +97,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
     
     svg.append("image")
-        .attr("xlink:href", "img/test_big_5.png")
+        .attr("xlink:href", "img/test_newstars_5_1px.png")
         .attr("class", "skyimage")
         .attr("id", "all_sky")
         .attr("x", pic_x)
@@ -103,7 +107,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
 
     g.append("image")
-        .attr("xlink:href", "img/test_big_6.png")
+        .attr("xlink:href", "img/test_newstars_6_2px.png")
         .attr("class", "skyimage")
         .attr("id", "zoom_sky")
         .attr("x", pic_x)
@@ -111,6 +115,28 @@ var pic_x = (width - pic_width)/2,
         .attr("width", pic_width)
         .attr("height", pic_height)
         .style("opacity", 0);
+    
+    
+    // Setting up the number box, which is the only dynamically-rendered true SVG components in this whole thing.
+    svg.append("rect")
+        .attr("id", "number-box")
+        .attr("x", width - rect_width - 10)
+        .attr("y", 10)
+        .attr("width", rect_width)
+        .attr("height", rect_height)
+        .attr("fill", "black")
+        .attr("opacity", 0.85);
+    
+    var number = svg.append("text")
+                    .attr("id", "number-planets")
+                    .attr("text-anchor", "middle")
+                    .attr("x", width - 10 - rect_width/2)
+                    .attr("y", 10 + rect_height/2) 
+                    .attr("dy", number_size/3)   // because friggin IE doesn't support dominant-baseline!
+                    .attr("font-family", "sans-serif")
+                    .attr("fill", "white")
+                    .attr("font-size", number_size)
+                    .attr("font-style", "bold");
 
 ////////////////////////
 // Scroll transitions //
@@ -127,8 +153,8 @@ var planets_position = 2300,
     size_position = 3300,
     habitable_position = 4300,
     geometry_position = 5300,
-    all_sky_position = 6500,
-    zoom_position = 7001,
+    all_sky_position = 6501,
+    zoom_position = 6501,
     rotate_position = 6500,
     interactive_position = 8000;
 
@@ -141,8 +167,8 @@ var scrollobj = {
 $(window).scroll(function(){
    scrollobj.lastTop = scrollobj.curTop;
    scrollobj.curTop = $(window).scrollTop();
-   console.log("lastTop is " + scrollobj.lastTop);
-   console.log("curTop is " + scrollobj.curTop); 
+   // console.log("lastTop is " + scrollobj.lastTop);
+   // console.log("curTop is " + scrollobj.curTop); 
 
    
    // Handling divs and images.
@@ -181,10 +207,12 @@ $(window).scroll(function(){
        $("#in_the_frame").css({"opacity":1, "top":"0%"});
    };
    if (scrollobj.curTop <= 2000){
+       d3.select("#number-planets").text("");
        $("#Keplers_haul").css({"opacity": 0, "top":"100%"});
        $("#candidates").css("opacity", 0);
    };
    if (scrollobj.curTop > 2000 && scrollobj.curTop <= 2500){
+       d3.select("#number-planets").text("3,458 planets");
        $("#in_the_frame").css({"opacity":1 - (scrollobj.curTop - 2000)/500, "top": -(scrollobj.curTop - 2000)/5 +"%"});
        $("#Keplers_haul").css({"opacity": (scrollobj.curTop - 2000)/500, "top": 100 - (scrollobj.curTop - 2000)/5 +"%"});
        $("#candidates").css("opacity", (scrollobj.curTop - 2000)/500);
@@ -195,6 +223,7 @@ $(window).scroll(function(){
    
    
    if (scrollobj.curTop > 2500 && scrollobj.curTop <= 3000){
+       d3.select("#number-planets").text("3,458 planets");
        $("#Keplers_haul").css({"opacity":1, "top":"0%"});
        $("#candidates").css("opacity", 1);
    };
@@ -203,6 +232,7 @@ $(window).scroll(function(){
        $("#size").css("opacity", 0);
    };
    if (scrollobj.curTop > 3000 && scrollobj.curTop <= 3500){
+       d3.select("#number-planets").text("1,725 planets");
        $("#Keplers_haul").css({"opacity":1 - (scrollobj.curTop - 3000)/500, "top": -(scrollobj.curTop - 3000)/5 +"%"});
        // $("#candidates").css("opacity", 1 - (scrollobj.curTop - 3000)/500);
        $("#candidates").css("opacity", 1);
@@ -217,6 +247,7 @@ $(window).scroll(function(){
    
    
    if (scrollobj.curTop > 3500 && scrollobj.curTop <= 4000){
+       d3.select("#number-planets").text("1,725 planets");
        $("#ripe_for_life").css({"opacity":1, "top":"0%"});
        $("#size").css("opacity", 1);
    };
@@ -225,6 +256,7 @@ $(window).scroll(function(){
        $("#habitable").css("opacity", 0);
    };
    if (scrollobj.curTop > 4000 && scrollobj.curTop <= 4500){
+       d3.select("#number-planets").text("~50 planets");
        $("#ripe_for_life").css({"opacity":1 - (scrollobj.curTop - 4000)/500, "top": -(scrollobj.curTop - 4000)/5 +"%"});
        // $("#size").css("opacity", 1 - (scrollobj.curTop - 4000)/500);
        $("#size").css("opacity", 1);
@@ -239,6 +271,7 @@ $(window).scroll(function(){
    
    //
    if (scrollobj.curTop > 4500 && scrollobj.curTop <= 5000){
+       d3.select("#number-planets").text("~50 planets");
        $("#these_might_be_like_home").css({"opacity":1, "top":"0%"});
        $("#habitable").css("opacity", 1);
    };
@@ -247,6 +280,7 @@ $(window).scroll(function(){
        $("#geometry").css("opacity", 0);
    };
    if (scrollobj.curTop > 5000 && scrollobj.curTop <= 5500){
+       d3.select("#number-planets").text("~22,500 planets");
        $("#these_might_be_like_home").css({"opacity":1 - (scrollobj.curTop - 5000)/500, "top": -(scrollobj.curTop - 5000)/5 +"%"});
        // $("#habitable").css("opacity", 1 - (scrollobj.curTop - 5000)/500);
        $("#habitable").css("opacity", 1);
@@ -261,6 +295,7 @@ $(window).scroll(function(){
    
    //
    if (scrollobj.curTop > 5500 && scrollobj.curTop <= 6000){
+       d3.select("#number-planets").text("~22,500 planets");
        $("#Earths_galore").css({"opacity":1, "top":"0%"});
        $("#geometry").css("opacity", 1);
    };
@@ -269,6 +304,7 @@ $(window).scroll(function(){
        $("#all_sky").css("opacity", 0);
    };
    if (scrollobj.curTop > 6000 && scrollobj.curTop <= 6500){
+       d3.select("#number-planets").text("~10,000,000,000 planets");
        $("#Earths_galore").css({"opacity":1 - (scrollobj.curTop - 6000)/500, "top": -(scrollobj.curTop - 6000)/5 +"%"});
        // $("#geometry").css("opacity", 1 - (scrollobj.curTop - 6000)/500);
        $("#geometry").css("opacity", 1);
@@ -277,6 +313,7 @@ $(window).scroll(function(){
        $("#all_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
    };
    if (scrollobj.curTop > 6500){
+       d3.select("#number-planets").text("~10,000,000,000 planets");
        $("#Earths_galore").css({"opacity":0, "top":"-100%"});
        $("#geometry").css("opacity", 0);
    };
@@ -342,10 +379,10 @@ $(window).scroll(function(){
         var scroll_ratio = (scrollobj.curTop - zoom_position)/800; // varies from 0 to 1 over the relevant scroll range
         var new_zoom = zoom_max/zoom_min * (1 + (zoom_min/zoom_max - 1) * scroll_ratio); // varies from zoom_max/zoom_min to 1 over the relevant scroll range
         var rt = rescale_translation(new_zoom);
-        g.attr("transform", "scale(" + new_zoom + ")translate(" + width*rt + "," + height*rt + ")");
+        g.attr("transform", "scale(" + new_zoom + ")translate(" + (width*rt + scroll_ratio*100) + "," + height*rt + ")");
     };
     if (scrollobj.curTop >= (zoom_position + 800)){
-        g.attr("transform", "scale(1)");
+        g.attr("transform", "scale(1)translate(100,0)");
     };
 
 });
@@ -372,7 +409,7 @@ $(window).resize(function(){
 });
 
 
-// Making the page scroll when the flashers are clicked.
+// Making the page scroll down when the down-flashers are clicked.
 $(".flasher").click(function(){
     console.log("click!"); // for debugging purposes.
 
@@ -384,4 +421,32 @@ $(".flasher").click(function(){
     $("body,html").animate({
         scrollTop: scrollobj.curTop + 1000
     }, "slow"); // slow is 600ms.
+});
+
+// Making the page scroll up when the up-flashers are clicked.
+$(".flasher-up").click(function(){
+    console.log("click!"); // for debugging purposes.
+
+    // $(window).scrollTop(scrollobj.curTop + 1000); // this just jumps the page to the appropriate location.
+    
+    // Animating the scroll transition through judicious use of jQuery, 
+    // along with CSS properties on the top-level HTML tag.
+    // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
+    $("body,html").animate({
+        scrollTop: scrollobj.curTop - 1000
+    }, "slow"); // slow is 600ms.
+});
+
+// Making the page scroll back to the top when the back-to-top button is pressed.
+$("#back-to-top").click(function(){
+    console.log("click!"); // for debugging purposes.
+
+    // $(window).scrollTop(scrollobj.curTop + 1000); // this just jumps the page to the appropriate location.
+    
+    // Animating the scroll transition through judicious use of jQuery, 
+    // along with CSS properties on the top-level HTML tag.
+    // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
+    $("body,html").animate({
+        scrollTop: 0
+    }, 1200); // Made this a little longer than the other transitions, since it has to scroll farther.
 });
