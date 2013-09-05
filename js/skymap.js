@@ -45,7 +45,7 @@ var pic_x = (width - pic_width)/2,
 
 // Load the images.
     svg.append("image")
-        .attr("xlink:href", "img/test_big_0.png")
+        .attr("xlink:href", "img/kepler_background.png")
         .attr("class", "skyimage")
         .attr("id", "background")
         .attr("x", pic_x)
@@ -57,7 +57,7 @@ var pic_x = (width - pic_width)/2,
     g = svg.append("g");
     
     svg.append("image")
-        .attr("xlink:href", "img/test_big_1.png")
+        .attr("xlink:href", "img/kepler_candidates.png")
         .attr("class", "skyimage")
         .attr("id", "candidates")
         .attr("x", pic_x)
@@ -67,7 +67,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
 	
     svg.append("image")
-        .attr("xlink:href", "img/test_big_2.png")
+        .attr("xlink:href", "img/kepler_size.png")
         .attr("class", "skyimage")
         .attr("id", "size")
         .attr("x", pic_x)
@@ -77,7 +77,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
     
     svg.append("image")
-        .attr("xlink:href", "img/test_big_3.png")
+        .attr("xlink:href", "img/kepler_habitable.png")
         .attr("class", "skyimage")
         .attr("id", "habitable")
         .attr("x", pic_x)
