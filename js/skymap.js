@@ -87,7 +87,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
     
     svg.append("image")
-        .attr("xlink:href", "img/test_big_4.png")
+        .attr("xlink:href", "img/kepler_geometry.png")
         .attr("class", "skyimage")
         .attr("id", "geometry")
         .attr("x", pic_x)
@@ -107,7 +107,7 @@ var pic_x = (width - pic_width)/2,
         .style("opacity", 0);
 
     g.append("image")
-        .attr("xlink:href", "img/test_newstars_6_2px.png")
+        .attr("xlink:href", "img/kepler_zoomedsky.png")
         .attr("class", "skyimage")
         .attr("id", "zoom_sky")
         .attr("x", pic_x)
