@@ -151,7 +151,26 @@ z-index:70;
 }
 
 
-.flasher, .flasher-up, #back-to-top {
+.flasher, #back-to-top{
+
+font-size: 16px;
+line-height:110%;
+
+-webkit-animation: fadein 3s linear infinite;
+-moz-animation: fadein 3s linear infinite;
+
+-webkit-animation-direction: alternate;
+-moz-animation-direction: alternate;
+
+/*-webkit-animation-delay: 1s;
+-moz-animation-delay: 1s;
+
+-webkit-animation-fill-mode:forwards; 
+-moz-animation-fill-mode:forwards;*/
+
+}
+
+.flasher-up{
 
 font-size: 16px;
 line-height:110%;

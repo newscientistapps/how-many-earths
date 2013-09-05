@@ -426,8 +426,10 @@ $(".flasher").click(function(){
     // Animating the scroll transition through judicious use of jQuery, 
     // along with CSS properties on the top-level HTML tag.
     // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
+    var new_location = (Math.floor(scrollobj.curTop/1000) + 1) * 1000; // can't use ceil, since we need this to work for multiples of 1000.
     $("body,html").animate({
-        scrollTop: scrollobj.curTop + 1000
+        // scrollTop: scrollobj.curTop + 1000
+        scrollTop: new_location
     }, "slow"); // slow is 600ms.
 });
 
@@ -440,8 +442,12 @@ $(".flasher-up").click(function(){
     // Animating the scroll transition through judicious use of jQuery, 
     // along with CSS properties on the top-level HTML tag.
     // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
+    var new_location = (Math.ceil(scrollobj.curTop/1000) - 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
+    console.log(scrollobj.curTop);
+    console.log(new_location);
     $("body,html").animate({
-        scrollTop: scrollobj.curTop - 1000
+        // scrollTop: scrollobj.curTop - 1000
+        scrollTop: new_location
     }, "slow"); // slow is 600ms.
 });
 
