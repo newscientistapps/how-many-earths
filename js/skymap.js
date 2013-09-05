@@ -131,7 +131,7 @@ var pic_x = (width - pic_width)/2,
     svg.append("rect")
         .attr("id", "number-box")
         .attr("x", width - rect_width - 10)
-        .attr("y", 10)
+        .attr("y", 0)
         .attr("width", rect_width)
         .attr("height", rect_height)
         .attr("fill", "black")
@@ -141,7 +141,7 @@ var pic_x = (width - pic_width)/2,
         .attr("id", "number-planets")
         .attr("text-anchor", "middle")
         .attr("x", width - 10 - rect_width/2)
-        .attr("y", 10 + rect_height/2) 
+        .attr("y", rect_height/2) 
         .attr("dy", number_size/3)   // because friggin IE doesn't support dominant-baseline!
         .attr("font-family", "sans-serif")
         .attr("fill", "white")
