@@ -449,10 +449,14 @@ $(".flasher").click(function(){
     // along with CSS properties on the top-level HTML tag.
     // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
     var new_location = (Math.floor(scrollobj.curTop/1000) + 1) * 1000; // can't use ceil, since we need this to work for multiples of 1000.
-    $("body,html").animate({
-        // scrollTop: scrollobj.curTop + 1000
-        scrollTop: new_location
-    }, "slow"); // slow is 600ms.
+    
+    // But first, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
+    if (navigator.userAgent.match(/ipad/i) === null){
+        $("body,html").animate({
+            scrollTop: new_location
+        }, "slow"); // slow is 600ms.
+    }
+    else { $(window).scrollTop(new_location)}; // this just jumps the page to the appropriate location.
 });
 
 // Making the page scroll up when the up-flashers are clicked.
@@ -465,12 +469,14 @@ $(".flasher-up").click(function(){
     // along with CSS properties on the top-level HTML tag.
     // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
     var new_location = (Math.ceil(scrollobj.curTop/1000) - 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
-    console.log(scrollobj.curTop);
-    console.log(new_location);
-    $("body,html").animate({
-        // scrollTop: scrollobj.curTop - 1000
-        scrollTop: new_location
-    }, "slow"); // slow is 600ms.
+
+    // But first, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
+    if (navigator.userAgent.match(/ipad/i) === null){
+        $("body,html").animate({
+            scrollTop: new_location
+        }, "slow"); // slow is 600ms.
+    }
+    else { $(window).scrollTop(new_location)}; // this just jumps the page to the appropriate location.
 });
 
 // Making the page scroll back to the top when the back-to-top button is pressed.
@@ -482,7 +488,12 @@ $("#back-to-top").click(function(){
     // Animating the scroll transition through judicious use of jQuery, 
     // along with CSS properties on the top-level HTML tag.
     // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
-    $("body,html").animate({
-        scrollTop: 0
-    }, 1200); // Made this a little longer than the other transitions, since it has to scroll farther.
+
+    // But first, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
+    if (navigator.userAgent.match(/ipad/i) === null){
+        $("body,html").animate({
+            scrollTop: 0
+        }, 1200); // slow is 600ms.
+    }
+    else { $(window).scrollTop(new_location)}; // this just jumps the page to the appropriate location.
 });
