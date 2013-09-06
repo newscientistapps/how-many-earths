@@ -37,7 +37,16 @@
 		<p id="intro_blurb">Today, we're starting to get a handle on the number of roughly Earth-sized worlds that might be suitable for life to emerge.</p>
 		
 		<div class = "flash-container">
-		<p class="flasher">▼ Click or scroll to continue</p>
+		<p class="flasher" id="first-flash">▼ </p>
+		<script>
+		if (navigator.userAgent.match(/ipad/i) !== null){ 
+				$("#first-flash").append("Click to continue");
+			}
+			else{
+				$("#first-flash").append("Click or scroll to continue");
+			};
+		</script>
+		
 		</div>  
 	
 	</div>
