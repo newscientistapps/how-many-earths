@@ -456,6 +456,11 @@ $(window).resize(function(){
     svg.select("#number-planets")
          .attr("x", width - 10 - rect_width/2);
     
+    // Make sure the scroll location isn't lost on iPads.
+    if (navigator.userAgent.match(/ipad/i) !== null){
+        $("window").scrollTop(Math.round(scrollobj.curTop/1000)*1000);
+    };
+    
 });
 
 
