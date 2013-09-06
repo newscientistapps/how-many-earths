@@ -142,7 +142,7 @@ var pic_x = (width - pic_width)/2,
             .attr("xlink:href", "img/kepler_geometry_allsky_small.png");
 
         g.select("#zoom-sky")
-            .attr("xlink:href", "img/kepler_zoomedsky_small.png");
+            .attr("xlink:href", "img/kepler_zoomedsky_small.gif");
     };
     
     
@@ -386,10 +386,10 @@ $(window).scroll(function(){
     // if (scrollobj.lastTop < all_sky_position && scrollobj.curTop >= all_sky_position){
     //     zoom(zoom_max/zoom_min);        
     // };
-    if (scrollobj.lastTop >= all_sky_position && scrollobj.curTop < all_sky_position){
-        g.select("#zoom_sky").style("opacity", 0);
-        g.select("#all_sky").style("opacity", 0);
-    };
+    // if (scrollobj.lastTop >= all_sky_position && scrollobj.curTop < all_sky_position){
+    //     g.select("#zoom_sky").style("opacity", 0);
+    //     g.select("#all_sky").style("opacity", 0);
+    // };
     
     // Zooming in and out.
     // if (scrollobj.lastTop < zoom_position && scrollobj.curTop >= zoom_position){
@@ -400,15 +400,15 @@ $(window).scroll(function(){
     // if (scrollobj.lastTop >= zoom_position && scrollobj.curTop < zoom_position){
     //     zoom(zoom_max/zoom_min);
     // };
-    if (scrollobj.lastTop < zoom_position && scrollobj.curTop >= zoom_position){
+    if (scrollobj.lastTop <= zoom_position && scrollobj.curTop > zoom_position){
         // svg.select("#all_sky").style("opacity", 0);
-        svg.select("#geometry").css("opacity", 0);
+        svg.select("#geometry").style("opacity", 0);
         // g.select("#all_sky").style("opacity", 1);
         // g.select("#zoom_sky").style("opacity", 1);
     };
-    if (scrollobj.lastTop >= zoom_position && scrollobj.curTop < zoom_position){
+    if (scrollobj.lastTop > zoom_position && scrollobj.curTop <= zoom_position){
         // svg.select("#all_sky").style("opacity", 1);
-        svg.select("#geometry").css("opacity", 1);
+        svg.select("#geometry").style("opacity", 1);
         g.select("#all_sky").style("opacity", 0);
         g.select("#zoom_sky").style("opacity", 0);
     };
@@ -476,7 +476,10 @@ $(".flasher").click(function(){
             scrollTop: new_location
         }, "slow"); // slow is 600ms.
     }
-    else { $("body,html").scrollTop(new_location)}; // this just jumps the page to the appropriate location.
+    else { 
+        new_location = (Math.round(scrollobj.curTop/1000) + 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
+        $(window).scrollTop(new_location); // this just jumps the page to the appropriate location.
+        }; 
 });
 
 // Making the page scroll up when the up-flashers are clicked.
@@ -489,14 +492,17 @@ $(".flasher-up").click(function(){
     // along with CSS properties on the top-level HTML tag.
     // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
     var new_location = (Math.ceil(scrollobj.curTop/1000) - 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
-
+    
     // But first, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
     if (navigator.userAgent.match(/ipad/i) === null){
         $("body,html").animate({
             scrollTop: new_location
         }, "slow"); // slow is 600ms.
     }
-    else { $("body,html").scrollTop(new_location)}; // this just jumps the page to the appropriate location.
+    else { 
+        new_location = (Math.round(scrollobj.curTop/1000) - 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
+        $(window).scrollTop(new_location); // this just jumps the page to the appropriate location.
+        };
 });
 
 // Making the page scroll back to the top when the back-to-top button is pressed.
@@ -515,5 +521,7 @@ $("#back-to-top").click(function(){
             scrollTop: 0
         }, 1200); // slow is 600ms.
     }
-    else { $("body,html").scrollTop(new_location)}; // this just jumps the page to the appropriate location.
+    else { 
+        $(window).scrollTop(0); // this just jumps the page to the appropriate location.
+        }; 
 });
