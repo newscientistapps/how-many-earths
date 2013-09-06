@@ -456,7 +456,7 @@ $(".flasher").click(function(){
             scrollTop: new_location
         }, "slow"); // slow is 600ms.
     }
-    else { $(window).scrollTop(new_location)}; // this just jumps the page to the appropriate location.
+    else { $("body,html").scrollTop(new_location)}; // this just jumps the page to the appropriate location.
 });
 
 // Making the page scroll up when the up-flashers are clicked.
@@ -476,7 +476,7 @@ $(".flasher-up").click(function(){
             scrollTop: new_location
         }, "slow"); // slow is 600ms.
     }
-    else { $(window).scrollTop(new_location)}; // this just jumps the page to the appropriate location.
+    else { $("body,html").scrollTop(new_location)}; // this just jumps the page to the appropriate location.
 });
 
 // Making the page scroll back to the top when the back-to-top button is pressed.
@@ -495,5 +495,5 @@ $("#back-to-top").click(function(){
             scrollTop: 0
         }, 1200); // slow is 600ms.
     }
-    else { $(window).scrollTop(new_location)}; // this just jumps the page to the appropriate location.
+    else { $("body,html").scrollTop(new_location)}; // this just jumps the page to the appropriate location.
 });
