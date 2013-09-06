@@ -17,10 +17,15 @@ var zoom_min = 1000,
 // Does what it says on the tin, in milliseconds.
 var zoom_transition_time = 2000;
 
-// var pic_width = 1440,
-//     pic_height = 771;
-var pic_width = 3000,
-    pic_height = 2000;
+// Picture width and height depend on what browser we're in.
+if (navigator.userAgent.match(/ipad/i) === null){
+    var pic_width = 3000,
+        pic_height = 2000;
+}
+else {
+    var pic_width = 1500,
+        pic_height = 1000;
+}
 
 var rect_width = 300,
     rect_height = rect_width/3.2,
@@ -96,16 +101,6 @@ var pic_x = (width - pic_width)/2,
         .attr("height", pic_height)
         .style("opacity", 0);
     
-    // svg.append("image")
-    //     .attr("xlink:href", "img/test_newstars_5_1px.png")
-    //     .attr("class", "skyimage")
-    //     .attr("id", "all_sky")
-    //     .attr("x", pic_x)
-    //     .attr("y", pic_y)
-    //     .attr("width", pic_width)
-    //     .attr("height", pic_height)
-    //     .style("opacity", 0);
-    
     g.append("image")
         .attr("xlink:href", "img/kepler_geometry_allsky.png")
         .attr("class", "skyimage")
@@ -125,6 +120,31 @@ var pic_x = (width - pic_width)/2,
         .attr("width", pic_width)
         .attr("height", pic_height)
         .style("opacity", 0);
+    
+    if (navigator.userAgent.match(/ipad/i) !== null){
+        
+        svg.select("#background")
+            .attr("xlink:href", "img/kepler_background_small.png");
+            
+        svg.select("#candidates")
+            .attr("xlink:href", "img/kepler_candidates_small.png");
+            
+        svg.select("#size")
+            .attr("xlink:href", "img/kepler_size_small.png");
+
+        svg.select("#habitable")
+            .attr("xlink:href", "img/kepler_habitable_small.png");
+            
+        svg.select("#geometry")
+            .attr("xlink:href", "img/kepler_geometry_small.png");
+            
+        g.select("#all_sky")
+            .attr("xlink:href", "img/kepler_geometry_allsky_small.png");
+
+        g.select("#zoom-sky")
+            .attr("xlink:href", "img/kepler_zoomedsky_small.png");
+    };
+    
     
     
     // Setting up the number box, which is the only dynamically-rendered true SVG components in this whole thing.
