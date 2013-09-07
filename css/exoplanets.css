@@ -54,8 +54,8 @@ body  {
 #intro {
 	position:fixed;
 	top:100px;
-	width:50%;
-	max-width:500px;
+    width:30%;
+    max-width:400px;
 	padding:20px 50px;
 	color: #fff;
 	z-index: 100;

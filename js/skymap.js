@@ -431,7 +431,7 @@ $(window).scroll(function(){
 
 // Handling window resizing behavior.
 $(window).resize(function(){
-    
+        
     // Reset the width and height variables.
     width = window.innerWidth;
     height = window.innerHeight;
@@ -456,9 +456,9 @@ $(window).resize(function(){
     svg.select("#number-planets")
          .attr("x", width - 10 - rect_width/2);
     
-    // Make sure the scroll location isn't lost on iPads.
+    // Make sure the scroll location isn't lost on iPads when the screen is rotated.
     if (navigator.userAgent.match(/ipad/i) !== null){
-        $("window").scrollTop(Math.round(scrollobj.curTop/1000)*1000);
+        $(window).scrollTop(Math.round(scrollobj.curTop/1000)*1000);
     };
     
 });
@@ -466,65 +466,67 @@ $(window).resize(function(){
 
 // Making the page scroll down when the down-flashers are clicked.
 $(".flasher").click(function(){
-    console.log("click!"); // for debugging purposes.
-
-    // $(window).scrollTop(scrollobj.curTop + 1000); // this just jumps the page to the appropriate location.
     
-    // Animating the scroll transition through judicious use of jQuery, 
-    // along with CSS properties on the top-level HTML tag.
-    // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
-    var new_location = (Math.floor(scrollobj.curTop/1000) + 1) * 1000; // can't use ceil, since we need this to work for multiples of 1000.
-    
-    // But first, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
+    // First, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
     if (navigator.userAgent.match(/ipad/i) === null){
+        
+        // Find the new location -- scroll down to the next multiple of 1000.
+        // Can't use ceil here, since we need this to work when we're already at a multiple of 1000 and want to jump to the next one.
+        var new_location = (Math.floor(scrollobj.curTop/1000) + 1) * 1000;
+        
+        // Animating the scroll transition through judicious use of jQuery, 
+        // along with CSS properties on the top-level HTML tag.
+        // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: new_location
         }, "slow"); // slow is 600ms.
     }
     else { 
-        new_location = (Math.round(scrollobj.curTop/1000) + 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
-        $(window).scrollTop(new_location); // this just jumps the page to the appropriate location.
+        // The iPad has a weird bug where it will sometimes scroll to 5999 if you ask it to go to 6000.
+        // Luckily, we've disabled manual scrolling, so it will always be very close to a multiple of 1000 anyhow.
+        // Therefore, we can just tell it to round to the nearest 1000 when calculating the next position, 
+        // rather than messing with the whole floor/ceil business.
+        var new_location = (Math.round(scrollobj.curTop/1000) + 1) * 1000;
+        $(window).scrollTop(new_location); // this just jumps the page to the appropriate location, rather than animating it.
         }; 
+    
 });
 
 // Making the page scroll up when the up-flashers are clicked.
 $(".flasher-up").click(function(){
-    console.log("click!"); // for debugging purposes.
-
-    // $(window).scrollTop(scrollobj.curTop + 1000); // this just jumps the page to the appropriate location.
     
-    // Animating the scroll transition through judicious use of jQuery, 
-    // along with CSS properties on the top-level HTML tag.
-    // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
-    var new_location = (Math.ceil(scrollobj.curTop/1000) - 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
-    
-    // But first, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
+    // First, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
     if (navigator.userAgent.match(/ipad/i) === null){
+        
+        // Find the new location -- scroll up to the previous multiple of 1000.
+        // Can't use floor here, since we need this to work when we're already at a multiple of 1000 and want to jump to the next one.
+        var new_location = (Math.ceil(scrollobj.curTop/1000) - 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
+        
+        // Animating the scroll transition through judicious use of jQuery, 
+        // along with CSS properties on the top-level HTML tag.
+        // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: new_location
         }, "slow"); // slow is 600ms.
     }
     else { 
-        new_location = (Math.round(scrollobj.curTop/1000) - 1) * 1000; // can't use floor, since we need this to work for multiples of 1000.
+        var new_location = (Math.round(scrollobj.curTop/1000) - 1) * 1000;
         $(window).scrollTop(new_location); // this just jumps the page to the appropriate location.
         };
 });
 
 // Making the page scroll back to the top when the back-to-top button is pressed.
 $("#back-to-top").click(function(){
-    console.log("click!"); // for debugging purposes.
-
-    // $(window).scrollTop(scrollobj.curTop + 1000); // this just jumps the page to the appropriate location.
     
-    // Animating the scroll transition through judicious use of jQuery, 
-    // along with CSS properties on the top-level HTML tag.
-    // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
-
-    // But first, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
+    // First, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
     if (navigator.userAgent.match(/ipad/i) === null){
+        
+        // Animating the scroll transition through judicious use of jQuery, 
+        // along with CSS properties on the top-level HTML tag.
+        // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: 0
-        }, 1200); // slow is 600ms.
+        }, 1200);
     }
     else { 
         $(window).scrollTop(0); // this just jumps the page to the appropriate location.
