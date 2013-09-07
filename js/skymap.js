@@ -18,7 +18,7 @@ var zoom_min = 1000,
 var zoom_transition_time = 2000;
 
 // Picture width and height depend on what browser we're in.
-if (navigator.userAgent.match(/ipad/i) === null){
+if (navigator.userAgent.match(/ipad|iphone/i) === null){
     var pic_width = 3000,
         pic_height = 2000;
 }
@@ -121,7 +121,7 @@ var pic_x = (width - pic_width)/2,
         .attr("height", pic_height)
         .style("opacity", 0);
     
-    if (navigator.userAgent.match(/ipad/i) !== null){
+    if (navigator.userAgent.match(/ipad|iphone/i) !== null){
         
         svg.select("#background")
             .attr("xlink:href", "img/kepler_background_small.png");
@@ -141,8 +141,8 @@ var pic_x = (width - pic_width)/2,
         g.select("#all_sky")
             .attr("xlink:href", "img/kepler_geometry_allsky_small.png");
 
-        g.select("#zoom-sky")
-            .attr("xlink:href", "img/kepler_zoomedsky_small.gif");
+        g.select("#zoom_sky")
+            .attr("xlink:href", "img/kepler_zoomedsky_small.png");
     };
     
     
@@ -456,8 +456,8 @@ $(window).resize(function(){
     svg.select("#number-planets")
          .attr("x", width - 10 - rect_width/2);
     
-    // Make sure the scroll location isn't lost on iPads when the screen is rotated.
-    if (navigator.userAgent.match(/ipad/i) !== null){
+    // Make sure the scroll location isn't lost on iOS devices when the screen is rotated.
+    if (navigator.userAgent.match(/ipad|iphone/i) !== null){
         $(window).scrollTop(Math.round(scrollobj.curTop/1000)*1000);
     };
     
@@ -467,8 +467,8 @@ $(window).resize(function(){
 // Making the page scroll down when the down-flashers are clicked.
 $(".flasher").click(function(){
     
-    // First, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
-    if (navigator.userAgent.match(/ipad/i) === null){
+    // First, test to see if we're on an iOS device -- the animation of the scroll doesn't work well there.
+    if (navigator.userAgent.match(/ipad|iphone/i) === null){
         
         // Find the new location -- scroll down to the next multiple of 1000.
         // Can't use ceil here, since we need this to work when we're already at a multiple of 1000 and want to jump to the next one.
@@ -495,8 +495,8 @@ $(".flasher").click(function(){
 // Making the page scroll up when the up-flashers are clicked.
 $(".flasher-up").click(function(){
     
-    // First, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
-    if (navigator.userAgent.match(/ipad/i) === null){
+    // First, test to see if we're on an iOS device -- the animation of the scroll doesn't work well there.
+    if (navigator.userAgent.match(/ipad|iphone/i) === null){
         
         // Find the new location -- scroll up to the previous multiple of 1000.
         // Can't use floor here, since we need this to work when we're already at a multiple of 1000 and want to jump to the next one.
@@ -518,8 +518,8 @@ $(".flasher-up").click(function(){
 // Making the page scroll back to the top when the back-to-top button is pressed.
 $("#back-to-top").click(function(){
     
-    // First, test to see if we're on an iPad -- the animation of the scroll doesn't work well there.
-    if (navigator.userAgent.match(/ipad/i) === null){
+    // First, test to see if we're on an iOS device -- the animation of the scroll doesn't work well there.
+    if (navigator.userAgent.match(/ipad|iphone/i) === null){
         
         // Animating the scroll transition through judicious use of jQuery, 
         // along with CSS properties on the top-level HTML tag.
