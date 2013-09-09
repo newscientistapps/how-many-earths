@@ -337,7 +337,7 @@ $(window).scroll(function(){
        // $("#all_sky").css("opacity", 0);
    };
    if (scrollobj.curTop > 6000 && scrollobj.curTop <= 6500){
-       d3.select("#number-planets").text("~10,000,000,000 planets");
+       d3.select("#number-planets").text("15-30 billion planets");
        $("#Earths_galore").css({"opacity":1 - (scrollobj.curTop - 6000)/500, "top": -(scrollobj.curTop - 6000)/5 +"%"});
        // $("#geometry").css("opacity", 1);
        $("#geometry").css("opacity", 0);
@@ -348,7 +348,7 @@ $(window).scroll(function(){
        $("#zoom_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
    };
    if (scrollobj.curTop > 6500){
-       d3.select("#number-planets").text("~10,000,000,000 planets");
+       d3.select("#number-planets").text("15-30 billion planets");
        $("#Earths_galore").css({"opacity":0, "top":"-100%"});
        $("#geometry").css("opacity", 0);
        $("#all_sky").css("opacity", 0);
