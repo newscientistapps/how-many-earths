@@ -57,7 +57,7 @@ var pic_x = (width - pic_width)/2,
         .attr("y", pic_y)
         .attr("width", pic_width)
         .attr("height", pic_height)
-        .attr("opacity", 1);
+        .attr("opacity", 0);
     
     g = svg.append("g");
     
@@ -155,7 +155,7 @@ var pic_x = (width - pic_width)/2,
         .attr("width", rect_width)
         .attr("height", rect_height)
         .attr("fill", "black")
-        .attr("opacity", 0.85);
+        .attr("opacity", 0);
     
    svg.append("text")
         .attr("id", "number-planets")
@@ -219,19 +219,19 @@ $(window).scroll(function(){
     };   
     if (scrollobj.curTop < 1200){
        $("#intro_planet").css("opacity", 1);
-       $("#main_event_interactive").css("opacity", 0);
+       $("#background").css("opacity", 0);
        $("#in_the_frame").css({"opacity":0, "top":"100%"});    
     };
     if (scrollobj.curTop > 1200 && scrollobj.curTop <= 1500){
        $("#intro_planet").css("opacity", (300 - (scrollobj.curTop - 1200))/300);
        $("#how_to_spot_a_planet").css({"opacity": (300 - (scrollobj.curTop - 1200))/300, "top": -(scrollobj.curTop - 1200)/3 + "%"});
-       $("#main_event_interactive").css("opacity", (scrollobj.curTop - 1200)/300);
+       $("#background").css("opacity", (scrollobj.curTop - 1200)/300);
        $("#in_the_frame").css({"opacity":(scrollobj.curTop - 1200)/300, "top": 100 - (scrollobj.curTop - 1200)/3 +"%"});
     };
     if (scrollobj.curTop > 1500){
        $("#intro_planet").css("opacity", 0);
        $("#how_to_spot_a_planet").css({"opacity": 0, "top": "-100%"}); 
-       $("#main_event_interactive").css("opacity", 1);
+       $("#background").css("opacity", 1);
     };
 
 
@@ -239,17 +239,20 @@ $(window).scroll(function(){
        $("#in_the_frame").css({"opacity":1, "top":"0%"});
     };
     if (scrollobj.curTop <= 2000){
+       d3.select("#number-box").attr("opacity", 0);
        d3.select("#number-planets").text("");
        $("#Keplers_haul").css({"opacity": 0, "top":"100%"});
        $("#candidates").css("opacity", 0);
     };
     if (scrollobj.curTop > 2000 && scrollobj.curTop <= 2500){
+       d3.select("#number-box").attr("opacity", 1);
        d3.select("#number-planets").text("3,458 planets");
        $("#in_the_frame").css({"opacity":1 - (scrollobj.curTop - 2000)/500, "top": -(scrollobj.curTop - 2000)/5 +"%"});
        $("#Keplers_haul").css({"opacity": (scrollobj.curTop - 2000)/500, "top": 100 - (scrollobj.curTop - 2000)/5 +"%"});
        $("#candidates").css("opacity", (scrollobj.curTop - 2000)/500);
     };
     if (scrollobj.curTop > 2500){
+       d3.select("#number-box").attr("opacity", 1);
        $("#in_the_frame").css({"opacity":0, "top":"-100%"});
     };
 
