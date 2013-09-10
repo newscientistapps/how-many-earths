@@ -202,6 +202,10 @@ $(window).scroll(function(){
     // Updating the scroll object.
     scrollobj.lastTop = scrollobj.curTop;
     scrollobj.curTop = $(window).scrollTop();
+    
+    // Debugging.
+    console.log(scrollobj.lastTop);
+    console.log($(window).scrollTop());
 
     // Handling divs and images.
     if (scrollobj.curTop <= 250){
@@ -336,7 +340,8 @@ $(window).scroll(function(){
     };
     if (scrollobj.curTop <= 6000){
        $("#the_bigger_picture").css({"opacity": 0, "top":"100%"});
-       // $("#all_sky").css("opacity", 0);
+       $("#all_sky").css("opacity", 0);
+       $("#zoom_sky").css("opacity", 0);
     };
     if (scrollobj.curTop > 6000 && scrollobj.curTop <= 6500){
        d3.select("#number-planets").text("15-30 billion planets");
@@ -406,14 +411,6 @@ $(window).scroll(function(){
     
     
     // Handling the zoom.
-    if (scrollobj.lastTop <= zoom_position && scrollobj.curTop > zoom_position){
-        svg.select("#geometry").style("opacity", 0);
-    };
-    if (scrollobj.lastTop > zoom_position && scrollobj.curTop <= zoom_position){
-        svg.select("#geometry").style("opacity", 1);
-        g.select("#all_sky").style("opacity", 0);
-        g.select("#zoom_sky").style("opacity", 0);
-    };
     if (scrollobj.curTop <= zoom_position){
         var new_zoom = zoom_max/zoom_min;
         var rt = rescale_translation(new_zoom);
