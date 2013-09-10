@@ -388,11 +388,17 @@ $(window).scroll(function(){
     if (scrollobj.curTop > 8500 && scrollobj.curTop <= 9000){
        $("#credits").css({"opacity":1, "top":"0%"});
     };
+    // if (scrollobj.curTop <= 9000){
+    //    $("#horizon").css({"opacity": 0, "top":"100%"});
+    // };
     if (scrollobj.curTop > 9000 && scrollobj.curTop <= 9500){
-       $("#credits").css({"opacity":1 - (scrollobj.curTop - 8000)/500, "top": -(scrollobj.curTop - 8000)/5 +"%"});
+       $("#credits").css({"opacity":1 - (scrollobj.curTop - 9000)/500, "top": -(scrollobj.curTop - 9000)/5 +"%"});
+       // $("#horizon").css({"opacity": (scrollobj.curTop - 9000)/500, "top": 100 - (scrollobj.curTop - 9000)/5 +"%"});
     };
     if (scrollobj.curTop > 9500){
        $("#credits").css({"opacity":0, "top":"-100%"});
+       // $("#horizon").css({"opacity": 1, "top":"0%"});
+       console.log("over here!")
     };
     
     
@@ -472,7 +478,7 @@ $(".flasher").click(function(){
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: new_location
-        }, "slow"); // slow is 600ms.
+        }, 2000);
     }
     else { 
         // The iPad has a weird bug where it will sometimes scroll to 5999 if you ask it to go to 6000.
@@ -500,7 +506,7 @@ $(".flasher-up").click(function(){
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: new_location
-        }, "slow"); // slow is 600ms.
+        }, 2000);
     }
     else { 
         var new_location = (Math.round(scrollobj.curTop/1000) - 1) * 1000;
@@ -519,7 +525,7 @@ $("#back-to-top").click(function(){
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: 0
-        }, 1200);
+        }, 2000);
     }
     else { 
         $(window).scrollTop(0); // this just jumps the page to the appropriate location.
