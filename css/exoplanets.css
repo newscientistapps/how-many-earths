@@ -51,6 +51,14 @@ body  {
     right: 1%;
 } 
 
+#share {
+    position: absolute;
+    top: 9px;
+    right: 0%;
+    width: 150px;
+} 
+
+
 #intro {
 	position:fixed;
 	top:100px;
