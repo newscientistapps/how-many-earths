@@ -120,6 +120,20 @@ var pic_x = (width - pic_width)/2,
         .attr("width", pic_width)
         .attr("height", pic_height)
         .style("opacity", 0);
+        
+    g.append("image")
+        .attr("xlink:href", "img/kepler_movie_16.gif")
+        .attr("class", "skyimage")
+        .attr("id", "movie")
+        // .attr("x", (width - pic_width/2)/2)
+        // .attr("y", (height - pic_height/2)/2)
+        // .attr("width", pic_width/2)
+        // .attr("height", pic_height/2)
+        .attr("x", (width - pic_width)/2)
+        .attr("y", (height - pic_height)/2)
+        .attr("width", pic_width)
+        .attr("height", pic_height)
+        .style("opacity", 0);
     
     if (navigator.userAgent.match(/ipad|iphone/i) !== null){
         
@@ -368,6 +382,7 @@ $(window).scroll(function(){
     };
     if (scrollobj.curTop <= 7000){
        $("#the_search_continues").css({"opacity": 0, "top":"100%"});
+       $("#movie").css("opacity", 0);
     };
     if (scrollobj.curTop > 7000 && scrollobj.curTop <= 7500){
        $("#the_bigger_picture").css({"opacity":1 - (scrollobj.curTop - 7000)/500, "top": -(scrollobj.curTop - 7000)/5 +"%"});
@@ -375,6 +390,8 @@ $(window).scroll(function(){
     };
     if (scrollobj.curTop > 7500){
        $("#the_bigger_picture").css({"opacity":0, "top":"-100%"});
+       $("#movie").css("opacity", 1);
+       $("#zoom_sky").css("opacity", 0);
     };
 
     //
