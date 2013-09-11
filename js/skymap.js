@@ -120,8 +120,9 @@ var pic_x = (width - pic_width)/2,
         .attr("width", pic_width)
         .attr("height", pic_height)
         .style("opacity", 0);
-        
-    g.append("image")
+    
+    // This is only here for pre-loading!    
+    svg.append("image")
         .attr("xlink:href", "img/kepler_movie.gif")
         .attr("class", "skyimage")
         .attr("id", "movie")
@@ -129,10 +130,14 @@ var pic_x = (width - pic_width)/2,
         // .attr("y", (height - pic_height/2)/2)
         // .attr("width", pic_width/2)
         // .attr("height", pic_height/2)
-        .attr("x", (width - pic_width)/2)
-        .attr("y", (height - pic_height)/2)
-        .attr("width", pic_width)
-        .attr("height", pic_height)
+        // .attr("x", (width - pic_width)/2)
+        // .attr("y", (height - pic_height)/2)
+        // .attr("width", pic_width)
+        // .attr("height", pic_height)
+        .attr("x", -1000)
+        .attr("y", -1000)
+        .attr("width", 3)
+        .attr("height", 2)
         .style("opacity", 0);
     
     if (navigator.userAgent.match(/ipad|iphone/i) !== null){
@@ -390,15 +395,13 @@ $(window).scroll(function(){
        $("#the_bigger_picture").css({"opacity":1 - (scrollobj.curTop - 7000)/500, "top": -(scrollobj.curTop - 7000)/5 +"%"});
        $("#the_search_continues").css({"opacity": (scrollobj.curTop - 7000)/500, "top": 100 - (scrollobj.curTop - 7000)/5 +"%"});
        // $("#movie").css("opacity", 0);
-       g.select("#zoom_sky")
-           .attr("xlink:href", "img/kepler_zoomedsky.png");
+       // g.select("#zoom_sky")
+       //     .attr("xlink:href", "img/kepler_zoomedsky.png");
     };
     if (scrollobj.curTop >= 7500){
        $("#the_bigger_picture").css({"opacity":0, "top":"-100%"});
        // $("#movie").css("opacity", 1);
        // $("#zoom_sky").css("opacity", 0);
-       g.select("#zoom_sky")
-           .attr("xlink:href", "img/kepler_movie.gif");
     };
 
     //
@@ -447,6 +450,19 @@ $(window).scroll(function(){
     };
     if (scrollobj.curTop >= (zoom_position + zoom_scroll_length)){
         g.attr("transform", "scale(1)translate(100,0)");
+    };
+    
+    // Handling the rotation.
+    if (scrollobj.curTop >= 7500 && scrollobj.lastTop < 7500){
+        g.select("#zoom_sky")
+            .attr("xlink:href", "img/kepler_movie.gif");
+        
+        // Get rid of the redundant movie.
+        svg.select("#movie").remove();
+    };
+    if (scrollobj.curTop < 7500 && scrollobj.lastTop >= 7500){
+        g.select("#zoom_sky")
+            .attr("xlink:href", "img/kepler_zoomedsky.png");
     };
 
 });
