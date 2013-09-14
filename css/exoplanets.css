@@ -170,13 +170,13 @@ z-index:70;
 
 font-size: 16px;
 line-height:110%;
-float: left;
+float: right;
 
--webkit-animation: fadein 3s linear infinite;
+/*-webkit-animation: fadein 3s linear infinite;
 -moz-animation: fadein 3s linear infinite;
 
 -webkit-animation-direction: alternate;
--moz-animation-direction: alternate;
+-moz-animation-direction: alternate;*/
 
 /*-webkit-animation-delay: 1s;
 -moz-animation-delay: 1s;
@@ -190,13 +190,13 @@ float: left;
 
 font-size: 16px;
 line-height:110%;
-float: right;
+float: left;
 
--webkit-animation: fadein 3s linear infinite;
+/*-webkit-animation: fadein 3s linear infinite;
 -moz-animation: fadein 3s linear infinite;
 
 -webkit-animation-direction: alternate;
--moz-animation-direction: alternate;
+-moz-animation-direction: alternate;*/
 
 /*-webkit-animation-delay: 1s;
 -moz-animation-delay: 1s;

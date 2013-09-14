@@ -5,17 +5,9 @@
 var width = $("body").innerWidth(),
 	height = window.innerHeight;
 
-// Note that these are negative -- that has to do with how rotation works on the stereographic projection.
-// Really, the initial dec (and RA, I believe) is positive.
-var initial_ra = -55,  // in degrees
-	initial_dec = -45;
-
 // Determine how far the map zooms in and out during the zoom transition.
 var zoom_min = 1000,
     zoom_max = 2500;
-
-// Does what it says on the tin, in milliseconds.
-var zoom_transition_time = 2000;
 
 // Picture width and height depend on what browser we're in.
 if (navigator.userAgent.match(/ipad|iphone/i) === null){
@@ -27,9 +19,50 @@ else {
         pic_height = 1000;
 }
 
+// Define image anchors.
+// We need to make sure the center of the screen always lines up with the center of the images.
+// The default anchor, (0, 0), is the upper-left corner of the screen.
+// So define a displacement from that location as appropriate to the size of the screen.
+var pic_x = (width - pic_width)/2,
+    pic_y = (height - pic_height)/2;
+
+// Define the sizes of the number box in the upper-right corner
 var rect_width = 300,
     rect_height = rect_width/3.2,
     number_size = 25;
+
+// Defining some projections we need to find the location of the North Star, so we can rotate around it.
+
+// Note that these are negative -- that has to do with how rotation works on the stereographic projection.
+// Really, the initial dec (and RA, I believe) is positive.
+var initial_ra = -55,  // in degrees
+	initial_dec = -45;
+
+// This is the same projection used in creating the static images in the first place.
+var old_projection = d3.geo.stereographic()
+    .clipAngle(140)
+    .scale(zoom_min)
+    .translate([width/2, height/2])
+    .precision(10)              // We don't care much about precision at small scales -- it's a star map!
+ 	.rotate([initial_ra, initial_dec]);
+
+var new_projection = d3.geo.stereographic()
+    .clipAngle(140)
+    .scale(zoom_min)
+    .translate([width/2, height/2])
+    // .precision(10)              // We don't care much about precision at small scales -- it's a star map!
+    // .rotate([initial_ra, initial_dec]);
+    .rotate([0, -90]);
+
+// var new_polaris_location = new_projection([0, 90]);
+var old_polaris_location = old_projection([0, 90]);
+
+// var dx = new_polaris_location[0] - old_polaris_location[0];
+// var dy = new_polaris_location[1] - old_polaris_location[1];
+// var dx = pic_width/2 - old_polaris_location[0] + pic_x;
+// var dy = pic_height/2 - old_polaris_location[1] + pic_y;
+var dx = width/2 - old_polaris_location[0];
+var dy = height/2 - old_polaris_location[1];
 
 //////////////////////////
 // Actually draw stuff! //
@@ -39,14 +72,6 @@ var rect_width = 300,
 var svg = d3.select("#main_event_interactive").append("svg")
     .attr("width", width)
     .attr("height", height);
-
-// Define image anchors.
-// We need to make sure the center of the screen always lines up with the center of the images.
-// The default anchor, (0, 0), is the upper-left corner of the screen.
-// So define a displacement from that location as appropriate to the size of the screen.
-var pic_x = (width - pic_width)/2,
-    pic_y = (height - pic_height)/2;
-
 
 // Load the images.
     svg.append("image")
@@ -121,24 +146,41 @@ var pic_x = (width - pic_width)/2,
         .attr("height", pic_height)
         .style("opacity", 0);
     
-    // This is only here for pre-loading!    
-    svg.append("image")
-        .attr("xlink:href", "img/kepler_movie.gif")
-        .attr("class", "skyimage")
-        .attr("id", "movie")
-        // .attr("x", (width - pic_width/2)/2)
-        // .attr("y", (height - pic_height/2)/2)
-        // .attr("width", pic_width/2)
-        // .attr("height", pic_height/2)
-        // .attr("x", (width - pic_width)/2)
-        // .attr("y", (height - pic_height)/2)
-        // .attr("width", pic_width)
-        // .attr("height", pic_height)
-        .attr("x", -1000)
-        .attr("y", -1000)
-        .attr("width", 3)
-        .attr("height", 2)
-        .style("opacity", 0);
+    // Setting up the rotation image.
+    g_rotate = svg.append("g");
+    
+    g_rotate.append("image")
+            .attr("xlink:href", "img/kepler_north_star.png")
+            .attr("class", "skyimage")
+            .attr("id", "rotating")
+            .attr("x", (width - 3500)/2 - dx)
+            .attr("y", (height - 3500)/2 - dy)
+            .attr("width", 3500)
+            .attr("height", 3500)
+            .style("opacity", 0);
+    
+    g_rotate.attr("transform", "translate(100,0)rotate(" + -1*initial_ra + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")");
+    
+        
+    
+    // // This is only here for pre-loading!    
+    // svg.append("image")
+    //     .attr("xlink:href", "img/kepler_movie.gif")
+    //     .attr("class", "skyimage")
+    //     .attr("id", "movie")
+    //     // .attr("x", (width - pic_width/2)/2)
+    //     // .attr("y", (height - pic_height/2)/2)
+    //     // .attr("width", pic_width/2)
+    //     // .attr("height", pic_height/2)
+    //     // .attr("x", (width - pic_width)/2)
+    //     // .attr("y", (height - pic_height)/2)
+    //     // .attr("width", pic_width)
+    //     // .attr("height", pic_height)
+    //     .attr("x", -1000)
+    //     .attr("y", -1000)
+    //     .attr("width", 3)
+    //     .attr("height", 2)
+    //     .style("opacity", 0);
     
     if (navigator.userAgent.match(/ipad|iphone/i) !== null){
         
@@ -448,21 +490,40 @@ $(window).scroll(function(){
         var rt = rescale_translation(new_zoom);
         g.attr("transform", "scale(" + new_zoom + ")translate(" + (width*rt + scroll_ratio*100) + "," + height*rt + ")");
     };
-    if (scrollobj.curTop >= (zoom_position + zoom_scroll_length)){
+    if (scrollobj.curTop >= (zoom_position + zoom_scroll_length) && scrollobj.curTop < 7500){
         g.attr("transform", "scale(1)translate(100,0)");
     };
     
     // Handling the rotation.
     if (scrollobj.curTop >= 7500 && scrollobj.lastTop < 7500){
-        g.select("#zoom_sky")
-            .attr("xlink:href", "img/kepler_movie.gif");
+        // g.select("#zoom_sky")
+        //     .attr("xlink:href", "img/kepler_movie.gif");
         
-        // Get rid of the redundant movie.
-        svg.select("#movie").remove();
+        // // Get rid of the redundant movie.
+        // svg.select("#movie").remove();
+        
+        // g.attr("transform", "scale(1)translate(100,0)rotate(15 " + projection([0, 0])[1] + " " + projection([0, 0])[0] + ")");
+        // console.log(g.attr("transform"));
+        // console.log("yo, over here");
+        var velocity = .0025;
+        svg.select("#rotating").style("opacity", 1);
+        var then = Date.now();
+        d3.timer(function() {
+            var angle = velocity * (then - Date.now()) - initial_ra;
+            // console.log(angle);
+            // g_rotate.attr("transform", "scale(1)translate(100,0)rotate(" + angle + " " + new_projection([0, 90])[0] + " " + new_projection([0, 90])[1] + ")");
+            g_rotate.attr("transform", "translate(100,0)rotate(" + angle + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")");
+            if (scrollobj.curTop < 7500){
+                g_rotate.attr("transform", "translate(100,0)rotate(" + -1*initial_ra + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")");
+                return true;
+            };
+        });
     };
     if (scrollobj.curTop < 7500 && scrollobj.lastTop >= 7500){
-        g.select("#zoom_sky")
-            .attr("xlink:href", "img/kepler_zoomedsky.png");
+        // g.select("#zoom_sky")
+        //     .attr("xlink:href", "img/kepler_zoomedsky.png");
+        svg.select("#rotating").style("opacity", 0);
+        // g_rotate.attr("transform", "translate(100,0)rotate(" + -1*initial_ra + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")");
     };
 
 });
@@ -487,6 +548,11 @@ $(window).resize(function(){
             .attr("x", pic_x)
             .attr("y", pic_y);
     
+    // Reset rotating-image location.
+    svg.select("#rotating")
+        .attr("x", (width - 4000)/2)
+        .attr("y", (height - 4000)/2);
+    
     // Reset number box and text location.
      svg.select("#number-box")
          .attr("x", width - rect_width - 10);
@@ -498,7 +564,7 @@ $(window).resize(function(){
     if (navigator.userAgent.match(/ipad|iphone/i) !== null){
         $(window).scrollTop(Math.round(scrollobj.curTop/1000)*1000);
     };
-    
+        
 });
 
 
