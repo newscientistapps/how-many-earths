@@ -193,6 +193,9 @@ var svg = d3.select("#main_event_interactive").append("svg")
 
         g.select("#zoom_sky")
             .attr("xlink:href", "img/kepler_zoomedsky_small.png");
+        
+        g_rotate.select("#rotating")
+            .attr("xlink:href", "img/kepler_north_star_small.png");
     };
     
     
