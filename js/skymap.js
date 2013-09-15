@@ -19,6 +19,8 @@ else {
         pic_height = 1000;
 }
 
+var rotating_pic_width = 3500;
+
 // Define image anchors.
 // We need to make sure the center of the screen always lines up with the center of the images.
 // The default anchor, (0, 0), is the upper-left corner of the screen.
@@ -46,21 +48,8 @@ var old_projection = d3.geo.stereographic()
     .precision(10)              // We don't care much about precision at small scales -- it's a star map!
  	.rotate([initial_ra, initial_dec]);
 
-var new_projection = d3.geo.stereographic()
-    .clipAngle(140)
-    .scale(zoom_min)
-    .translate([width/2, height/2])
-    // .precision(10)              // We don't care much about precision at small scales -- it's a star map!
-    // .rotate([initial_ra, initial_dec]);
-    .rotate([0, -90]);
-
-// var new_polaris_location = new_projection([0, 90]);
 var old_polaris_location = old_projection([0, 90]);
 
-// var dx = new_polaris_location[0] - old_polaris_location[0];
-// var dy = new_polaris_location[1] - old_polaris_location[1];
-// var dx = pic_width/2 - old_polaris_location[0] + pic_x;
-// var dy = pic_height/2 - old_polaris_location[1] + pic_y;
 var dx = width/2 - old_polaris_location[0];
 var dy = height/2 - old_polaris_location[1];
 
@@ -153,10 +142,10 @@ var svg = d3.select("#main_event_interactive").append("svg")
             .attr("xlink:href", "img/kepler_north_star.png")
             .attr("class", "skyimage")
             .attr("id", "rotating")
-            .attr("x", (width - 3500)/2 - dx)
-            .attr("y", (height - 3500)/2 - dy)
-            .attr("width", 3500)
-            .attr("height", 3500)
+            .attr("x", (width - rotating_pic_width)/2 - dx)
+            .attr("y", (height - rotating_pic_width)/2 - dy)
+            .attr("width", rotating_pic_width)
+            .attr("height", rotating_pic_width)
             .style("opacity", 0);
     
     g_rotate.attr("transform", "translate(100,0)rotate(" + -1*initial_ra + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")");
@@ -549,9 +538,23 @@ $(window).resize(function(){
             .attr("y", pic_y);
     
     // Reset rotating-image location.
+    
+    // This is the same projection used in creating the static images in the first place.
+    old_projection = d3.geo.stereographic()
+        .clipAngle(140)
+        .scale(zoom_min)
+        .translate([width/2, height/2])
+        .precision(10)              // We don't care much about precision at small scales -- it's a star map!
+     	.rotate([initial_ra, initial_dec]);
+
+    old_polaris_location = old_projection([0, 90]);
+
+    dx = width/2 - old_polaris_location[0];
+    dy = height/2 - old_polaris_location[1];
+    
     svg.select("#rotating")
-        .attr("x", (width - 4000)/2)
-        .attr("y", (height - 4000)/2);
+        .attr("x", (width - rotating_pic_width)/2 - dx)
+        .attr("y", (height - rotating_pic_width)/2 - dy);
     
     // Reset number box and text location.
      svg.select("#number-box")
