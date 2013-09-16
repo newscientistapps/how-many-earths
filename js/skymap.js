@@ -12,14 +12,19 @@ var zoom_min = 1000,
 // Picture width and height depend on what browser we're in.
 if (navigator.userAgent.match(/ipad|iphone/i) === null){
     var pic_width = 3000,
-        pic_height = 2000;
+        pic_height = 2000,
+        rotating_pic_width = 3500;  
 }
 else {
-    var pic_width = 1500,
-        pic_height = 1000;
+    var pic_scale = 1.3;
+    var pic_width = pic_scale*1500,
+        pic_height = pic_scale*1000,
+        rotating_pic_width = pic_scale*1750;
+    // var pic_width = 3000,
+    //     pic_height = 2000,
+    //     rotating_pic_width = 3500,
+    //     pic_scale = 1;
 }
-
-var rotating_pic_width = 3500;
 
 // Define image anchors.
 // We need to make sure the center of the screen always lines up with the center of the images.
@@ -150,29 +155,22 @@ var svg = d3.select("#main_event_interactive").append("svg")
     
     g_rotate.attr("transform", "translate(100,0)rotate(" + -1*initial_ra + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")");
     
-        
-    
-    // // This is only here for pre-loading!    
+    // // Setting up the horizon image.
     // svg.append("image")
-    //     .attr("xlink:href", "img/kepler_movie.gif")
-    //     .attr("class", "skyimage")
-    //     .attr("id", "movie")
-    //     // .attr("x", (width - pic_width/2)/2)
-    //     // .attr("y", (height - pic_height/2)/2)
-    //     // .attr("width", pic_width/2)
-    //     // .attr("height", pic_height/2)
-    //     // .attr("x", (width - pic_width)/2)
-    //     // .attr("y", (height - pic_height)/2)
-    //     // .attr("width", pic_width)
-    //     // .attr("height", pic_height)
-    //     .attr("x", -1000)
-    //     .attr("y", -1000)
-    //     .attr("width", 3)
-    //     .attr("height", 2)
+    //     .attr("xlink:href", "img/HORIZON_3d-01.png")
+    //     // .attr("class", "skyimage")
+    //     .attr("id", "horizon")
+    //     .attr("x", 0)
+    //     // .attr("y", height - width*(pic_height/pic_width))
+    //     .attr("y", height/2)
+    //     .attr("preserveAspectRatio", "none")
+    //     .attr("width", width)
+    //     // .attr("height", width*(pic_height/pic_width))
+    //     .attr("height", height/2)
     //     .style("opacity", 0);
     
     if (navigator.userAgent.match(/ipad|iphone/i) !== null){
-        
+                
         svg.select("#background")
             .attr("xlink:href", "img/kepler_background_small.png");
             
@@ -197,8 +195,6 @@ var svg = d3.select("#main_event_interactive").append("svg")
         g_rotate.select("#rotating")
             .attr("xlink:href", "img/kepler_north_star_small.png");
     };
-    
-    
     
     // Setting up the number box, which is the only dynamically-rendered true SVG components in this whole thing.
     svg.append("rect")
@@ -422,8 +418,8 @@ $(window).scroll(function(){
     if (scrollobj.curTop <= 7000){
        $("#the_search_continues").css({"opacity": 0, "top":"100%"});
        // $("#movie").css("opacity", 0);
-       g.select("#zoom_sky")
-           .attr("xlink:href", "img/kepler_zoomedsky.png");
+       // g.select("#zoom_sky")
+       //     .attr("xlink:href", "img/kepler_zoomedsky.png");
     };
     if (scrollobj.curTop > 7000 && scrollobj.curTop < 7500){
        $("#the_bigger_picture").css({"opacity":1 - (scrollobj.curTop - 7000)/500, "top": -(scrollobj.curTop - 7000)/5 +"%"});
@@ -524,7 +520,7 @@ $(window).scroll(function(){
 $(window).resize(function(){
         
     // Reset the width and height variables.
-    width = window.innerWidth;
+    width = $("body").innerWidth();
     height = window.innerHeight;
     
     // Reset image offset locations.
