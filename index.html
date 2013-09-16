@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="css/exoplanets.css" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
-    
+    <!--[if gte IE 9]><!-->
     <script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="js/jquery-1.10.2.min.js"></script>
-	
+	<!--<![endif]-->
 	<!-- Disable scrolling on the iPad and iPhone -->
 	<script>if (navigator.userAgent.match(/ipad|iphone/i) !== null){ 
 			$(document).bind("touchmove", false);
@@ -47,6 +47,14 @@
 	<img id="planet_png" src="img/exoearth.png"/>
 	</div>
 	
+	<!--[if lt IE 9]>
+	<div style="z-index:2000;opacity:0.6;width:100%;height:100%;position:fixed;top:0;background:#000">
+	</div>
+	<div style="z-index:2000;width:100%;height:30%;position:fixed;top:30%;background:#000;">
+	  <p style="opacity:1.0;color:#fff;text-align:center;font-size:50px;"><em>Your browser can't display this content. Try using a more modern browser, like <a href="http://www.google.com/chrome" target="blank">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/" target="blank">Firefox</a>.</em></p>
+	</div>
+	<![endif]--> 
+	
 	<div id="intro">
 	
 		<h1>How many<br> Earths?</h1>
@@ -66,7 +74,7 @@
 			};
 		</script>
 		
-		</div>  
+		</div> 
 	
 	</div>
 
@@ -192,10 +200,6 @@
 	<div id="main_event_interactive", style ="position:fixed;top:0%;">
 		<script src="js/skymap.js"></script>		
 	</div>
-	
-	<!-- <div class="super-overlay", id="horizon">
-		<img src="img/HORIZON_2_big_2-01.png">
-		</div> -->
 	
 
 </body>
