@@ -155,19 +155,19 @@ var svg = d3.select("#main_event_interactive").append("svg")
     
     g_rotate.attr("transform", "translate(100,0)rotate(" + -1*initial_ra + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")");
     
-    // // Setting up the horizon image.
-    // svg.append("image")
-    //     .attr("xlink:href", "img/HORIZON_3d-01.png")
-    //     // .attr("class", "skyimage")
-    //     .attr("id", "horizon")
-    //     .attr("x", 0)
-    //     .attr("y", height - width*(pic_height/pic_width))
-    //     // .attr("y", height/2)
-    //     // .attr("preserveAspectRatio", "none")
-    //     .attr("width", width)
-    //     .attr("height", width*(pic_height/pic_width))
-    //     // .attr("height", height/2)
-    //     .style("opacity", 0);
+    // Setting up the horizon image.
+    svg.append("image")
+        .attr("xlink:href", "img/HORIZON.png")
+        .attr("class", "skyimage")
+        .attr("id", "horizon")
+        .attr("x", 0)
+        .attr("y", height - width*(pic_height/pic_width))
+        // .attr("y", height/2)
+        // .attr("preserveAspectRatio", "none")
+        .attr("width", width)
+        .attr("height", width*(pic_height/pic_width))
+        // .attr("height", height/2)
+        .style("opacity", 0);
     
     if (navigator.userAgent.match(/ipad|iphone/i) !== null){
                 
@@ -194,9 +194,12 @@ var svg = d3.select("#main_event_interactive").append("svg")
         
         g_rotate.select("#rotating")
             .attr("xlink:href", "img/kepler_north_star_small.png");
+        
+        svg.select("#horizon")
+            .attr("xlink:href", "img/HORIZON_small.png");
     };
     
-    // Setting up the number box, which is the only dynamically-rendered true SVG components in this whole thing.
+    // Setting up the number box, which is the only dynamically-rendered true SVG component in this whole thing.
     svg.append("rect")
         .attr("id", "number-box")
         .attr("x", width - rect_width - 10)
@@ -293,21 +296,26 @@ $(window).scroll(function(){
     };
     if (scrollobj.curTop <= 2000){
        d3.select("#number-box").attr("opacity", 0);
+       d3.select("#number-planets").attr("opacity", 0);
        d3.select("#number-planets").text("");
        $("#Keplers_haul").css({"opacity": 0, "top":"100%"});
        $("#candidates").css("opacity", 0);
     };
     if (scrollobj.curTop > 2000 && scrollobj.curTop <= 2500){
-       d3.select("#number-box").attr("opacity", 1);
+       d3.select("#number-box").attr("opacity", (scrollobj.curTop - 2000)/500);
        d3.select("#number-planets").text("3573 planets");
+       d3.select("#number-planets").attr("opacity", (scrollobj.curTop - 2000)/500);
        $("#in_the_frame").css({"opacity":1 - (scrollobj.curTop - 2000)/500, "top": -(scrollobj.curTop - 2000)/5 +"%"});
        $("#Keplers_haul").css({"opacity": (scrollobj.curTop - 2000)/500, "top": 100 - (scrollobj.curTop - 2000)/5 +"%"});
        $("#candidates").css("opacity", (scrollobj.curTop - 2000)/500);
     };
     if (scrollobj.curTop > 2500){
-       d3.select("#number-box").attr("opacity", 1);
        $("#in_the_frame").css({"opacity":0, "top":"-100%"});
     };
+    if (scrollobj.curTop > 2500 && scrollobj.curTop <= 8000){
+        d3.select("#number-box").attr("opacity", 1);
+        d3.select("#number-planets").attr("opacity", 1);
+    }
 
 
     if (scrollobj.curTop > 2500 && scrollobj.curTop <= 3000){
@@ -440,29 +448,31 @@ $(window).scroll(function(){
     };
     if (scrollobj.curTop <= 8000){
        $("#credits").css({"opacity": 0, "top":"100%"});
+       $("#horizon").css({"opacity": 0, "top":"100%"});
     };
     if (scrollobj.curTop > 8000 && scrollobj.curTop <= 8500){
        $("#the_search_continues").css({"opacity":1 - (scrollobj.curTop - 8000)/500, "top": -(scrollobj.curTop - 8000)/5 +"%"});
        $("#credits").css({"opacity": (scrollobj.curTop - 8000)/500, "top": 100 - (scrollobj.curTop - 8000)/5 +"%"});
+       $("#horizon").css({"opacity": (scrollobj.curTop - 8000)/500, "top": 100 - (scrollobj.curTop - 8000)/5 +"%"});
+       $("#number-planets").attr("opacity", 1 - (scrollobj.curTop - 8000)/500);
+       $("#number-box").attr("opacity", 1 - (scrollobj.curTop - 8000)/500);
     };
     if (scrollobj.curTop > 8500){
        $("#the_search_continues").css({"opacity":0, "top":"-100%"});
+       $("#horizon").css({"opacity": 1, "top":"0%"});
+       $("#number-planets").attr("opacity", 0);
+       $("#number-box").attr("opacity", 0);
     };
     
     //
     if (scrollobj.curTop > 8500 && scrollobj.curTop <= 9000){
        $("#credits").css({"opacity":1, "top":"0%"});
     };
-    if (scrollobj.curTop <= 9000){
-       $("#horizon").css({"opacity": 0, "top":"100%"});
-    };
     if (scrollobj.curTop > 9000 && scrollobj.curTop <= 9500){
        $("#credits").css({"opacity":1 - (scrollobj.curTop - 9000)/500, "top": -(scrollobj.curTop - 9000)/5 +"%"});
-       $("#horizon").css({"opacity": (scrollobj.curTop - 9000)/500, "top": 100 - (scrollobj.curTop - 9000)/5 +"%"});
     };
     if (scrollobj.curTop > 9500){
        $("#credits").css({"opacity":0, "top":"-100%"});
-       $("#horizon").css({"opacity": 1, "top":"0%"});
     };
     
     
@@ -561,7 +571,14 @@ $(window).resize(function(){
 
     svg.select("#number-planets")
          .attr("x", width - 10 - rect_width/2);
-             
+    
+    // Handle horizon image size.
+    svg.select("#horizon")
+        .attr("x", 0)
+        .attr("y", height - width*(pic_height/pic_width))
+        .attr("width", width)
+        .attr("height", width*(pic_height/pic_width));
+                     
     // Make sure the scroll location isn't lost on iOS devices when the screen is rotated.
     if (navigator.userAgent.match(/ipad|iphone/i) !== null){
         $(window).scrollTop(Math.round(scrollobj.curTop/1000)*1000);
