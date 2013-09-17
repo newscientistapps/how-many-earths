@@ -34,7 +34,7 @@ var pic_x = (width - pic_width)/2,
     pic_y = (height - pic_height)/2;
 
 // Define the sizes of the number box in the upper-right corner
-var rect_width = 300,
+var rect_width = 350,
     rect_height = rect_width/3.2,
     number_size = 25;
 
@@ -231,7 +231,7 @@ var svg = d3.select("#main_event_interactive").append("svg")
     // Setting up the number box, which is the only dynamically-rendered true SVG component in this whole thing.
     svg.append("rect")
         .attr("id", "number-box")
-        .attr("x", width - rect_width - 10)
+        .attr("x", width - rect_width)
         .attr("y", 0)
         .attr("width", rect_width)
         .attr("height", rect_height)
@@ -241,7 +241,7 @@ var svg = d3.select("#main_event_interactive").append("svg")
    svg.append("text")
         .attr("id", "number-planets")
         .attr("text-anchor", "middle")
-        .attr("x", width - 10 - rect_width/2)
+        .attr("x", width - rect_width/2)
         .attr("y", rect_height/2) 
         .attr("dy", number_size/3)   // because friggin IE doesn't support dominant-baseline!
         // .attr("font-family", "sans-serif")
@@ -718,10 +718,10 @@ $(window).resize(function(){
     
     // Reset number box and text location.
      svg.select("#number-box")
-         .attr("x", width - rect_width - 10);
+         .attr("x", width - rect_width);
 
     svg.select("#number-planets")
-         .attr("x", width - 10 - rect_width/2);
+         .attr("x", width - rect_width/2);
     
     // Handle horizon image size.
     svg.select("#horizon")
