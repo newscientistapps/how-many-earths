@@ -58,6 +58,10 @@ var old_polaris_location = old_projection([0, 90]);
 var dx = width/2 - old_polaris_location[0];
 var dy = height/2 - old_polaris_location[1];
 
+// Controlling the timing of the various animations.
+var scroll_time = 2000,
+    number_time = 1500;
+
 var pretty_number_string = function(number){
     // Given an integer, returns a string which formats that integer in the New Scientist style:
     // no commas if it's less than 5 digits, commas separating every set of thousands thereafter.
@@ -506,7 +510,7 @@ $(window).scroll(function(){
     if (scrollobj.curTop > 3250 && scrollobj.lastTop <= 3250 && scrollobj.curTop < 4250){
         d3.select("#number-planets")
             .transition()
-            .duration(2000)
+            .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
                 var f = d3.interpolate(parseInt(string), 1690);
@@ -521,7 +525,7 @@ $(window).scroll(function(){
     if (scrollobj.curTop <= 3250 && scrollobj.lastTop > 3250){
         d3.select("#number-planets")
             .transition()
-            .duration(2000)
+            .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
                 var f = d3.interpolate(parseInt(string), 3573);
@@ -536,7 +540,7 @@ $(window).scroll(function(){
     if (scrollobj.curTop > 4250 && scrollobj.lastTop <= 4250 && scrollobj.curTop < 5250){
         d3.select("#number-planets")
             .transition()
-            .duration(2000)
+            .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
                 var f = d3.interpolate(parseInt(string), 50);
@@ -551,7 +555,7 @@ $(window).scroll(function(){
     if (scrollobj.curTop <= 4250 && scrollobj.lastTop > 4250 && scrollobj.curTop > 3250){
         d3.select("#number-planets")
             .transition()
-            .duration(2000)
+            .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
                 var f = d3.interpolate(parseInt(string), 1690);
@@ -566,7 +570,7 @@ $(window).scroll(function(){
     if (scrollobj.curTop > 5250 && scrollobj.lastTop <= 5250 && scrollobj.curTop < 6250){
         d3.select("#number-planets")
             .transition()
-            .duration(2000)
+            .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
                 var f = d3.interpolate(parseInt(string), 22500);
@@ -581,7 +585,7 @@ $(window).scroll(function(){
     if (scrollobj.curTop <= 5250 && scrollobj.lastTop > 5250 && scrollobj.curTop > 4250){
         d3.select("#number-planets")
             .transition()
-            .duration(2000)
+            .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
                 var f = d3.interpolate(parseInt(string), 50);
@@ -596,7 +600,7 @@ $(window).scroll(function(){
     if (scrollobj.curTop > 6250 && scrollobj.lastTop <= 6250){
         d3.select("#number-planets")
             .transition()
-            .duration(2000)
+            .duration(number_time)
             .ease("exp")
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
@@ -613,7 +617,7 @@ $(window).scroll(function(){
     if (scrollobj.curTop <= 6250 && scrollobj.lastTop > 6250 && scrollobj.curTop > 5250){
         d3.select("#number-planets")
             .transition()
-            .duration(2000)
+            .duration(number_time)
             .ease("exp-out")
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
@@ -753,7 +757,7 @@ $(".flasher").click(function(){
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: new_location
-        }, 2000);
+        }, scroll_time);
     }
     else { 
         // The iPad has a weird bug where it will sometimes scroll to 5999 if you ask it to go to 6000.
@@ -781,7 +785,7 @@ $(".flasher-up").click(function(){
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: new_location
-        }, 2000);
+        }, scroll_time);
     }
     else { 
         var new_location = (Math.round(scrollobj.curTop/1000) - 1) * 1000;
@@ -800,7 +804,7 @@ $("#back-to-top").click(function(){
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
         $("body,html").animate({
             scrollTop: 0
-        }, 2000);
+        }, scroll_time);
     }
     else { 
         $(window).scrollTop(0); // this just jumps the page to the appropriate location.
