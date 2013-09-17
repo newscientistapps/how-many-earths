@@ -213,6 +213,14 @@ float: left;
     pointer-events: none;
 }*/
 
+@font-face{font-family: LCD; src: url('../fonts/DS-DIGI.TTF');}
+
 #number-planets{
-    font-family: sans-serif;
+/*    fill: white;*/
+/*    font-family: sans-serif;*/
+    font-size: 25px;
+    fill: #55FF00;
+    font-family: Courier;
+/*    font-family: LCD;*/
+/*    font-size: 40px;*/
 }

@@ -58,6 +58,35 @@ var old_polaris_location = old_projection([0, 90]);
 var dx = width/2 - old_polaris_location[0];
 var dy = height/2 - old_polaris_location[1];
 
+var pretty_number_string = function(number){
+    // Given an integer, returns a string which formats that integer in the New Scientist style:
+    // no commas if it's less than 5 digits, commas separating every set of thousands thereafter.
+    
+    // var log_base_ten = Math.log(number)/Math.log(10);
+    // var digits = Math.floor(log_base_ten);           // number of digits
+    
+    var num_string = String(number);
+    var digits = num_string.length;
+    
+    if (digits < 5){
+        return num_string;
+    }
+    else{
+        // number_of_commas = Math.floor(digits/3);
+        var result_array = [];
+        // Read through the number backwards, putting every triplet of numbers into the array, followed by a comma, until we run out of digits.
+        for (var i = 0; i < digits; i += 3){
+            var next_digits = num_string.slice(-1*(i + 3),digits - i); // the next set of digits to put after a comma
+            result_array.unshift(next_digits);
+            result_array.unshift(",")
+        };
+        
+        result_array = result_array.slice(1); // the first entry will be a superfluous comma.
+        var result = result_array.join("");
+        return result;
+    };
+};
+
 //////////////////////////
 // Actually draw stuff! //
 //////////////////////////
@@ -215,9 +244,8 @@ var svg = d3.select("#main_event_interactive").append("svg")
         .attr("x", width - 10 - rect_width/2)
         .attr("y", rect_height/2) 
         .attr("dy", number_size/3)   // because friggin IE doesn't support dominant-baseline!
-        .attr("font-family", "sans-serif")
-        .attr("fill", "white")
-        .attr("font-size", number_size)
+        // .attr("font-family", "sans-serif")
+        // .attr("font-size", number_size)
         .attr("font-style", "bold");
 
 ////////////////////////
@@ -317,7 +345,6 @@ $(window).scroll(function(){
         d3.select("#number-planets").attr("opacity", 1);
     }
 
-
     if (scrollobj.curTop > 2500 && scrollobj.curTop <= 3000){
        d3.select("#number-planets").text("3573 planets");
        $("#Keplers_haul").css({"opacity":1, "top":"0%"});
@@ -328,7 +355,7 @@ $(window).scroll(function(){
        $("#size").css("opacity", 0);
     };
     if (scrollobj.curTop > 3000 && scrollobj.curTop <= 3500){
-       d3.select("#number-planets").text("1690 planets");
+       // d3.select("#number-planets").text("1690 planets");
        $("#Keplers_haul").css({"opacity":1 - (scrollobj.curTop - 3000)/500, "top": -(scrollobj.curTop - 3000)/5 +"%"});
        // $("#candidates").css("opacity", 1 - (scrollobj.curTop - 3000)/500);
        $("#candidates").css("opacity", 1);
@@ -343,7 +370,7 @@ $(window).scroll(function(){
 
 
     if (scrollobj.curTop > 3500 && scrollobj.curTop <= 4000){
-       d3.select("#number-planets").text("1690 planets");
+       // d3.select("#number-planets").text("1690 planets");
        $("#ripe_for_life").css({"opacity":1, "top":"0%"});
        $("#size").css("opacity", 1);
     };
@@ -352,7 +379,7 @@ $(window).scroll(function(){
        $("#habitable").css("opacity", 0);
     };
     if (scrollobj.curTop > 4000 && scrollobj.curTop <= 4500){
-       d3.select("#number-planets").text("~50 planets");
+       // d3.select("#number-planets").text("~50 planets");
        $("#ripe_for_life").css({"opacity":1 - (scrollobj.curTop - 4000)/500, "top": -(scrollobj.curTop - 4000)/5 +"%"});
        // $("#size").css("opacity", 1 - (scrollobj.curTop - 4000)/500);
        $("#size").css("opacity", 1);
@@ -367,7 +394,7 @@ $(window).scroll(function(){
 
     //
     if (scrollobj.curTop > 4500 && scrollobj.curTop <= 5000){
-       d3.select("#number-planets").text("~50 planets");
+       // d3.select("#number-planets").text("~50 planets");
        $("#these_might_be_like_home").css({"opacity":1, "top":"0%"});
        $("#habitable").css("opacity", 1);
     };
@@ -376,7 +403,7 @@ $(window).scroll(function(){
        $("#geometry").css("opacity", 0);
     };
     if (scrollobj.curTop > 5000 && scrollobj.curTop <= 5500){
-       d3.select("#number-planets").text("~22,500 planets");
+       // d3.select("#number-planets").text("~22,500 planets");
        $("#these_might_be_like_home").css({"opacity":1 - (scrollobj.curTop - 5000)/500, "top": -(scrollobj.curTop - 5000)/5 +"%"});
        // $("#habitable").css("opacity", 1 - (scrollobj.curTop - 5000)/500);
        $("#habitable").css("opacity", 1);
@@ -391,7 +418,7 @@ $(window).scroll(function(){
 
     //
     if (scrollobj.curTop > 5500 && scrollobj.curTop <= 6000){
-       d3.select("#number-planets").text("~22,500 planets");
+       // d3.select("#number-planets").text("~22,500 planets");
        $("#Earths_galore").css({"opacity":1, "top":"0%"});
        $("#geometry").css("opacity", 1);
     };
@@ -401,7 +428,7 @@ $(window).scroll(function(){
        $("#zoom_sky").css("opacity", 0);
     };
     if (scrollobj.curTop > 6000 && scrollobj.curTop <= 6500){
-       d3.select("#number-planets").text("15-30 billion planets");
+       // d3.select("#number-planets").text("15-30 billion planets");
        $("#Earths_galore").css({"opacity":1 - (scrollobj.curTop - 6000)/500, "top": -(scrollobj.curTop - 6000)/5 +"%"});
        // $("#geometry").css("opacity", 1);
        $("#geometry").css("opacity", 0);
@@ -412,7 +439,7 @@ $(window).scroll(function(){
        $("#zoom_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
     };
     if (scrollobj.curTop > 6500){
-       d3.select("#number-planets").text("15-30 billion planets");
+       // d3.select("#number-planets").text("15-30 billion planets");
        $("#Earths_galore").css({"opacity":0, "top":"-100%"});
        $("#geometry").css("opacity", 0);
        $("#all_sky").css("opacity", 0);
@@ -475,6 +502,130 @@ $(window).scroll(function(){
        $("#credits").css({"opacity":0, "top":"-100%"});
     };
     
+    // Handling the text animation.
+    if (scrollobj.curTop > 3250 && scrollobj.lastTop <= 3250 && scrollobj.curTop < 4250){
+        d3.select("#number-planets")
+            .transition()
+            .duration(2000)
+            .tween("text", function(){
+                var string = this.textContent.split(",").join("") // removes all commas from the string.
+                var f = d3.interpolate(parseInt(string), 1690);
+                return function(t){
+                    var number = Math.round(f(t));
+                    num_string = pretty_number_string(number);
+                    this.textContent = num_string + " planets";
+                }
+            });
+    };
+    
+    if (scrollobj.curTop <= 3250 && scrollobj.lastTop > 3250){
+        d3.select("#number-planets")
+            .transition()
+            .duration(2000)
+            .tween("text", function(){
+                var string = this.textContent.split(",").join("") // removes all commas from the string.
+                var f = d3.interpolate(parseInt(string), 3573);
+                return function(t){
+                    var number = Math.round(f(t));
+                    num_string = pretty_number_string(number);
+                    this.textContent = num_string + " planets";
+                }
+            });
+    };
+    
+    if (scrollobj.curTop > 4250 && scrollobj.lastTop <= 4250 && scrollobj.curTop < 5250){
+        d3.select("#number-planets")
+            .transition()
+            .duration(2000)
+            .tween("text", function(){
+                var string = this.textContent.split(",").join("") // removes all commas from the string.
+                var f = d3.interpolate(parseInt(string), 50);
+                return function(t){
+                    var number = Math.round(f(t));
+                    num_string = pretty_number_string(number);
+                    this.textContent = num_string + " planets"; 
+               }
+            });
+    };
+    
+    if (scrollobj.curTop <= 4250 && scrollobj.lastTop > 4250 && scrollobj.curTop > 3250){
+        d3.select("#number-planets")
+            .transition()
+            .duration(2000)
+            .tween("text", function(){
+                var string = this.textContent.split(",").join("") // removes all commas from the string.
+                var f = d3.interpolate(parseInt(string), 1690);
+                return function(t){
+                    var number = Math.round(f(t));
+                    num_string = pretty_number_string(number);
+                    this.textContent = num_string + " planets"; 
+               }
+            });
+    };
+    
+    if (scrollobj.curTop > 5250 && scrollobj.lastTop <= 5250 && scrollobj.curTop < 6250){
+        d3.select("#number-planets")
+            .transition()
+            .duration(2000)
+            .tween("text", function(){
+                var string = this.textContent.split(",").join("") // removes all commas from the string.
+                var f = d3.interpolate(parseInt(string), 22500);
+                return function(t){
+                    var number = Math.round(f(t));
+                    num_string = pretty_number_string(number);
+                    this.textContent = num_string + " planets";
+                }
+            });
+    };
+    
+    if (scrollobj.curTop <= 5250 && scrollobj.lastTop > 5250 && scrollobj.curTop > 4250){
+        d3.select("#number-planets")
+            .transition()
+            .duration(2000)
+            .tween("text", function(){
+                var string = this.textContent.split(",").join("") // removes all commas from the string.
+                var f = d3.interpolate(parseInt(string), 50);
+                return function(t){
+                    var number = Math.round(f(t));
+                    num_string = pretty_number_string(number);
+                    this.textContent = num_string + " planets";
+                }
+            });
+    };
+    
+    if (scrollobj.curTop > 6250 && scrollobj.lastTop <= 6250){
+        d3.select("#number-planets")
+            .transition()
+            .duration(2000)
+            .ease("exp")
+            .tween("text", function(){
+                var string = this.textContent.split(",").join("") // removes all commas from the string.
+                var f = d3.interpolate(parseInt(string), 1000000000);
+                return function(t){
+                    var number = Math.round(f(t));
+                    num_string = pretty_number_string(number);
+                    this.textContent = num_string + " planets";
+                };
+            })
+            .each("end", function(){this.textContent = "15-30 billion planets"});
+    };
+    
+    if (scrollobj.curTop <= 6250 && scrollobj.lastTop > 6250 && scrollobj.curTop > 5250){
+        d3.select("#number-planets")
+            .transition()
+            .duration(2000)
+            .ease("exp-out")
+            .tween("text", function(){
+                var string = this.textContent.split(",").join("") // removes all commas from the string.
+                var f = d3.interpolate(parseInt(string), 22500);
+                return function(t){
+                    var number = Math.round(f(t));
+                    num_string = pretty_number_string(number);
+                    this.textContent = num_string + " planets";
+                };
+            })
+            .each("start", function(){this.textContent = "1,000,000,000 planets"});
+    };
     
     // Handling the zoom.
     if (scrollobj.curTop <= zoom_position){
