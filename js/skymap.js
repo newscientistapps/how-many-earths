@@ -91,6 +91,35 @@ var pretty_number_string = function(number){
     };
 };
 
+var toCharCode = function(string){
+    // Given a string, returns the string's character code numbers in an array.
+    
+    // Get an array of the characters in the string.
+    var char_array = string.split("");
+    // Make a place for the character codes to live.
+    var code_array = [];
+    // Get the character code for each character and put it into the code array.
+    char_array.forEach(function(i){
+        code_array.push(i.charCodeAt(0));
+    });
+    
+    return code_array;
+};
+
+var backFromCharCode = function(array){
+    // Goes from an array of character codes back to a string.
+    return String.fromCharCode.apply("", array);
+};
+
+var newInterpolateString = function(a, b){
+    // Returns an interpolator between two strings of the same length.
+    var array_interpolator = d3.interpolateArray(toCharCode(a), toCharCode(b));
+    var string_interpolator = function(t){
+        return backFromCharCode(array_interpolator(t));
+    };
+    return string_interpolator;
+};
+
 //////////////////////////
 // Actually draw stuff! //
 //////////////////////////
@@ -547,7 +576,9 @@ $(window).scroll(function(){
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
-                    this.textContent = num_string + " planets"; 
+                    // planet_string = newInterpolateString(" planets", " Earths ")(t);
+                    planet_string = " Earths "
+                    this.textContent = num_string + planet_string; 
                }
             });
     };
@@ -562,7 +593,9 @@ $(window).scroll(function(){
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
-                    this.textContent = num_string + " planets"; 
+                    // planet_string = newInterpolateString(" Earths ", " planets")(t);
+                    planet_string = " planets"
+                    this.textContent = num_string + planet_string; 
                }
             });
     };
@@ -577,7 +610,7 @@ $(window).scroll(function(){
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
-                    this.textContent = num_string + " planets";
+                    this.textContent = num_string + " Earths ";
                 }
             });
     };
@@ -592,7 +625,7 @@ $(window).scroll(function(){
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
-                    this.textContent = num_string + " planets";
+                    this.textContent = num_string + " Earths ";
                 }
             });
     };
@@ -608,10 +641,10 @@ $(window).scroll(function(){
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
-                    this.textContent = num_string + " planets";
+                    this.textContent = num_string + " Earths ";
                 };
             })
-            .each("end", function(){this.textContent = "15-30 billion planets"});
+            .each("end", function(){this.textContent = "15-30 billion Earths "});
     };
     
     if (scrollobj.curTop <= 6250 && scrollobj.lastTop > 6250 && scrollobj.curTop > 5250){
@@ -625,10 +658,10 @@ $(window).scroll(function(){
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
-                    this.textContent = num_string + " planets";
+                    this.textContent = num_string + " Earths ";
                 };
             })
-            .each("start", function(){this.textContent = "1,000,000,000 planets"});
+            .each("start", function(){this.textContent = "1,000,000,000 Earths "});
     };
     
     // Handling the zoom.
