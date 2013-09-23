@@ -173,6 +173,7 @@ line-height:110%;
 float: right;
 
 cursor:pointer;
+opacity:0.75;
 
 /*-webkit-animation: fadein 3s linear infinite;
 -moz-animation: fadein 3s linear infinite;
@@ -195,6 +196,7 @@ line-height:110%;
 float: left;
 
 cursor:pointer;
+opacity: 0.75;
 
 /*-webkit-animation: fadein 3s linear infinite;
 -moz-animation: fadein 3s linear infinite;
@@ -208,6 +210,16 @@ cursor:pointer;
 -webkit-animation-fill-mode:forwards; 
 -moz-animation-fill-mode:forwards;*/
 
+}
+
+.flasher:hover{
+    opacity:1.0;
+}
+.flasher-up:hover{
+    opacity:1.0;
+}
+#back-to-top:hover{
+    opacity:1.0;
 }
 
 @-webkit-keyframes fadein { from {opacity:0.0;} to {opacity:1.0;}}

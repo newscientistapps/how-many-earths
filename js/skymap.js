@@ -816,6 +816,7 @@ $(".flasher-up").click(function(){
         // Animating the scroll transition through judicious use of jQuery, 
         // along with CSS properties on the top-level HTML tag.
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
+        $(window).scrollTop(new_location + 500);
         $("body,html").animate({
             scrollTop: new_location
         }, scroll_time);
