@@ -108,7 +108,7 @@ var toCharCode = function(string){
 
 var backFromCharCode = function(array){
     // Goes from an array of character codes back to a string.
-    return String.fromCharCode.apply("", array);
+    return String.fromCharCode.apply(null, array);
 };
 
 var newInterpolateString = function(a, b){

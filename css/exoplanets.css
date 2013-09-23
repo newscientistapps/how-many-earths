@@ -172,6 +172,8 @@ font-size: 16px;
 line-height:110%;
 float: right;
 
+cursor:pointer;
+
 /*-webkit-animation: fadein 3s linear infinite;
 -moz-animation: fadein 3s linear infinite;
 
@@ -191,6 +193,8 @@ float: right;
 font-size: 16px;
 line-height:110%;
 float: left;
+
+cursor:pointer;
 
 /*-webkit-animation: fadein 3s linear infinite;
 -moz-animation: fadein 3s linear infinite;
