@@ -802,7 +802,12 @@ $(".flasher").click(function(){
         // Find the new location -- scroll down to the next multiple of 1000, plus 500.
         // Can't use ceil here, since we need this to work when we're already at a multiple of 1000 and want to jump to the next one.
         // var new_location = (Math.floor(scrollobj.curTop/1000) + 1) * 1000;
-        var new_location = Math.round(scrollobj.curTop/1000) * 1000 + 500;
+        if (scrollobj.curTop <= 500){
+            var new_location = 1000;
+        }
+        else{
+            var new_location = Math.round(scrollobj.curTop/1000) * 1000 + 500;
+        }
         
         // Animating the scroll transition through judicious use of jQuery, 
         // along with CSS properties on the top-level HTML tag.
