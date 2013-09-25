@@ -32,7 +32,7 @@ else {
         
         $("#textbox").append("p")
             .css({'opacity':1.0,'color':'#fff','text-align':'center','font-size':'70px'})
-            .text("Your version of iOS can't display this content. Try updating your operating system, or use a different device.");
+            .text("Your version of iOS is out of date and cannot display this content. Try running a system update, or use a different device.");
     };
     var pic_scale = 1.0;
     var zoom_scale = 1.3;
@@ -143,7 +143,13 @@ var newInterpolateString = function(a, b){
 //////////////////////////////////////////////////////////////////
 // Prevent the page from remembering scroll position on reload. //
 //////////////////////////////////////////////////////////////////
+// For Firefox (and IE?)
 $(window).scrollTop(0);
+// For Webkit (Safari and Chrome)
+$(window).unload(function() {
+    $('body').scrollTop(0);
+});
+
 
 //////////////////////////
 // Actually draw stuff! //
