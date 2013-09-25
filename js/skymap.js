@@ -208,6 +208,17 @@ var svg = d3.select("#main_event_interactive").append("svg")
         .attr("height", pic_height)
         .style("opacity", 0);
     
+    // g.append("image")
+    //         .attr("xlink:href", "img/kepler_north_star.png")
+    //         .attr("class", "skyimage")
+    //         .attr("id", "zoom_sky")
+    //         .attr("x", (width - rotating_pic_width)/2 - dx)
+    //         .attr("y", (height - rotating_pic_width)/2 - dy)
+    //         .attr("width", rotating_pic_width)
+    //         .attr("height", rotating_pic_width)
+    //         .attr("transform", "rotate(" + -1*initial_ra + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")")
+    //         .style("opacity", 0);
+    
     // Setting up the rotation image.
     g_rotate = svg.append("g");
     
@@ -465,6 +476,7 @@ $(window).scroll(function(){
        $("#the_bigger_picture").css({"opacity": 0, "top":"100%"});
        $("#all_sky").css("opacity", 0);
        $("#zoom_sky").css("opacity", 0);
+       // $("#rotating").css("opacity", 0);  
     };
     if (scrollobj.curTop > 6000 && scrollobj.curTop <= 6500){
        // d3.select("#number-planets").text("15-30 billion planets");
@@ -475,7 +487,8 @@ $(window).scroll(function(){
    
        $("#the_bigger_picture").css({"opacity": (scrollobj.curTop - 6000)/500, "top": 100 - (scrollobj.curTop - 6000)/5 +"%"});
        // $("#all_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
-       $("#zoom_sky").css("opacity", (scrollobj.curTop - 6000)/500);  
+       $("#zoom_sky").css("opacity", (scrollobj.curTop - 6000)/500);
+       // $("#rotating").css("opacity", (scrollobj.curTop - 6000)/500);  
     };
     if (scrollobj.curTop > 6500){
        // d3.select("#number-planets").text("15-30 billion planets");
@@ -483,6 +496,7 @@ $(window).scroll(function(){
        $("#geometry").css("opacity", 0);
        $("#all_sky").css("opacity", 0);
        $("#zoom_sky").css("opacity", 1);  
+       // $("#rotating").css("opacity", 1);  
     };
 
     //
@@ -712,8 +726,6 @@ $(window).scroll(function(){
         });
     };
     if (scrollobj.curTop < 7500 && scrollobj.lastTop >= 7500){
-        // g.select("#zoom_sky")
-        //     .attr("xlink:href", "img/kepler_zoomedsky.png");
         svg.select("#rotating").style("opacity", 0);
         // g_rotate.attr("transform", "translate(100,0)rotate(" + -1*initial_ra + " " + old_projection([0, 90])[0] + " " + old_projection([0, 90])[1] + ")");
     };
@@ -787,13 +799,15 @@ $(".flasher").click(function(){
     // First, test to see if we're on an iOS device -- the animation of the scroll doesn't work well there.
     if (navigator.userAgent.match(/ipad|iphone/i) === null){
         
-        // Find the new location -- scroll down to the next multiple of 1000.
+        // Find the new location -- scroll down to the next multiple of 1000, plus 500.
         // Can't use ceil here, since we need this to work when we're already at a multiple of 1000 and want to jump to the next one.
-        var new_location = (Math.floor(scrollobj.curTop/1000) + 1) * 1000;
+        // var new_location = (Math.floor(scrollobj.curTop/1000) + 1) * 1000;
+        var new_location = Math.round(scrollobj.curTop/1000) * 1000 + 500;
         
         // Animating the scroll transition through judicious use of jQuery, 
         // along with CSS properties on the top-level HTML tag.
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
+        // $(window).scrollTop(new_location - 500);
         $("body,html").animate({
             scrollTop: new_location
         }, scroll_time);
@@ -822,7 +836,7 @@ $(".flasher-up").click(function(){
         // Animating the scroll transition through judicious use of jQuery, 
         // along with CSS properties on the top-level HTML tag.
         // For whatever reason, "body" works in Webkit (Chrome and Safari), while "html" works in Firefox.
-        $(window).scrollTop(new_location + 500);
+        // $(window).scrollTop(new_location + 500);
         $("body,html").animate({
             scrollTop: new_location
         }, scroll_time);
