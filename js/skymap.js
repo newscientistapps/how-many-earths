@@ -21,10 +21,12 @@ if (navigator.userAgent.match(/ipad|iphone/i) === null){
         rotating_pic_width = 3500;  
 }
 else {
-    var pic_scale = 1.3;
-    var pic_width = pic_scale*1500,
-        pic_height = pic_scale*1000,
-        rotating_pic_width = pic_scale*1750;
+    var pic_scale = 1.0;
+    var zoom_scale = 1.3;
+    zoom_min *= zoom_scale;
+    var pic_width = pic_scale*2160,
+        pic_height = pic_scale*1440,
+        rotating_pic_width = zoom_scale*pic_scale*1750;
     // var pic_width = 3000,
     //     pic_height = 2000,
     //     rotating_pic_width = 3500,
