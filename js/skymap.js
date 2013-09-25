@@ -21,6 +21,19 @@ if (navigator.userAgent.match(/ipad|iphone/i) === null){
         rotating_pic_width = 3500;  
 }
 else {
+    // Test for iOS <= 6
+    if (navigator.userAgent.match(/OS [0-5]/)){
+        $("body").append("div")
+            .css({"z-index": 2000, "opacity": 0.6,"width":"100%","height":"100%","position":"fixed","top":0,"background":"#000"});
+        
+        $("body").append("div")
+            .css({"z-index": 2000,"width":"100%","height":"10%","position":"fixed","top":"30%","background":"#000"})
+            .attr("id", "textbox");
+        
+        $("#textbox").append("p")
+            .css({'opacity':1.0,'color':'#fff','text-align':'center','font-size':'70px'})
+            .text("Your version of iOS can't display this content. Try updating your operating system, or use a different device.");
+    };
     var pic_scale = 1.0;
     var zoom_scale = 1.3;
     zoom_min *= zoom_scale;
