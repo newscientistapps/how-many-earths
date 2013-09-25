@@ -5,6 +5,12 @@
 var width = $("body").innerWidth(),
 	height = window.innerHeight;
 
+
+// How many planet candidates are there in the Kepler field meeting various requirements?
+var num_candidates = 3588,
+    num_rocky_planets = 1696,
+    num_habitable_planets = 51;
+
 // Determine how far the map zooms in and out during the zoom transition.
 var zoom_min = 1000,
     zoom_max = 2500;
@@ -364,7 +370,7 @@ $(window).scroll(function(){
     };
     if (scrollobj.curTop > 2000 && scrollobj.curTop <= 2500){
        d3.select("#number-box").attr("opacity", (scrollobj.curTop - 2000)/500);
-       d3.select("#number-planets").text("3573 planets");
+       d3.select("#number-planets").text(num_candidates + " planets");
        d3.select("#number-planets").attr("opacity", (scrollobj.curTop - 2000)/500);
        $("#in_the_frame").css({"opacity":1 - (scrollobj.curTop - 2000)/500, "top": -(scrollobj.curTop - 2000)/5 +"%"});
        $("#Keplers_haul").css({"opacity": (scrollobj.curTop - 2000)/500, "top": 100 - (scrollobj.curTop - 2000)/5 +"%"});
@@ -379,7 +385,7 @@ $(window).scroll(function(){
     }
 
     if (scrollobj.curTop > 2500 && scrollobj.curTop <= 3000){
-       d3.select("#number-planets").text("3573 planets");
+       d3.select("#number-planets").text(num_candidates + " planets");
        $("#Keplers_haul").css({"opacity":1, "top":"0%"});
        $("#candidates").css("opacity", 1);
     };
@@ -542,7 +548,7 @@ $(window).scroll(function(){
             .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
-                var f = d3.interpolate(parseInt(string), 1690);
+                var f = d3.interpolate(parseInt(string), num_rocky_planets);
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
@@ -557,7 +563,7 @@ $(window).scroll(function(){
             .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
-                var f = d3.interpolate(parseInt(string), 3573);
+                var f = d3.interpolate(parseInt(string), num_candidates);
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
@@ -572,7 +578,7 @@ $(window).scroll(function(){
             .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
-                var f = d3.interpolate(parseInt(string), 50);
+                var f = d3.interpolate(parseInt(string), num_habitable_planets);
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
@@ -589,7 +595,7 @@ $(window).scroll(function(){
             .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
-                var f = d3.interpolate(parseInt(string), 1690);
+                var f = d3.interpolate(parseInt(string), num_rocky_planets);
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
@@ -621,7 +627,7 @@ $(window).scroll(function(){
             .duration(number_time)
             .tween("text", function(){
                 var string = this.textContent.split(",").join("") // removes all commas from the string.
-                var f = d3.interpolate(parseInt(string), 50);
+                var f = d3.interpolate(parseInt(string), num_habitable_planets);
                 return function(t){
                     var number = Math.round(f(t));
                     num_string = pretty_number_string(number);
