@@ -5,7 +5,6 @@
 var width = $("body").innerWidth(),
 	height = window.innerHeight;
 
-
 // How many planet candidates are there in the Kepler field meeting various requirements?
 var num_candidates = 3588,
     num_rocky_planets = 1696,
@@ -125,6 +124,11 @@ var newInterpolateString = function(a, b){
     };
     return string_interpolator;
 };
+
+//////////////////////////////////////////////////////////////////
+// Prevent the page from remembering scroll position on reload. //
+//////////////////////////////////////////////////////////////////
+$(window).scrollTop(0);
 
 //////////////////////////
 // Actually draw stuff! //
