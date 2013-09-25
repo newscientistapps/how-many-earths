@@ -146,6 +146,9 @@ var newInterpolateString = function(a, b){
 // For Firefox (and IE?)
 $(window).scrollTop(0);
 // For Webkit (Safari and Chrome)
+$(window).bind("beforeunload", (function() {
+    $('body').scrollTop(0);
+}));
 $(window).unload(function() {
     $('body').scrollTop(0);
 });
