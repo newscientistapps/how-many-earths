@@ -148,11 +148,11 @@ $(window).scrollTop(0);
 // For Safari, Chrome, and IE:
 $(window).bind("beforeunload", (function() {
     $('html,body').scrollTop(0);
-    console.log("test beforeunload");
+    // console.log("test beforeunload");
 }));
 $(window).unload(function() {
     $('html,body').scrollTop(0);
-    console.log("test unload");
+    // console.log("test unload");
 });
 
 
@@ -364,8 +364,8 @@ $(window).scroll(function(){
     scrollobj.curTop = $(window).scrollTop();
     
     // Debugging.
-    console.log(scrollobj.lastTop);
-    console.log($(window).scrollTop());
+    // console.log(scrollobj.lastTop);
+    // console.log($(window).scrollTop());
 
     // Handling divs and images.
     if (scrollobj.curTop <= 250){
