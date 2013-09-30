@@ -143,14 +143,16 @@ var newInterpolateString = function(a, b){
 //////////////////////////////////////////////////////////////////
 // Prevent the page from remembering scroll position on reload. //
 //////////////////////////////////////////////////////////////////
-// For Firefox (and IE?)
+// For Firefox
 $(window).scrollTop(0);
-// For Webkit (Safari and Chrome)
+// For Safari, Chrome, and IE:
 $(window).bind("beforeunload", (function() {
-    $('body').scrollTop(0);
+    $('html,body').scrollTop(0);
+    console.log("test beforeunload");
 }));
 $(window).unload(function() {
-    $('body').scrollTop(0);
+    $('html,body').scrollTop(0);
+    console.log("test unload");
 });
 
 
